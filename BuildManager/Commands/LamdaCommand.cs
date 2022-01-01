@@ -10,8 +10,8 @@ namespace BuildManager.Commands
     public class LamdaCommand : Command
     {
         private readonly Action<object> _Execute;
-        private readonly Func<object, bool> _CanExecute;
-        public LamdaCommand(Action<object> Execute , Func<object,bool> CanExecute = null)
+        private readonly Predicate<object> _CanExecute;
+        public LamdaCommand(Action<object> Execute , Predicate<object> CanExecute = null)
         {
             _Execute = Execute;
             _CanExecute = CanExecute;

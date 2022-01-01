@@ -26,17 +26,7 @@ namespace BuildManager.ViewModels
         #region Command
 
         #region CloseAppCommand
-        public ICommand CloseAppCommand { get; }
-
-        private void OnCloseAppCommandExecuted (object o)
-        {
-            Application.Current.Shutdown();
-        }
-
-        private bool CanCloseAppCommandExecute (object o)
-        {
-            return true;
-        }
+        public CloseApplicationCommand CloseAppCommand { get;}
 
         #endregion
 
@@ -44,7 +34,7 @@ namespace BuildManager.ViewModels
 
         public MainWindowViewModel()
         {
-            CloseAppCommand = new LamdaCommand(OnCloseAppCommandExecuted, CanCloseAppCommandExecute);
+            CloseAppCommand = new CloseApplicationCommand();
         }
     }
 }
