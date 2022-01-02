@@ -23,18 +23,11 @@ namespace BuildManager.ViewModels
         }
         #endregion
 
-        #region Command
-
-        #region CloseAppCommand
-        public CloseApplicationCommand CloseAppCommand { get;}
-
-        #endregion
-
-        #endregion
+        
 
         public MainWindowViewModel()
         {
-            CloseAppCommand = new CloseApplicationCommand();
+            Title = "My Proj";
         }
     }
 }

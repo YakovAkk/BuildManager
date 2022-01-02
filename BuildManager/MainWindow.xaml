@@ -13,48 +13,7 @@
     <Window.DataContext>
         <viewmodels:MainWindowViewModel/>
     </Window.DataContext>
-    <Grid x:Name="Root" Background="Aqua">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
-        <Border MinWidth="100" Background="Black"
-                VerticalAlignment="Center" Grid.Column="0" 
-                Grid.ColumnSpan="4" CornerRadius="70">
-            <TextBlock x:Name="textBox" Text="Hello this is my building material recorder app"
-                   Grid.Row="0" Grid.Column="0"
-                   Grid.ColumnSpan="3" Cursor="Hand"/>
-        </Border>
-    
-        <Button x:Name="btnCreate" Grid.Row="1" Grid.Column="1" >
-
-            <TextBlock Text="Create new object"
-                      VerticalAlignment="Center"
-                       TextWrapping="Wrap"
-                       TextAlignment="Center"/>
-
-        </Button>
-        <Button x:Name="btnAbout" Grid.Row="2" Grid.Column="0" >
-            <TextBlock Text="About"
-                      VerticalAlignment="Center"
-                       TextWrapping="Wrap"
-                       TextAlignment="Center"/>
-          
-
-        </Button>
-        <Button x:Name="btnExit" Grid.Row="2" Grid.Column="2" Command="{Binding CloseAppCommand}">
-            <TextBlock Text="Exit"
-                      VerticalAlignment="Center"
-                       TextWrapping="Wrap"
-                       TextAlignment="Center"/>
-        </Button>
+    <Grid x:Name="Root" x:FieldModifier="public" >
+        <Frame x:Name ="MainFrame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

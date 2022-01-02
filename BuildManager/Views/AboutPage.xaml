@@ -1,0 +1,31 @@
+﻿<Page x:Class="BuildManager.Views.AboutPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BuildManager.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="800"
+      Title="AboutPage">
+
+    <Grid Background="Black">
+        <TextBlock x:Name="textBox" Text="  My name is Yakov, i have created the application  &#x0a;for goal-oriented people, who want to build a Town. &#x0a;  Application was developed with Volodymyr's support, &#x0a;thank you very much."
+                   Grid.Row="0" Grid.Column="0" Cursor="Hand" Margin="-58,34,44,150" RenderTransformOrigin="0.5,0.5" >
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.171"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+
+        <Button HorizontalContentAlignment="Center" Command="{Binding BackAppCommand}" 
+                VerticalContentAlignment="Center" Margin="0,550,0,0" 
+                VerticalAlignment="Top" Height="152" Width="228">
+            <TextBlock Text="Back" VerticalAlignment="Center"/>
+        </Button>
+
+    </Grid>
+</Page>
