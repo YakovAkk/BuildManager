@@ -33,9 +33,9 @@
                    Grid.ColumnSpan="3" Cursor="Hand"/>
         </Border>
 
-        <Button x:Name="btnCreate" Grid.Row="1" Grid.Column="1" >
+        <Button x:Name="btnLogin" Grid.Row="1" Grid.Column="1" Command="{Binding LoginAppCommand}">
 
-            <TextBlock Text="Create new object"
+            <TextBlock Text="Login"
                       VerticalAlignment="Center"
                        TextWrapping="Wrap"
                        TextAlignment="Center"/>
@@ -48,13 +48,11 @@
                        TextAlignment="Center"/>
         </Button>
         <Button x:Name="btnExit" Grid.Row="2" Grid.Column="2" Command="{Binding CloseAppCommand}">
-            
+
             <TextBlock Text="Exit"
                       VerticalAlignment="Center"
                        TextWrapping="Wrap"
                        TextAlignment="Center"/>
-            
-            
         </Button>
     </Grid>
 </Page>
