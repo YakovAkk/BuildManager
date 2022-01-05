@@ -6,7 +6,7 @@
         xmlns:viewmodels="clr-namespace:BuildManager.ViewModels"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
-      
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Height="800" Width="800"
         WindowStartupLocation="CenterScreen"
         Title="{Binding Title}">

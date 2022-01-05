@@ -4,11 +4,70 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BuildManager.Views"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:viewmodels="clr-namespace:BuildManager.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:LoginPageViewModel}"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="800" d:DesignWidth="800"
       Title="LoginPage">
 
-    <Grid Background="AliceBlue">
-        
+    <Grid Background="Aqua">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border MinWidth="100" Background="Black"
+                VerticalAlignment="Center" Grid.Column="0" 
+                Grid.ColumnSpan="4" CornerRadius="70">
+            <TextBlock x:Name="textBox" Text="Authorization (Enter Login and Password)"
+                       VerticalAlignment="Center"
+                   Grid.Row="0" Grid.Column="0"
+                   Grid.ColumnSpan="3" Cursor="Hand" Height="212" Margin="45,0,107,0"/>
+        </Border>
+        <Button x:Name="btnRegistration" Grid.Row="1" Grid.Column="2" Margin="30" Command="{Binding registerAppCommand}">
+            <TextBlock Text="Registration"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center"/>
+        </Button>
+
+        <Border MinWidth="100" Background="Black" Padding="20"
+                VerticalAlignment="Center" Grid.Column="0" 
+                Grid.Row="2"
+                Grid.ColumnSpan="3" CornerRadius="70">
+            <TextBox x:Name="tb" Height="62" Margin="0,0,10,0"  Background="Black" />
+        </Border>
+
+
+        <Border MinWidth="100" Background="Black" Padding="20"
+                VerticalAlignment="Center" Grid.Column="0" 
+                Grid.Row="3"
+                Grid.ColumnSpan="3" CornerRadius="70">
+            <PasswordBox x:Name="pb" Height="62" Margin="0,0,10,0"  Background="Black" />
+        </Border>
+
+        <Button x:Name="btnEnter" Grid.Row="4" Grid.Column="1" Margin="15">
+
+            <TextBlock Text="Enter"  
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center"/>
+        </Button>
+
+
+        <Button x:Name="btnBack" Grid.Row="4" Grid.Column="0" Margin="30 " Command="{Binding backFromLoginApplicationCommand}">
+            <TextBlock Text="Back"  
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center"/>
+        </Button>
     </Grid>
 </Page>

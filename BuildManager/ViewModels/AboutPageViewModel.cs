@@ -11,12 +11,12 @@ namespace BuildManager.ViewModels
     public class AboutPageViewModel : ViewModel
     {
         #region Command
-        public BackApplicationCommand BackAppCommand { get; }
+        public BackFromAboutApplicationCommand BackAppCommand { get; }
         #endregion
 
         public AboutPageViewModel()
         {
-            BackAppCommand = new BackApplicationCommand();
+            BackAppCommand = new BackFromAboutApplicationCommand();
         }
     }
 }
