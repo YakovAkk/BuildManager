@@ -28,12 +28,12 @@
                 VerticalAlignment="Center" Grid.Column="0" 
                 Grid.ColumnSpan="4" CornerRadius="70">
             <TextBlock x:Name="textBox" Text="Authorization (Enter Login and Password)"
-                       VerticalAlignment="Center"
+                       VerticalAlignment="Top" FontSize="45"
                    Grid.Row="0" Grid.Column="0"
-                   Grid.ColumnSpan="3" Cursor="Hand" Height="212" Margin="45,0,107,0"/>
+                   Grid.ColumnSpan="3" Cursor="Hand" Height="212" Margin="171,0,-171,0"/>
         </Border>
         <Button x:Name="btnRegistration" Grid.Row="1" Grid.Column="2" Margin="30" Command="{Binding registerAppCommand}">
-            <TextBlock Text="Registration"
+            <TextBlock Text="Registration" FontSize="40"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        TextAlignment="Center"/>
@@ -41,7 +41,7 @@
 
         <Border MinWidth="100" Background="Black" Padding="20"
                 VerticalAlignment="Center" Grid.Column="0" 
-                Grid.Row="2"
+                Grid.Row="2" 
                 Grid.ColumnSpan="3" CornerRadius="70">
             <TextBox x:Name="tb" Height="62" Margin="0,0,10,0"  Background="Black" Text="{Binding Login}" />
         </Border>
@@ -51,12 +51,12 @@
                 VerticalAlignment="Center" Grid.Column="0" 
                 Grid.Row="3"
                 Grid.ColumnSpan="3" CornerRadius="70">
-            <PasswordBox x:Name="pb" Height="62" Margin="0,0,10,0"  Background="Black" PasswordChanged="PasswordBox_PasswordChanged"/>
+            <PasswordBox x:Name="pb" Height="62" Margin="0,0,10,0" FontSize="40"  Background="Black" PasswordChanged="PasswordBox_PasswordChanged"/>
         </Border>
 
         <Button x:Name="btnEnter" Grid.Row="4" Grid.Column="1" Margin="15" Command="{Binding UsersCabinetCommand}">
 
-            <TextBlock Text="Enter"   
+            <TextBlock Text="Enter"   FontSize="40"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        TextAlignment="Center"/>
@@ -64,7 +64,7 @@
 
 
         <Button x:Name="btnBack" Grid.Row="4" Grid.Column="0" Margin="30 " Command="{Binding backFromLoginApplicationCommand}">
-            <TextBlock Text="Back"  
+            <TextBlock Text="Back"   FontSize="40"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        TextAlignment="Center"/>

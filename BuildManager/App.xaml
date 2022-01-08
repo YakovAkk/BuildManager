@@ -11,17 +11,13 @@
             <Style TargetType="Button">
 
                 <Setter Property="Background" Value="Black"  />
-                <Setter Property="FontSize" Value="30"  />
-                <Setter Property="MinHeight" Value="23" />
-                <Setter Property="MinWidth" Value="75" />
+
                 <Setter Property="Foreground" Value="Aqua"/>
             </Style>
 
             <Style TargetType="TextBlock">
                 <Setter Property="Foreground" Value="Aqua"/>
-                <Setter Property="Padding" Value="70"/>
-                <Setter Property="FontSize" Value="30"/>
-                <Setter Property="Padding" Value="80"/>
+
 
             </Style>
 
@@ -30,7 +26,7 @@
                 <Setter Property="Foreground" Value="Aqua"/>
             </Style>
             <Style TargetType="PasswordBox">
-                <Setter Property="FontSize" Value="40"/>
+
                 <Setter Property="Foreground" Value="Aqua"/>
             </Style>
             

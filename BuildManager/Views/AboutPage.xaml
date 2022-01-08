@@ -10,7 +10,7 @@
 
     <Grid Background="Black">
         <TextBlock x:Name="textBox" Text="  My name is Yakov, i have created the application  for goal-oriented people, &#x0a; who want to build a Town. Application was developed with Volodymyr's support,  &#x0a;thank you very much."
-                   Grid.Row="0" Grid.Column="0" Cursor="Hand" Margin="-58,34,44,150" RenderTransformOrigin="0.5,0.5" >
+                   Grid.Row="0" Grid.Column="0" Cursor="Hand" Margin="24,1,-38,183" RenderTransformOrigin="0.5,0.5" FontSize="35" >
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -22,9 +22,9 @@
         </TextBlock>
 
         <Button HorizontalContentAlignment="Center" Command="{Binding BackAppCommand}" 
-                VerticalContentAlignment="Center" Margin="0,550,0,0" 
+                VerticalContentAlignment="Center" Margin="536,592,536,0" 
                 VerticalAlignment="Top" Height="152" Width="228">
-            <TextBlock Text="Back" VerticalAlignment="Center"/>
+            <TextBlock Text="Back" VerticalAlignment="Center" FontSize="40"/>
         </Button>
 
     </Grid>

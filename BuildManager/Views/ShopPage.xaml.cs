@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BuildManager.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace BuildManager.Views
         public ShopMaterialPage()
         {
             InitializeComponent();
+            DataContext = new ShopViewModel();
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
