@@ -6,12 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
-namespace BuildManager.Commands
+namespace BuildManager.Commands.UserCabinet
 {
-    public class BackFromRegistrationApplicationCommand : Command
+    public class ExitCommand : Command
     {
         public ICommand AppCommand { get; }
         public override bool CanExecute(object? parameter)
@@ -22,10 +21,10 @@ namespace BuildManager.Commands
         public override void Execute(object? parameter)
         {
             var changePage = new ChangePage();
-            changePage.ChangePageForMainWindow(new LoginPage());
+            changePage.ChangePageForMainWindow(new MainPage());
         }
 
-        public BackFromRegistrationApplicationCommand()
+        public ExitCommand()
         {
             AppCommand = new LamdaCommand(Execute, CanExecute);
         }

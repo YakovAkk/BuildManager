@@ -1,4 +1,5 @@
 ﻿using BuildManager.Commands.Base;
+using BuildManager.GeneralFunk;
 using BuildManager.Views;
 using System.Windows;
 using System.Windows.Input;
@@ -15,13 +16,8 @@ namespace BuildManager.Commands
 
         public override void Execute(object? parameter)
         {
-            foreach (Window window in Application.Current.Windows)
-            {
-                if (window.GetType() == typeof(MainWindow))
-                {
-                    (window as MainWindow).MainFrame.Content = new AboutPage();
-                }
-            }
+            var changePage = new ChangePage();
+            changePage.ChangePageForMainWindow(new AboutPage());
         }
 
         public AboutApplicationCommand()

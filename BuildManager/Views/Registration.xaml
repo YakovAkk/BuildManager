@@ -6,7 +6,7 @@
       xmlns:viewmodels="clr-namespace:BuildManager.ViewModels" 
       d:DataContext="{d:DesignInstance Type=viewmodels:RegistrationPageViewModel}"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="800"
+      d:DesignHeight="800" d:DesignWidth="1300"
       Title="Registration">
 
     <Grid Background="Aqua">
@@ -16,14 +16,14 @@
                      Height="179" Width="780" Margin="20,0,0,0"/>
         </Border>
 
-        <Button x:Name="btnLogin" Margin="511,184,10,522" Command="{Binding backFromRegistration}">
+        <Button x:Name="btnLogin" Margin="743,184,10,522" Command="{Binding backFromRegistration}">
             <TextBlock Text="Login"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        TextAlignment="Center"/>
         </Button>
 
-        <StackPanel Margin="35,264,0,140">
+        <StackPanel Margin="35,278,0,140">
             <Border  Background="Black" Margin="10,5,10,10"
                  CornerRadius="70" Height="70" Width="730">
                 <TextBox x:Name="textLogin" Margin="10,10,10,10" Background="Black"
@@ -56,14 +56,14 @@
             </Border>
         </StackPanel>
 
-        <Button x:Name="btnBack" Margin="35,622,544,66" Command="{Binding backFromRegistration}">
+        <Button x:Name="btnBack" Margin="35,622,964,34" Command="{Binding backFromRegistration}">
             <TextBlock Text="Back"  
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        TextAlignment="Center"/>
         </Button>
 
-        <Button x:Name="btnEnter" Margin="323,608,237,33" Command="{Binding AddCommand}" >
+        <Button x:Name="btnEnter" Margin="407,622,372,34" Command="{Binding AddCommand}" >
             <TextBlock Text="Enter"  
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"

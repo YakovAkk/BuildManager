@@ -1,4 +1,5 @@
 ﻿using BuildManager.Commands.Base;
+using BuildManager.GeneralFunk;
 using BuildManager.Views;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace BuildManager.Commands
 {
     public class BackFromLoginApplicationCommand : Command
     {
-        public ICommand CloseAppCommand { get; }
+        public ICommand AppCommand { get; }
         public override bool CanExecute(object? parameter)
         {
             return true;
@@ -20,18 +21,13 @@ namespace BuildManager.Commands
 
         public override void Execute(object? parameter)
         {
-            foreach (Window window in Application.Current.Windows)
-            {
-                if (window.GetType() == typeof(MainWindow))
-                {
-                    (window as MainWindow).MainFrame.Content = new MainPage();
-                }
-            }
+            var changePage = new ChangePage();
+            changePage.ChangePageForMainWindow(new MainPage());
         }
 
         public BackFromLoginApplicationCommand()
         {
-            CloseAppCommand = new LamdaCommand(Execute, CanExecute);
+            AppCommand = new LamdaCommand(Execute, CanExecute);
         }
     }
 }

@@ -1,22 +1,18 @@
-﻿<Page x:Class="BuildManager.Views.MainPage"
+﻿<Page x:Class="BuildManager.Views.UsersCabinetPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:BuildManager.Views"
-      mc:Ignorable="d"
-      xmlns:viewmodels="clr-namespace:BuildManager.ViewModels"
-        d:DataContext="{d:DesignInstance Type=viewmodels:MainPageViewModel}"
-      d:DesignHeight="800" d:DesignWidth="1300"
-      Title="MainPage"
-      
-      >
+      xmlns:local="clr-namespace:BuildManager.Views" xmlns:viewmodels="clr-namespace:BuildManager.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:UsersCabinetModelView}"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1200"
+      Title="UsersCabinetPage">
 
-    <Grid x:Name="Root" Background="Aqua">
+    <Grid Background="Aqua">
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -28,31 +24,32 @@
         <Border MinWidth="100" Background="Black"
                 VerticalAlignment="Center" Grid.Column="0" 
                 Grid.ColumnSpan="4" CornerRadius="70">
-            <TextBlock x:Name="textBox" Text="Hello this is my building material recorder app"
-                   Grid.Row="0" Grid.Column="0" HorizontalAlignment ="Center"
+            <TextBlock x:Name="textBox" Text="Welcome to your cabinet, choose the action"
+                   Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"
                    Grid.ColumnSpan="3" Cursor="Hand"/>
         </Border>
+        <Button x:Name="btnShopMaterial" Grid.Row="1" Grid.Column="0" Command="{Binding ShopCommand}">
 
-        <Button x:Name="btnLogin" Grid.Row="1" Grid.Column="1" Command="{Binding LoginAppCommand}">
-
-            <TextBlock Text="Login"
-                      VerticalAlignment="Center"
-                       TextWrapping="Wrap"
-                       TextAlignment="Center"/>
-
-        </Button>
-        <Button x:Name="btnAbout" Grid.Row="2" Grid.Column="0" Command="{Binding AboutAppCommand}">
-            <TextBlock Text="About"
+            <TextBlock Text="Shop Material"
                       VerticalAlignment="Center"
                        TextWrapping="Wrap"
                        TextAlignment="Center"/>
         </Button>
-        <Button x:Name="btnExit" Grid.Row="2" Grid.Column="2" Command="{Binding CloseAppCommand}">
 
-            <TextBlock Text="Exit"
+        <Button x:Name="btnExit" Grid.Row="2" Grid.Column="1" Command="{Binding ExitCommand}">
+
+            <TextBlock Text="Exit" 
                       VerticalAlignment="Center"
                        TextWrapping="Wrap"
                        TextAlignment="Center"/>
         </Button>
+        <Button x:Name="btnYourMaterial" Grid.Row="1" Grid.Column="2" Command="{Binding UsersItemCommand}">
+
+            <TextBlock Text="Your Material"
+                      VerticalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+        </Button>
+
     </Grid>
 </Page>

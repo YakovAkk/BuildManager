@@ -5,11 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BuildManager.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="800"
+      d:DesignHeight="800" d:DesignWidth="1300"
       Title="AboutPage">
 
     <Grid Background="Black">
-        <TextBlock x:Name="textBox" Text="  My name is Yakov, i have created the application  &#x0a;for goal-oriented people, who want to build a Town. &#x0a;  Application was developed with Volodymyr's support, &#x0a;thank you very much."
+        <TextBlock x:Name="textBox" Text="  My name is Yakov, i have created the application  for goal-oriented people, &#x0a; who want to build a Town. Application was developed with Volodymyr's support,  &#x0a;thank you very much."
                    Grid.Row="0" Grid.Column="0" Cursor="Hand" Margin="-58,34,44,150" RenderTransformOrigin="0.5,0.5" >
             <TextBlock.RenderTransform>
                 <TransformGroup>

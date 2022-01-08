@@ -1,0 +1,52 @@
+﻿<Page x:Class="BuildManager.Views.ShopMaterialPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BuildManager.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1300"
+      Title="ShopMaterialPage">
+
+    <Grid Background="Black">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0" Background="Black">
+            <TabItem Name="Material">
+                <TabItem.Header>
+                    <TextBlock Text="Material" Background="Black"/>
+                </TabItem.Header>
+                <ListView VerticalAlignment="Top" Height="206" >
+                    <ListView.View>
+                        <GridView >
+                            <GridViewColumn Header="ID"/>
+                            <GridViewColumn Header="Name"/>
+                            <GridViewColumn Header="MesurableValue"/>
+                            <GridViewColumn Header="Price"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+
+            <TabItem Name="JobbersTab">
+                <TabItem.Header>
+                    <TextBlock Text="Jobbers" Background="Black"/>
+                </TabItem.Header>
+                <ListView VerticalAlignment="Top" Height="206" >
+                    <ListView.View>
+                        <GridView >
+                            <GridViewColumn Header="ID"/>
+                            <GridViewColumn Header="Name"/>
+                            <GridViewColumn Header="Speciality"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Page>

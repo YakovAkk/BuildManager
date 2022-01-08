@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:BuildManager.Views"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:viewmodels="clr-namespace:BuildManager.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:LoginPageViewModel}"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="800"
+      d:DesignHeight="800" d:DesignWidth="1300"
       Title="LoginPage">
 
     <Grid Background="Aqua">
@@ -43,7 +43,7 @@
                 VerticalAlignment="Center" Grid.Column="0" 
                 Grid.Row="2"
                 Grid.ColumnSpan="3" CornerRadius="70">
-            <TextBox x:Name="tb" Height="62" Margin="0,0,10,0"  Background="Black" />
+            <TextBox x:Name="tb" Height="62" Margin="0,0,10,0"  Background="Black" Text="{Binding Login}" />
         </Border>
 
 
@@ -51,12 +51,12 @@
                 VerticalAlignment="Center" Grid.Column="0" 
                 Grid.Row="3"
                 Grid.ColumnSpan="3" CornerRadius="70">
-            <PasswordBox x:Name="pb" Height="62" Margin="0,0,10,0"  Background="Black" />
+            <PasswordBox x:Name="pb" Height="62" Margin="0,0,10,0"  Background="Black" PasswordChanged="PasswordBox_PasswordChanged"/>
         </Border>
 
-        <Button x:Name="btnEnter" Grid.Row="4" Grid.Column="1" Margin="15">
+        <Button x:Name="btnEnter" Grid.Row="4" Grid.Column="1" Margin="15" Command="{Binding UsersCabinetCommand}">
 
-            <TextBlock Text="Enter"  
+            <TextBlock Text="Enter"   
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        TextAlignment="Center"/>
