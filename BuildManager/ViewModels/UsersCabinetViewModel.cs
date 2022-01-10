@@ -6,7 +6,7 @@ using BuildManager.Views;
 
 namespace BuildManager.ViewModels
 {
-    public class UsersCabinetModelView : ViewModel
+    public class UsersCabinetViewModel : ViewModel
     {
         #region Command
         public ExitCommand ExitCommand { get; set; }
@@ -18,7 +18,7 @@ namespace BuildManager.ViewModels
             {
                 return shopCommand ?? (new RelayCommand(obj =>
                 {
-                    var changePage = new ChangePage();
+                    var changePage = new GenerateFunk();
                     changePage.ChangePageForMainWindow(new ShopMaterialPage());
                 }));
             }
@@ -33,7 +33,7 @@ namespace BuildManager.ViewModels
             {
                 return usersItemCommand ?? (new RelayCommand(obj =>
                 {
-                    var changePage = new ChangePage();
+                    var changePage = new GenerateFunk();
                     changePage.ChangePageForMainWindow(new UsersItemPage());
                 }));
             }
@@ -41,7 +41,7 @@ namespace BuildManager.ViewModels
         }
         #endregion
 
-        public UsersCabinetModelView()
+        public UsersCabinetViewModel()
         {
             ExitCommand = new ExitCommand();
         }

@@ -4,6 +4,7 @@ using BuildManager.Data.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuildManager.Migrations
 {
     [DbContext(typeof(AppDBContent))]
-    partial class AppDBContentModelSnapshot : ModelSnapshot
+    [Migration("20220110094412_testDB2")]
+    partial class testDB2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +38,7 @@ namespace BuildManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("BuildManager.Data.Models.DataMaterial", b =>
@@ -47,19 +49,20 @@ namespace BuildManager.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Material_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("User_id")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("dateDeal")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("materialid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("userid")
+                        .HasColumnType("int");
+
                     b.HasKey("id");
+
+                    b.HasIndex("materialid");
+
+                    b.HasIndex("userid");
 
                     b.ToTable("DataMaterials");
                 });
@@ -72,18 +75,22 @@ namespace BuildManager.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<int>("JobPerson_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("User_id")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("dateDeal")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("personid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("userid")
+                        .HasColumnType("int");
+
                     b.HasKey("id");
 
-                    b.ToTable("DataPeople");
+                    b.HasIndex("personid");
+
+                    b.HasIndex("userid");
+
+                    b.ToTable("Persons");
                 });
 
             modelBuilder.Entity("BuildManager.Data.Models.JobPerson", b =>
@@ -135,6 +142,8 @@ namespace BuildManager.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Materials");
                 });
 
@@ -145,6 +154,12 @@ namespace BuildManager.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<int>("dataMaterial_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("dataPerson")
+                        .HasColumnType("int");
 
                     b.Property<string>("email")
                         .IsRequired()
@@ -161,6 +176,62 @@ namespace BuildManager.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("BuildManager.Data.Models.DataMaterial", b =>
+                {
+                    b.HasOne("BuildManager.Data.Models.Material", "material")
+                        .WithMany()
+                        .HasForeignKey("materialid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BuildManager.Data.Models.User", "user")
+                        .WithMany("dataMaterial")
+                        .HasForeignKey("userid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("material");
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("BuildManager.Data.Models.DataPerson", b =>
+                {
+                    b.HasOne("BuildManager.Data.Models.JobPerson", "person")
+                        .WithMany()
+                        .HasForeignKey("personid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BuildManager.Data.Models.User", "user")
+                        .WithMany("dataPeople")
+                        .HasForeignKey("userid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("person");
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("BuildManager.Data.Models.Material", b =>
+                {
+                    b.HasOne("BuildManager.Data.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("BuildManager.Data.Models.User", b =>
+                {
+                    b.Navigation("dataMaterial");
+
+                    b.Navigation("dataPeople");
                 });
 #pragma warning restore 612, 618
         }

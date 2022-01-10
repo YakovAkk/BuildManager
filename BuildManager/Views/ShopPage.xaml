@@ -42,7 +42,7 @@
             </Grid>
 
             <StackPanel Grid.Row="1">
-                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" >
+                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding MaterialsCement}">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="BagPersonal" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="Cement" FontFamily="Champagne &amp; Limousines"/>
@@ -93,29 +93,29 @@
             </StackPanel>
         </Grid>
 
-        <TabControl Grid.Row="0" Grid.Column="1" SelectedItem="{Binding SelectedTabItem}">
+        <TabControl Grid.Row="0" Grid.Column="1" SelectedItem="{Binding SelectedTabItem}" Background="Black">
             <TabItem Name="MaterialTab">
                 <TabItem.Header>
                     <TextBlock Text="Material" FontSize="40" Background="Black"/>
                 </TabItem.Header>
                 <TabItem.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Редактировать" Command="{Binding OpenEditItemWnd}"/>
-                        <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                        <MenuItem Header="Add to Basket" Command="{Binding AddToBasket}" />
+                        <MenuItem Header="Edit" Command="{Binding OpenEditWindow}"/>
                     </ContextMenu>
                 </TabItem.ContextMenu>
-                <ListView x:Name="ViewAllUsers" FontSize="30" ItemsSource="{Binding AllUsers}"
-                          SelectedItem="{Binding SelectedUser}">
+                <ListView x:Name="ViewAllUsers" FontSize="30" ItemsSource="{Binding materials}"
+                          SelectedItem="{Binding SelectedMaterial}" >
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="Auto" Header="Id"                                            
-                                            DisplayMemberBinding="{Binding Path=Name}"/>
-                            <GridViewColumn Width="200" Header="Name"
-                                            DisplayMemberBinding="{Binding Path=SurName}"/>
+                                            DisplayMemberBinding="{Binding Path = id}"/>
+                            <GridViewColumn Width="Auto" Header="Name"
+                                            DisplayMemberBinding="{Binding Path = name}"/>
                             <GridViewColumn Width="Auto" Header="Mesurable Value"
-                                            DisplayMemberBinding="{Binding Path=Phone}"/>
-                            <GridViewColumn Width="200" Header="Price"
-                                            DisplayMemberBinding="{Binding Path=UserPosition.Salary}"/>
+                                            DisplayMemberBinding="{Binding Path = mesurableValue}"/>
+                            <GridViewColumn Width="Auto" Header="Price"
+                                            DisplayMemberBinding="{Binding Path = price}"/>
                            
                         </GridView>
                     </ListView.View>
@@ -125,10 +125,11 @@
         </TabControl>
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
                     HorizontalAlignment="Right">
-            <Button Content="Новый сотрудник"/>
-            <Button Content="Новая позиция" />
-            <Button Content="Новый отдел" />
+            <Button Content="  EditMaterial  " FontSize="30" Command="{Binding OpenEditWindow}"/>
+            <Button Content="  AddMaterial   " FontSize="30" Command="{Binding OpenAddWindow}"/>
             <Button Content="Back" FontSize="30" Command="{Binding Back}"/>
+            
+            
         </StackPanel>
     </Grid>
 </Page>

@@ -11,8 +11,9 @@ namespace BuildManager.ViewModels
 {
     public class LoginPageViewModel : ViewModel
     {
-        private AppDBContent DB { get; }
+        
 
+        public static string UsersLogin { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
 
@@ -28,11 +29,21 @@ namespace BuildManager.ViewModels
             {
                 return usersCabinetCommand ?? (new UsersCabinetCommand(obj =>
                 {
-                    var Users = DB.Users;
-                    var User = Users.Where(u => u.login == Login && u.pass == Password).FirstOrDefault();
-                    if(User != null)
+                    bool flag = false;
+                    using(AppDBContent DB = new AppDBContent())
                     {
-                        var changePage = new ChangePage();
+                        var Users = DB.Users;
+                        var User = Users.Where(u => u.login == Login && u.pass == Password).FirstOrDefault();
+                        if (User != null)
+                        {
+                            UsersLogin = Login;
+                            flag = true;
+                        }
+                    }
+
+                    if (flag)
+                    {
+                        var changePage = new GenerateFunk();
                         changePage.ChangePageForMainWindow(new UsersCabinetPage());
                     }
                     else
@@ -49,7 +60,6 @@ namespace BuildManager.ViewModels
         {
             backFromLoginApplicationCommand = new BackFromLoginApplicationCommand();
             registerAppCommand = new RegisterApplicationCommand();
-            DB = new AppDBContent();
         }
     }
 }

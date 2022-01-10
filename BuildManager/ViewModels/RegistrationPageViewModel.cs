@@ -5,12 +5,6 @@ using BuildManager.Data.Models;
 using BuildManager.GeneralFunk;
 using BuildManager.ViewModels.Base;
 using BuildManager.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace BuildManager.ViewModels
@@ -21,10 +15,6 @@ namespace BuildManager.ViewModels
         public string password { get; set; } = "";
         public string password2 { get; set; } = "";
         public string email { get; set; } = "";
-
-        AppDBContent DB { get; set; }
-
-
 
         #region Command
 
@@ -52,15 +42,18 @@ namespace BuildManager.ViewModels
 
         public void addUser()
         {
-            User user = new User(login, email, password);
-            DB.Users.Add(user);
+            using (AppDBContent DB = new AppDBContent())
+            {
+                User user = new User(login, email, password);
+                DB.Users.Add(user);
 
-            DB.SaveChanges();
+                DB.SaveChanges();
 
-            MessageBoxResult result = MessageBox.Show("Register was Succeed. Don't forget you password)");
-
-            var changePage = new ChangePage();
-            changePage.ChangePageForMainWindow(new UsersCabinetPage());
+                MessageBoxResult result = MessageBox.Show("Register was Succeed. Don't forget you password)");
+ 
+            }
+            var changePage = new GenerateFunk();
+            changePage.ChangePageForMainWindow(new LoginPage());
 
         }
 
@@ -69,8 +62,6 @@ namespace BuildManager.ViewModels
         public RegistrationPageViewModel()
         {
             backFromRegistration = new BackFromRegistrationApplicationCommand();
-
-            DB = new AppDBContent();
 
         }
     }

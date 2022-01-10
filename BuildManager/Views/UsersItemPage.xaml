@@ -20,13 +20,22 @@
                 <TabItem.Header>
                     <TextBlock Text="Material" Background="Black" FontSize="40"/>
                 </TabItem.Header>
-                <ListView VerticalAlignment="Top" Height="206"  FontSize="30">
+                <ListView VerticalAlignment="Top" Height="631"  FontSize="30" ItemsSource="{Binding materials}"
+                          SelectedItem="{Binding SelectedMaterial}">
                     <ListView.View>
                         <GridView >
-                            <GridViewColumn Width="Auto" Header="ID"/>
-                            <GridViewColumn Width="Auto" Header="Name"/>
-                            <GridViewColumn Width="Auto" Header="MesurableValue"/>
-                            <GridViewColumn Width="Auto" Header="Price"/>
+                            <GridViewColumn Width="Auto" Header="ID"
+                                            DisplayMemberBinding="{Binding Path = material.id}"/>
+                            <GridViewColumn Width="Auto" Header="Name"
+                                            DisplayMemberBinding="{Binding Path = material.name}"/>
+                            <GridViewColumn Width="Auto" Header="MesurableValue"
+                                            DisplayMemberBinding="{Binding Path = material.mesurableValue}"/>
+                            <GridViewColumn Width="Auto" Header="Price"
+                                            DisplayMemberBinding="{Binding Path = material.price}"/>
+                            <GridViewColumn Width="Auto" Header="Count"
+                                            DisplayMemberBinding="{Binding Path = Count}"/>
+                            <GridViewColumn Width="Auto" Header="Full Price"
+                                            DisplayMemberBinding="{Binding Path = FullPrice}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -36,7 +45,7 @@
                 <TabItem.Header>
                     <TextBlock Text="Jobbers" Background="Black" FontSize="40"/>
                 </TabItem.Header>
-                <ListView VerticalAlignment="Top" Height="206" FontSize="30">
+                <ListView VerticalAlignment="Top" Height="206" FontSize="30" >
                     <ListView.View>
                         <GridView >
                             <GridViewColumn Width="Auto" Header="ID"/>

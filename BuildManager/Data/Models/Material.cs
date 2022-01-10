@@ -12,6 +12,11 @@ namespace BuildManager.Data.Models
         public string name { get; set; }
         public string mesurableValue { get; set; }
         public int price { get; set; }
+        public int CategoryId { get; set; }
 
+        public Material()
+        {
+
+        }
     }
 }

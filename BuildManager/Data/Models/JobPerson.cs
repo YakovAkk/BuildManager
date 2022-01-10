@@ -10,5 +10,11 @@ namespace BuildManager.Data.Models
     {
         public int id { get; set; }
         public string name { get; set; }
+        public string Surname { get; set; }
+        public string Phone { get; set; }
+        public JobPerson()
+        {
+
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace BuildManager.Commands.LoginPageCommand
 
         public override void Execute(object? parameter)
         {
-            var changePage = new ChangePage();
+            var changePage = new GenerateFunk();
             changePage.ChangePageForMainWindow(new Registration());
         }
 

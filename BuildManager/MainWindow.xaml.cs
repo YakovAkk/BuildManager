@@ -1,4 +1,5 @@
-﻿using BuildManager.Views;
+﻿using BuildManager.Data.DataBase;
+using BuildManager.Views;
 using System.Windows;
 
 namespace BuildManager
@@ -12,6 +13,11 @@ namespace BuildManager
         {
             InitializeComponent();
             MainFrame.Content = new MainPage();
+
+
+            //DataForDatabase db = new DataForDatabase();
+
+            //db.AddData();
         }
     }
 }
