@@ -21,10 +21,12 @@ namespace BuildManager.Views
     /// </summary>
     public partial class ShopMaterialPage : Page
     {
+        public static ListView AllMaterialsView;
         public ShopMaterialPage()
         {
             InitializeComponent();
             DataContext = new ShopViewModel();
+            AllMaterialsView = ViewMaterials;
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

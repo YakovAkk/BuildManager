@@ -16,7 +16,7 @@ namespace BuildManager.ViewModels
     {
         public static GenerateFunk _generateFunk = new GenerateFunk();
 
-        private List<Material> _materials = _generateFunk.GetMaterials();
+        private List<Material> _materials = new List<Material>();
         public List<Material> materials
         {
             get { return _materials; }
@@ -42,6 +42,7 @@ namespace BuildManager.ViewModels
             }
         }
 
+
         private RelayCommand openAddWindow;
         public RelayCommand OpenAddWindow
         {
@@ -56,6 +57,7 @@ namespace BuildManager.ViewModels
             }
         }
 
+
         private RelayCommand openEditWindow;
         public RelayCommand OpenEditWindow
         {
@@ -69,23 +71,116 @@ namespace BuildManager.ViewModels
             }
         }
 
-        private RelayCommand materialsCement;
 
+        private RelayCommand materialsCement;
         public RelayCommand MaterialsCement
         {
             get
             {
                 return materialsCement ?? (new RelayCommand(obj =>
                 {
-
-                    //_materials = _materials.Where(m => m.CategoryId ==  ((int)CategoryEnum.Cement)).ToList();
-
+                    _materials = _generateFunk.GetMaterials().Where(m => m.CategoryId ==  ((int)CategoryEnum.Cement)).ToList();
+                    UpdateAllMaterialView();
                 }));
             }
         }
 
-        public RelayCommand addToBasket;
+        private RelayCommand materialsTile;
+        public RelayCommand MaterialsTile
+        {
+            get
+            {
+                return materialsTile ?? (new RelayCommand(obj =>
+                {
+                    _materials = _generateFunk.GetMaterials().Where(m => m.CategoryId == ((int)CategoryEnum.Tile)).ToList();
+                    UpdateAllMaterialView();
+                }));
+            }
+        }
 
+        private RelayCommand materialsBrick;
+        public RelayCommand MaterialsBrick
+        {
+            get
+            {
+                return materialsBrick ?? (new RelayCommand(obj =>
+                {
+                    _materials = _generateFunk.GetMaterials().Where(m => m.CategoryId == ((int)CategoryEnum.Brick)).ToList();
+                    UpdateAllMaterialView();
+                }));
+            }
+        }
+        private RelayCommand materialsGasBlock;
+        public RelayCommand MaterialsGasBlock
+        {
+            get
+            {
+                return materialsGasBlock ?? (new RelayCommand(obj =>
+                {
+                    _materials = _generateFunk.GetMaterials().Where(m => m.CategoryId == ((int)CategoryEnum.GasBlock)).ToList();
+                    UpdateAllMaterialView();
+                }));
+            }
+        }
+        private RelayCommand materialsSlate;
+        public RelayCommand MaterialsSlate
+        {
+            get
+            {
+                return materialsSlate ?? (new RelayCommand(obj =>
+                {
+                    _materials = _generateFunk.GetMaterials().Where(m => m.CategoryId == ((int)CategoryEnum.Slate)).ToList();
+                    UpdateAllMaterialView();
+                }));
+            }
+        }
+        private RelayCommand materialsStyrofoam;
+        public RelayCommand MaterialsStyrofoam
+        {
+            get
+            {
+                return materialsStyrofoam ?? (new RelayCommand(obj =>
+                {
+                    _materials = _generateFunk.GetMaterials().Where(m => m.CategoryId == ((int)CategoryEnum.Styrofoam)).ToList();
+                    UpdateAllMaterialView();
+                }));
+            }
+        }
+        private RelayCommand materialsFurniture;
+        public RelayCommand MaterialsFurniture
+        {
+            get
+            {
+                return materialsFurniture ?? (new RelayCommand(obj =>
+                {
+                    _materials = _generateFunk.GetMaterials().Where(m => m.CategoryId == ((int)CategoryEnum.Furniture)).ToList();
+                    UpdateAllMaterialView();
+                }));
+            }
+        }
+
+        private RelayCommand allMaterial;
+        public RelayCommand AllMaterial
+        {
+            get
+            {
+                return allMaterial ?? (new RelayCommand(obj =>
+                {
+                    _materials = _generateFunk.GetMaterials();
+                     UpdateAllMaterialView();
+                }));
+            }
+        }
+
+        private void UpdateAllMaterialView()
+        {
+            ShopMaterialPage.AllMaterialsView.ItemsSource = null;
+            ShopMaterialPage.AllMaterialsView.Items.Clear();
+            ShopMaterialPage.AllMaterialsView.ItemsSource = materials;
+            ShopMaterialPage.AllMaterialsView.Items.Refresh();
+        }
+
+        private RelayCommand addToBasket;
         public RelayCommand AddToBasket
         {
             get

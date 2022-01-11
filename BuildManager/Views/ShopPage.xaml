@@ -42,6 +42,14 @@
             </Grid>
 
             <StackPanel Grid.Row="1">
+                
+                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding AllMaterial}">
+                    <Grid Width="150">
+                        <materialDesign:PackIcon Kind="ArrowAll" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Text="All materials" FontFamily="Champagne &amp; Limousines"/>
+                    </Grid>
+                </Button>
+                
                 <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding MaterialsCement}">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="BagPersonal" VerticalAlignment="Center"/>
@@ -49,41 +57,41 @@
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD">
+                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding MaterialsTile}">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="BarrierDown" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="Tile" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD">
+                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding MaterialsBrick}">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="Bricks" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="Brick" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD">
+                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding MaterialsGasBlock}">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="GasCylinder" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="Gas Block" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD">
+                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding MaterialsSlate}">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="Slate" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="Slate" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD">
+                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding MaterialsStyrofoam}">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="Package" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="Styrofoam" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
                 </Button>
-                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD">
+                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding MaterialsFurniture}">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="TableFurniture" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="Furniture" FontFamily="Champagne &amp; Limousines"/>
@@ -104,7 +112,7 @@
                         <MenuItem Header="Edit" Command="{Binding OpenEditWindow}"/>
                     </ContextMenu>
                 </TabItem.ContextMenu>
-                <ListView x:Name="ViewAllUsers" FontSize="30" ItemsSource="{Binding materials}"
+                <ListView x:Name="ViewMaterials" FontSize="30" ItemsSource="{Binding materials}"
                           SelectedItem="{Binding SelectedMaterial}" >
                     <ListView.View>
                         <GridView>
