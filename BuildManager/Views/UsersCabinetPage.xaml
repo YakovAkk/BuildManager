@@ -1,0 +1,55 @@
+﻿<Page x:Class="BuildManager.Views.UsersCabinetPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BuildManager.Views" xmlns:viewmodels="clr-namespace:BuildManager.ViewModels" 
+      d:DataContext="{d:DesignInstance Type=viewmodels:UsersCabinetModelView}"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1200"
+      Title="UsersCabinetPage">
+
+    <Grid Background="Aqua">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border MinWidth="100" Background="Black"
+                VerticalAlignment="Center" Grid.Column="0" 
+                Grid.ColumnSpan="3" CornerRadius="70" Height="146">
+            <TextBlock x:Name="textBox" Text="Welcome to your cabinet, choose the action" FontSize="40"
+                   Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"
+                   Grid.ColumnSpan="3" Cursor="Hand"/>
+        </Border>
+        <Button x:Name="btnShopMaterial" Grid.Row="1" Grid.Column="0" Command="{Binding ShopCommand}">
+
+            <TextBlock Text="Shop Material" FontSize="40"
+                      VerticalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+        </Button>
+
+        <Button x:Name="btnExit" Grid.Row="2" Grid.Column="1" Command="{Binding ExitCommand}">
+
+            <TextBlock Text="Exit" FontSize="40"
+                      VerticalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+        </Button>
+        <Button x:Name="btnYourMaterial" Grid.Row="1" Grid.Column="2" Command="{Binding UsersItemCommand}">
+            <TextBlock Text="Your Material" FontSize="40"
+                      VerticalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+        </Button>
+
+    </Grid>
+</Page>

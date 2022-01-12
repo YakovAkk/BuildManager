@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BuildManager.Data.DataBase;
+using BuildManager.Views;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BuildManager
 {
@@ -23,6 +12,12 @@ namespace BuildManager
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame.Content = new MainPage();
+
+
+            //DataForDatabase db = new DataForDatabase();
+
+            //db.AddData();
         }
     }
 }

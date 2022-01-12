@@ -1,0 +1,143 @@
+﻿<Page x:Class="BuildManager.Views.ShopMaterialPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BuildManager.Views"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+      xmlns:viewmodels="clr-namespace:BuildManager.ViewModels" 
+      d:DataContext="{d:DesignInstance Type=viewmodels:ShopViewModel}"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1300"
+      Title="ShopMaterialPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+
+        <Grid Grid.Row="0">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="LightGray" Offset="1"/>
+                    <GradientStop Color="#FFE6E6E6"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="20" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
+            </Grid.Effect>
+
+            <Grid Background="Black">
+                <TextBlock Text=" Shop Material "  Foreground="Aqua" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="WS Simple Gallifreyan"  FontSize="16"/>
+            </Grid>
+
+            <StackPanel Grid.Row="1">
+                
+                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding AllMaterial}">
+                    <Grid Width="150">
+                        <materialDesign:PackIcon Kind="ArrowAll" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Text="All materials" FontFamily="Champagne &amp; Limousines"/>
+                    </Grid>
+                </Button>
+                
+                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding MaterialsCement}">
+                    <Grid Width="150">
+                        <materialDesign:PackIcon Kind="BagPersonal" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Text="Cement" FontFamily="Champagne &amp; Limousines"/>
+                    </Grid>
+                </Button>
+
+                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding MaterialsTile}">
+                    <Grid Width="150">
+                        <materialDesign:PackIcon Kind="BarrierDown" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Text="Tile" FontFamily="Champagne &amp; Limousines"/>
+                    </Grid>
+                </Button>
+
+                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding MaterialsBrick}">
+                    <Grid Width="150">
+                        <materialDesign:PackIcon Kind="Bricks" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Text="Brick" FontFamily="Champagne &amp; Limousines"/>
+                    </Grid>
+                </Button>
+
+                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding MaterialsGasBlock}">
+                    <Grid Width="150">
+                        <materialDesign:PackIcon Kind="GasCylinder" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Text="Gas Block" FontFamily="Champagne &amp; Limousines"/>
+                    </Grid>
+                </Button>
+
+                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding MaterialsSlate}">
+                    <Grid Width="150">
+                        <materialDesign:PackIcon Kind="Slate" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Text="Slate" FontFamily="Champagne &amp; Limousines"/>
+                    </Grid>
+                </Button>
+
+                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding MaterialsStyrofoam}">
+                    <Grid Width="150">
+                        <materialDesign:PackIcon Kind="Package" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Text="Styrofoam" FontFamily="Champagne &amp; Limousines"/>
+                    </Grid>
+                </Button>
+                <Button Margin="10" Background="Black" BorderBrush="#FF8522BD" Command="{Binding MaterialsFurniture}">
+                    <Grid Width="150">
+                        <materialDesign:PackIcon Kind="TableFurniture" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Text="Furniture" FontFamily="Champagne &amp; Limousines"/>
+                    </Grid>
+                </Button>
+
+            </StackPanel>
+        </Grid>
+
+        <TabControl Grid.Row="0" Grid.Column="1" SelectedItem="{Binding SelectedTabItem}" Background="Black">
+            <TabItem Name="MaterialTab">
+                <TabItem.Header>
+                    <TextBlock Text="Material" FontSize="40" Background="Black"/>
+                </TabItem.Header>
+                <TabItem.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add to Basket" Command="{Binding AddToBasket}" />
+                        <MenuItem Header="Edit" Command="{Binding OpenEditWindow}"/>
+                    </ContextMenu>
+                </TabItem.ContextMenu>
+                <ListView x:Name="ViewMaterials" FontSize="30" ItemsSource="{Binding materials}"
+                          SelectedItem="{Binding SelectedMaterial}" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="Auto" Header="Id"                                            
+                                            DisplayMemberBinding="{Binding Path = id}"/>
+                            <GridViewColumn Width="Auto" Header="Name"
+                                            DisplayMemberBinding="{Binding Path = name}"/>
+                            <GridViewColumn Width="Auto" Header="Mesurable Value"
+                                            DisplayMemberBinding="{Binding Path = mesurableValue}"/>
+                            <GridViewColumn Width="Auto" Header="Price"
+                                            DisplayMemberBinding="{Binding Path = price}"/>
+                           
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+
+        </TabControl>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Content="  EditMaterial  " FontSize="30" Command="{Binding OpenEditWindow}"/>
+            <Button Content="  AddMaterial   " FontSize="30" Command="{Binding OpenAddWindow}"/>
+            <Button Content="Back" FontSize="30" Command="{Binding Back}"/>
+            
+            
+        </StackPanel>
+    </Grid>
+</Page>
