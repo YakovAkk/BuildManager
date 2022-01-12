@@ -5,10 +5,9 @@ using BuildManager.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace BuildManager.GeneralFunk
 {
@@ -24,7 +23,6 @@ namespace BuildManager.GeneralFunk
                 }
             }
         }
-
         public List<Material> GetMaterials()
         {
             using (AppDBContent db = new AppDBContent())
@@ -32,9 +30,6 @@ namespace BuildManager.GeneralFunk
                 return db.Materials.ToList();
             }
         }
-
-        
-
         public List<JobPerson> GetPeople()
         {
             using (AppDBContent db = new AppDBContent())
@@ -42,12 +37,19 @@ namespace BuildManager.GeneralFunk
                 return db.JobPeople.ToList();
             }
         }
-
         public List<JobPerson> GetJobbers()
         {
             using (AppDBContent db = new AppDBContent())
             {
                 return db.JobPeople.ToList();
+            }
+        }
+
+        public List<Category> GetCategories()
+        {
+            using (AppDBContent db = new AppDBContent())
+            {
+                return db.Categories.ToList();
             }
         }
 
@@ -58,14 +60,12 @@ namespace BuildManager.GeneralFunk
                 return db.Users.ToList();
             }
         }
-
         public void SetCenterPositionAndOpen(Window window)
         {
             window.Owner = Application.Current.MainWindow;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.ShowDialog();
         }
-
         public string EditMatrial(Material oldMateral, string newName, string newMesValue, int newPrice, Category newCategory)
         {
             string result = "Такого сотрудника не существует";
@@ -85,14 +85,13 @@ namespace BuildManager.GeneralFunk
             }
             return result;
         }
-
         public List<ResMaterial> GetMaterialsForUser()
         {
             using (AppDBContent db = new AppDBContent())
             {
                 var mat = new List<ResMaterial>();
                 var dataMaterial = db.DataMaterials.ToList();
-                var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+                var user = GetUsers().Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
                 var material = db.Materials.ToList();
                 foreach (var item in dataMaterial)
                 {
@@ -107,14 +106,13 @@ namespace BuildManager.GeneralFunk
                 return mat;
             }
         }
-
         public List<ResJobbers> GetJobbersForUser()
         {
             using (AppDBContent db = new AppDBContent())
             {
                 var job = new List<ResJobbers>();
                 var dataPeople = db.DataPeople.ToList();
-                var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+                var user = GetUsers().Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
                 var Jobbers = db.JobPeople.ToList();
                 foreach (var item in dataPeople)
                 {
@@ -130,6 +128,24 @@ namespace BuildManager.GeneralFunk
                 }
 
                 return job;
+            }
+        }
+
+        public void AddMaterial(string? materialName, string? materialMesurableValue, int materialPrice, Category materialCategory)
+        {
+            using (AppDBContent db = new AppDBContent())
+            {
+                db.Materials.Add(new Material() { name = materialName, mesurableValue = materialMesurableValue, price = materialPrice, CategoryId = materialCategory.Id});
+                db.SaveChanges();
+            }
+        }
+
+        public void AddUser(string? jobberName, string? jobberSurname, string jobberPhone)
+        {
+            using (AppDBContent db = new AppDBContent())
+            {
+                db.JobPeople.Add(new JobPerson() {name = jobberName , Surname = jobberSurname, Phone = jobberPhone});
+                db.SaveChanges();
             }
         }
     }

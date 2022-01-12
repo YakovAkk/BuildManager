@@ -4,7 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BuildManager.Views"
+        xmlns:viewmodels="clr-namespace:BuildManager.ViewModels" 
+
+        d:DataContext="{d:DesignInstance Type=viewmodels:ShopViewModel}"
         mc:Ignorable="d"
+        x:Name="AddNewMaterialWnd"
         Title="AddNewMaterialWindow" Height="300" Width="300">
     <Grid Background="Black">
         <Grid.RowDefinitions>
@@ -13,13 +17,16 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" >
-            <TextBlock Text="Name" FontSize="20"/>
-            <TextBox Text=""  FontSize="20" />
-            <TextBlock Text="Mesurable Value" FontSize="20" />
-            <TextBox Text="" FontSize="20"/>
-            <TextBlock Text="Price" FontSize="20"/>
-            <TextBox Text="" FontSize="20"/>
+            <TextBlock x:Name="blockName" Text="Name" FontSize="20"/>
+            <TextBox Text="{Binding Path = materialName }"  FontSize="20" />
+            <TextBlock x:Name="blockMesurableValue" Text="Mesurable Value" FontSize="20" />
+            <TextBox Text="{Binding Path = materialMesurableValue}" FontSize="20" />
+            <TextBlock x:Name="blockPrice" Text="Price" FontSize="20" />
+            <TextBox Text="{Binding Path = materialPrice}" FontSize="20" />
+            <TextBlock  Text="Category" FontSize="20" />
+            <ComboBox Background="White" ItemsSource="{Binding AllCatigories}" DisplayMemberPath="Name" SelectedItem="{Binding materialCategory}"/>
         </StackPanel>
-        <Button Grid.Row="1" Content="Add Material" Background="Black" Foreground="Aqua" FontSize ="20"/>
+        <Button Grid.Row="1" Content="Add Material" Background="Black" Foreground="Aqua" FontSize ="20" Command="{Binding AddNewMaterial}"
+                CommandParameter="{Binding ElementName=AddNewMaterialWnd}"/>
     </Grid>
 </Window>

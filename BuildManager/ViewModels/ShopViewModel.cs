@@ -25,10 +25,6 @@ namespace BuildManager.ViewModels
         }
 
         public static Material SelectedMaterial { get; set; }
-        public static string materialName { get; set; }
-        public static string materialMesurableValue { get; set; }
-        public static int materialPrice { get; set; }
-        public static Category materialCategory { get; set; }
 
 
         // Jobbers
@@ -41,6 +37,26 @@ namespace BuildManager.ViewModels
             get { return _jobbers; }
             set { _jobbers = value; }
         }
+
+        // Add matreial to DB
+
+        private List<Category> allCatigories = _generateFunk.GetCategories();
+        public List<Category> AllCatigories
+        {
+            get { return allCatigories; }
+            set { allCatigories = value; }
+        }
+        public static string materialName { get; set; }
+        public static string materialMesurableValue { get; set; }
+        public static int materialPrice { get; set; }
+        public static Category materialCategory { get; set; }
+
+        // Add jobber to DB
+        public static string JobberName { get; set; }
+        public static string JobberSurname { get; set; }
+        public static string JobberPhone { get; set; }
+
+
 
 
         #region Command
@@ -58,20 +74,32 @@ namespace BuildManager.ViewModels
         }
 
 
-        private RelayCommand openAddWindow;
-        public RelayCommand OpenAddWindow
+        private RelayCommand openAddMaterialWindow;
+        public RelayCommand OpenAddMaterialWindow
         {
             get
             {
-                return openAddWindow ?? (new RelayCommand(obj =>
+                return openAddMaterialWindow ?? (new RelayCommand(obj =>
                 {
                     AddNewMaterialWindow newMaterialWindow = new AddNewMaterialWindow();
-                    GenerateFunk generateFunk = new GenerateFunk();
-                    generateFunk.SetCenterPositionAndOpen(newMaterialWindow);
+                    _generateFunk.SetCenterPositionAndOpen(newMaterialWindow);
                 }));
             }
         }
 
+
+        private RelayCommand openAddJobberWindow;
+        public RelayCommand OpenAddJobberWindow
+        {
+            get
+            {
+                return openAddJobberWindow ?? (new RelayCommand(obj =>
+                {
+                    AddNewJobberWindow addJobberWindow = new AddNewJobberWindow();
+                    _generateFunk.SetCenterPositionAndOpen(addJobberWindow);
+                }));
+            }
+        }
 
         private RelayCommand openEditWindow;
         public RelayCommand OpenEditWindow
@@ -85,7 +113,6 @@ namespace BuildManager.ViewModels
                 }));
             }
         }
-
 
         private RelayCommand materialsCement;
         public RelayCommand MaterialsCement
@@ -125,6 +152,7 @@ namespace BuildManager.ViewModels
                 }));
             }
         }
+
         private RelayCommand materialsGasBlock;
         public RelayCommand MaterialsGasBlock
         {
@@ -137,6 +165,7 @@ namespace BuildManager.ViewModels
                 }));
             }
         }
+
         private RelayCommand materialsSlate;
         public RelayCommand MaterialsSlate
         {
@@ -149,6 +178,7 @@ namespace BuildManager.ViewModels
                 }));
             }
         }
+
         private RelayCommand materialsStyrofoam;
         public RelayCommand MaterialsStyrofoam
         {
@@ -161,6 +191,7 @@ namespace BuildManager.ViewModels
                 }));
             }
         }
+
         private RelayCommand materialsFurniture;
         public RelayCommand MaterialsFurniture
         {
@@ -185,14 +216,6 @@ namespace BuildManager.ViewModels
                      UpdateAllMaterialView();
                 }));
             }
-        }
-
-        private void UpdateAllMaterialView()
-        {
-            ShopMaterialPage.AllMaterialsView.ItemsSource = null;
-            ShopMaterialPage.AllMaterialsView.Items.Clear();
-            ShopMaterialPage.AllMaterialsView.ItemsSource = materials;
-            ShopMaterialPage.AllMaterialsView.Items.Refresh();
         }
 
         private RelayCommand addToBasket;
@@ -235,9 +258,83 @@ namespace BuildManager.ViewModels
             }
         }
 
+        private RelayCommand addNewMaterial;
+        public RelayCommand AddNewMaterial
+        {
+            get
+            {
+                return addNewMaterial ?? (new RelayCommand(obj =>
+                {
+                    Window wnd = obj as Window;
+                    string resultStr = "";
+                    if (materialName == null || materialName.Replace(" ", "").Length == 0)
+                    {
+                        MessageBox.Show("Fill the  name");
+                    }
+                    if (materialPrice == 0)
+                    {
+                        MessageBox.Show("Fill the Price");
+                    }
+                    if (materialMesurableValue == null || materialName.Replace(" ", "").Length == 0)
+                    {
+                        MessageBox.Show("Fill the MesurableValue");
+                    }
+                    if (materialCategory == null)
+                    {
+                        MessageBox.Show("Change Category");
+                    }
+                    else
+                    {
+                        _generateFunk.AddMaterial(materialName, materialMesurableValue, materialPrice, materialCategory);
+                        UpdateAllMaterialView();
+                        MessageBox.Show("Success");
+                        wnd.Close();
+                    }
+                }));
+            }
+        }
+        private RelayCommand addNewJobber;
+        public RelayCommand AddNewJobber
+        {
+            get
+            {
+                return addNewJobber ?? (new RelayCommand(obj =>
+                {
+                    Window wnd = obj as Window;
+                    string resultStr = "";
+                    if (JobberName == null || JobberName.Replace(" ", "").Length == 0)
+                    {
+                        MessageBox.Show("Fill the  name");
+                    }
+                    if (JobberSurname == null || JobberSurname.Replace(" ", "").Length == 0)
+                    {
+                        MessageBox.Show("Fill the MesurableValue");
+                    }
+                    if (JobberPhone == null || JobberPhone.Replace(" ", "").Length == 0)
+                    {
+                        MessageBox.Show("Fill the MesurableValue");
+                    }
+                    else
+                    {
+                        _generateFunk.AddUser(JobberName, JobberSurname, JobberPhone);
+                        UpdateAllMaterialView();
+                        MessageBox.Show("Success");
+                        wnd.Close();
+                    }
+                }));
+            }
+        }
+
+
+
         #endregion
-
-
+        private void UpdateAllMaterialView()
+        {
+            ShopMaterialPage.AllMaterialsView.ItemsSource = null;
+            ShopMaterialPage.AllMaterialsView.Items.Clear();
+            ShopMaterialPage.AllMaterialsView.ItemsSource = materials;
+            ShopMaterialPage.AllMaterialsView.Items.Refresh();
+        }
         public ShopViewModel()
         {
 

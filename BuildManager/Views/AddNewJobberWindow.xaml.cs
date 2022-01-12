@@ -4,11 +4,11 @@ using System.Windows;
 namespace BuildManager.Views
 {
     /// <summary>
-    /// Interaction logic for AddNewMaterialWindow.xaml
+    /// Interaction logic for AddNewJobberWindow.xaml
     /// </summary>
-    public partial class AddNewMaterialWindow : Window
+    public partial class AddNewJobberWindow : Window
     {
-        public AddNewMaterialWindow()
+        public AddNewJobberWindow()
         {
             InitializeComponent();
             DataContext = new ShopViewModel();

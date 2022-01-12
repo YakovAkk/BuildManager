@@ -13,6 +13,9 @@
     <Compile Update="Views\AddJobberWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AddNewJobberWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\AddNewMaterialWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -49,6 +52,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AddJobberWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AddNewJobberWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AddNewMaterialWindow.xaml">

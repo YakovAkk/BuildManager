@@ -155,8 +155,10 @@
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
                     HorizontalAlignment="Right">
             <Button Content="  EditMaterial  " FontSize="30" Command="{Binding OpenEditWindow}"/>
-            <Button Content="  AddMaterial   " FontSize="30" Command="{Binding OpenAddWindow}"/>
-            <Button Content="Back" FontSize="30" Command="{Binding Back}"/>
+            <Button Content="  AddMaterial   " FontSize="30" Command="{Binding OpenAddMaterialWindow}"/>
+            <Button Content="  AddJobber   " FontSize="30" Command="{Binding OpenAddJobberWindow}"/>
+            <Button Content="  Back  " FontSize="30" Command="{Binding Back}"/>
+            
 
 
         </StackPanel>

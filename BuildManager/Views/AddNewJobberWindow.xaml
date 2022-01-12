@@ -1,0 +1,28 @@
+﻿<Window x:Class="BuildManager.Views.AddNewJobberWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BuildManager.Views" xmlns:viewmodels="clr-namespace:BuildManager.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ShopViewModel}"
+        mc:Ignorable="d"
+        x:Name="AddNewJobberWnd"
+        Title="AddNewJobberWindow" Height="300" Width="300">
+    <Grid Background="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" >
+            <TextBlock x:Name="blockName" Text="Name" FontSize="20"/>
+            <TextBox Text="{Binding Path = JobberName }"  FontSize="20" />
+            <TextBlock x:Name="blockSurName" Text="Surname" FontSize="20" />
+            <TextBox Text="{Binding Path = JobberSurname}" FontSize="20" />
+            <TextBlock x:Name="blockPrice" Text="Phone" FontSize="20" />
+            <TextBox Text="{Binding Path = JobberPhone}" FontSize="20" />
+
+        </StackPanel>
+        <Button Grid.Row="1" Content="Add Jobber" Background="Black" Foreground="Aqua" FontSize ="20" Command="{Binding AddNewJobber}"
+                CommandParameter="{Binding ElementName=AddNewJobberWnd}"/>
+    </Grid>
+</Window>
