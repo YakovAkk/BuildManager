@@ -33,7 +33,17 @@ namespace BuildManager.GeneralFunk
             }
         }
 
+        
+
         public List<JobPerson> GetPeople()
+        {
+            using (AppDBContent db = new AppDBContent())
+            {
+                return db.JobPeople.ToList();
+            }
+        }
+
+        public List<JobPerson> GetJobbers()
         {
             using (AppDBContent db = new AppDBContent())
             {
@@ -95,6 +105,31 @@ namespace BuildManager.GeneralFunk
                 }
 
                 return mat;
+            }
+        }
+
+        public List<ResJobbers> GetJobbersForUser()
+        {
+            using (AppDBContent db = new AppDBContent())
+            {
+                var job = new List<ResJobbers>();
+                var dataPeople = db.DataPeople.ToList();
+                var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+                var Jobbers = db.JobPeople.ToList();
+                foreach (var item in dataPeople)
+                {
+                    if (item.User_id == user.id)
+                    {
+                        var resPerson = Jobbers.Where(m => m.id == item.JobPerson_id).FirstOrDefault();
+                        job.Add(new ResJobbers()
+                        {
+                            jobPerson = resPerson,
+                            Salary = item.Salary
+                        });
+                    }
+                }
+
+                return job;
             }
         }
     }

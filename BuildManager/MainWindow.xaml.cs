@@ -16,7 +16,6 @@ namespace BuildManager
 
 
             //DataForDatabase db = new DataForDatabase();
-
             //db.AddData();
         }
     }

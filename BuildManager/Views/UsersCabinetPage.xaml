@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BuildManager.Views" xmlns:viewmodels="clr-namespace:BuildManager.ViewModels" 
-      d:DataContext="{d:DesignInstance Type=viewmodels:UsersCabinetModelView}"
+      d:DataContext="{d:DesignInstance Type=viewmodels:UsersCabinetViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1200"
       Title="UsersCabinetPage">
@@ -31,7 +31,7 @@
         </Border>
         <Button x:Name="btnShopMaterial" Grid.Row="1" Grid.Column="0" Command="{Binding ShopCommand}">
 
-            <TextBlock Text="Shop Material" FontSize="40"
+            <TextBlock Text="Shop" FontSize="40"
                       VerticalAlignment="Center"
                        TextWrapping="Wrap"
                        TextAlignment="Center"/>
@@ -45,7 +45,7 @@
                        TextAlignment="Center"/>
         </Button>
         <Button x:Name="btnYourMaterial" Grid.Row="1" Grid.Column="2" Command="{Binding UsersItemCommand}">
-            <TextBlock Text="Your Material" FontSize="40"
+            <TextBlock Text="Your Material and Jobbers" FontSize="40"
                       VerticalAlignment="Center"
                        TextWrapping="Wrap"
                        TextAlignment="Center"/>

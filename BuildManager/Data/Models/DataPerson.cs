@@ -11,6 +11,20 @@ namespace BuildManager.Data.Models
         public int id { get; set; }
         public int User_id { get; set; }
         public int JobPerson_id { get; set; }
+        public int Salary { get; set; }
         public DateTime dateDeal { get; set; }
+
+        public DataPerson()
+        {
+
+        }
+        public DataPerson(int User_id,int JobPerson_id,int Salary)
+        {
+            this.User_id = User_id;
+            this.JobPerson_id = JobPerson_id;
+            this.Salary = Salary;
+            dateDeal = DateTime.Now;
+        }
+
     }
 }

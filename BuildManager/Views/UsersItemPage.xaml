@@ -45,12 +45,15 @@
                 <TabItem.Header>
                     <TextBlock Text="Jobbers" Background="Black" FontSize="40"/>
                 </TabItem.Header>
-                <ListView VerticalAlignment="Top" Height="206" FontSize="30" >
+                <ListView VerticalAlignment="Top" Height="206" FontSize="30" ItemsSource="{Binding jobbers}"
+                          SelectedItem="{Binding SelectedJobber}">
                     <ListView.View>
                         <GridView >
-                            <GridViewColumn Width="Auto" Header="ID"/>
-                            <GridViewColumn Width="Auto" Header="Name"/>
-                            <GridViewColumn Width="Auto" Header="Speciality"/>
+                            <GridViewColumn Width="Auto" Header="ID" DisplayMemberBinding="{Binding jobPerson.id}"/>
+                            <GridViewColumn Width="Auto" Header="Name" DisplayMemberBinding="{Binding jobPerson.name}"/>
+                            <GridViewColumn Width="Auto" Header="Surname" DisplayMemberBinding="{Binding jobPerson.Surname}"/>
+                            <GridViewColumn Width="Auto" Header="Phone" DisplayMemberBinding="{Binding jobPerson.Phone}"/>
+                            <GridViewColumn Width="Auto" Header="Salary" DisplayMemberBinding="{Binding Salary}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>

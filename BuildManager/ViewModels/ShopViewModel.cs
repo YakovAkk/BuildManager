@@ -16,17 +16,32 @@ namespace BuildManager.ViewModels
     {
         public static GenerateFunk _generateFunk = new GenerateFunk();
 
+        // Materials
         private List<Material> _materials = new List<Material>();
         public List<Material> materials
         {
             get { return _materials; }
             set { _materials = value; }
         }
+
         public static Material SelectedMaterial { get; set; }
         public static string materialName { get; set; }
         public static string materialMesurableValue { get; set; }
         public static int materialPrice { get; set; }
         public static Category materialCategory { get; set; }
+
+
+        // Jobbers
+
+        public static JobPerson SelectedJobber { get; set; }
+
+        private List<JobPerson> _jobbers = _generateFunk.GetJobbers();
+        public List<JobPerson> jobbers
+        {
+            get { return _jobbers; }
+            set { _jobbers = value; }
+        }
+
 
         #region Command
         private RelayCommand back;
@@ -194,6 +209,26 @@ namespace BuildManager.ViewModels
                         var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
 
                         db.DataMaterials.Add(new DataMaterial(user.id, SelectedMaterial.id, int.Parse(AddWindowViewModel.count)));
+                        db.SaveChanges();
+                    }
+                }));
+            }
+        }
+
+
+        private RelayCommand addJobberToBuilding;
+        public RelayCommand AddJobberToBuilding
+        {
+            get {
+                return addJobberToBuilding ?? (new RelayCommand(obj =>
+                {
+                    _generateFunk.SetCenterPositionAndOpen(new AddJobberWindow());
+
+                    using (AppDBContent db = new AppDBContent())
+                    {
+                        var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+
+                        db.DataPeople.Add(new DataPerson(user.id, SelectedJobber.id, int.Parse(AddJobberViewModel.count)));
                         db.SaveChanges();
                     }
                 }));

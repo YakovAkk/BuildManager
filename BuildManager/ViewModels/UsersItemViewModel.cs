@@ -17,12 +17,20 @@ namespace BuildManager.ViewModels
     {
         public static GenerateFunk _generateFunk = new GenerateFunk();
            
-
+        // Materials
         private List<ResMaterial> _materials = _generateFunk.GetMaterialsForUser();
         public List<ResMaterial> materials
         {
             get { return _materials; }
             set { _materials = value; }
+        }
+
+        // Jobbers
+        private List<ResJobbers> _jobbers = _generateFunk.GetJobbersForUser();
+        public List<ResJobbers> jobbers
+        {
+            get { return _jobbers; }
+            set { _jobbers = value; }
         }
 
         #region Properties

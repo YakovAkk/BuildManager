@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace BuildManager.Data
 {
-    public class ResMaterial
+    public class ResJobbers
     {
-        public Material material { get; set; }
-        public int Count { get; set; }
-        public int FullPrice { get; set; }
-        public ResMaterial()
+        public JobPerson jobPerson { get; set; }
+
+        public int Salary { get; set; }
+        public ResJobbers()
         {
 
         }
