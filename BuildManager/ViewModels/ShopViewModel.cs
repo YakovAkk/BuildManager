@@ -230,8 +230,8 @@ namespace BuildManager.ViewModels
                     using (AppDBContent db = new AppDBContent())
                     {
                         var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-
-                        db.DataMaterials.Add(new DataMaterial(user.id, SelectedMaterial.id, int.Parse(AddWindowViewModel.count)));
+                        var buildObj = db.BuildingObjects.Where(o => o.User_id == user.id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+                        db.DataMaterials.Add(new DataMaterial(buildObj.Id, SelectedMaterial.id, int.Parse(AddWindowViewModel.count)));
                         db.SaveChanges();
                     }
                 }));
@@ -250,8 +250,8 @@ namespace BuildManager.ViewModels
                     using (AppDBContent db = new AppDBContent())
                     {
                         var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-
-                        db.DataPeople.Add(new DataPerson(user.id, SelectedJobber.id, int.Parse(AddJobberViewModel.count)));
+                        var buildObj = db.BuildingObjects.Where(o => o.User_id == user.id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+                        db.DataPeople.Add(new DataPerson(buildObj.Id, SelectedJobber.id, int.Parse(AddJobberViewModel.count)));
                         db.SaveChanges();
                     }
                 }));
@@ -287,6 +287,7 @@ namespace BuildManager.ViewModels
                     {
                         _generateFunk.AddMaterial(materialName, materialMesurableValue, materialPrice, materialCategory);
                         UpdateAllMaterialView();
+
                         MessageBox.Show("Success");
                         wnd.Close();
                     }
@@ -317,8 +318,10 @@ namespace BuildManager.ViewModels
                     else
                     {
                         _generateFunk.AddUser(JobberName, JobberSurname, JobberPhone);
-                        UpdateAllMaterialView();
                         MessageBox.Show("Success");
+                        _jobbers = _generateFunk.GetJobbers();
+                        UpdateAllJobberlView();
+                       
                         wnd.Close();
                     }
                 }));
@@ -334,6 +337,14 @@ namespace BuildManager.ViewModels
             ShopMaterialPage.AllMaterialsView.Items.Clear();
             ShopMaterialPage.AllMaterialsView.ItemsSource = materials;
             ShopMaterialPage.AllMaterialsView.Items.Refresh();
+        }
+
+        private void UpdateAllJobberlView()
+        {
+            ShopMaterialPage.AllJobbersView.ItemsSource = null;
+            ShopMaterialPage.AllJobbersView.Items.Clear();
+            ShopMaterialPage.AllJobbersView.ItemsSource = jobbers;
+            ShopMaterialPage.AllJobbersView.Items.Refresh();
         }
         public ShopViewModel()
         {

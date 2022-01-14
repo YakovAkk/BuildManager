@@ -23,6 +23,16 @@ namespace BuildManager.GeneralFunk
                 }
             }
         }
+
+        public List<BuildingObject> GetAllObjectForUser()
+        {
+            using (AppDBContent db = new AppDBContent())
+            {
+                var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+                return db.BuildingObjects.Where(o => o.User_id == user.id).ToList();
+            }
+        }
+
         public List<Material> GetMaterials()
         {
             using (AppDBContent db = new AppDBContent())
@@ -91,15 +101,20 @@ namespace BuildManager.GeneralFunk
             {
                 var mat = new List<ResMaterial>();
                 var dataMaterial = db.DataMaterials.ToList();
-                var user = GetUsers().Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+                var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+                var buildObj = db.BuildingObjects.Where(o => o.User_id == user.id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
                 var material = db.Materials.ToList();
                 foreach (var item in dataMaterial)
                 {
-                    if(item.User_id == user.id)
+                    if (item.BuildObject_id == buildObj.Id)
                     {
                         var resMaterial = material.Where(m => m.id == item.Material_id).FirstOrDefault();
-                        mat.Add(new ResMaterial() { material = resMaterial,Count = item.Count ,
-                            FullPrice = item.Count * resMaterial.price });
+                        mat.Add(new ResMaterial()
+                        {
+                            material = resMaterial,
+                            Count = item.Count,
+                            FullPrice = item.Count * resMaterial.price
+                        });
                     }
                 }
 
@@ -113,10 +128,11 @@ namespace BuildManager.GeneralFunk
                 var job = new List<ResJobbers>();
                 var dataPeople = db.DataPeople.ToList();
                 var user = GetUsers().Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+                var buildObj = db.BuildingObjects.Where(o => o.User_id == user.id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
                 var Jobbers = db.JobPeople.ToList();
                 foreach (var item in dataPeople)
                 {
-                    if (item.User_id == user.id)
+                    if (item.BuildObject_id == buildObj.Id)
                     {
                         var resPerson = Jobbers.Where(m => m.id == item.JobPerson_id).FirstOrDefault();
                         job.Add(new ResJobbers()

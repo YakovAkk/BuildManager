@@ -13,6 +13,9 @@
     <Compile Update="Views\AddJobberWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AddNewBuildingObjectWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\AddNewJobberWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -37,6 +40,9 @@
     <Compile Update="Views\ShopPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\UsersBildingObjectPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\UsersCabinetPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -52,6 +58,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AddJobberWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AddNewBuildingObjectWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AddNewJobberWindow.xaml">
@@ -76,6 +85,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ShopPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UsersBildingObjectPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\UsersCabinetPage.xaml">

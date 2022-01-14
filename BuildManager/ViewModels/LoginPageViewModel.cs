@@ -21,16 +21,16 @@ namespace BuildManager.ViewModels
         public BackFromLoginApplicationCommand backFromLoginApplicationCommand { get; }
         public RegisterApplicationCommand registerAppCommand { get; }
 
-        private UsersCabinetCommand usersCabinetCommand { get; }
+        private UsersCabinetCommand usersBuildingObjectCabinetCommand { get; }
 
-        public UsersCabinetCommand UsersCabinetCommand
+        public UsersCabinetCommand UsersBuildingObjectCabinetCommand
         {
             get
             {
-                return usersCabinetCommand ?? (new UsersCabinetCommand(obj =>
+                return usersBuildingObjectCabinetCommand ?? (new UsersCabinetCommand(obj =>
                 {
                     bool flag = false;
-                    using(AppDBContent DB = new AppDBContent())
+                    using (AppDBContent DB = new AppDBContent())
                     {
                         var Users = DB.Users;
                         var User = Users.Where(u => u.login == Login && u.pass == Password).FirstOrDefault();
@@ -44,7 +44,7 @@ namespace BuildManager.ViewModels
                     if (flag)
                     {
                         var changePage = new GenerateFunk();
-                        changePage.ChangePageForMainWindow(new UsersCabinetPage());
+                        changePage.ChangePageForMainWindow(new UsersBildingObjectPage());
                     }
                     else
                     {
