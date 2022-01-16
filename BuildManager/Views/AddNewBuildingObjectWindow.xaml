@@ -1,0 +1,21 @@
+﻿<Window x:Class="BuildManager.Views.AddNewBuildingObjectWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BuildManager.Views" xmlns:viewmodels="clr-namespace:BuildManager.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:UsersBuildingObjectViewModel}"
+        mc:Ignorable="d"
+        Title="AddNewBuildingObjectWindow" Height="200" Width="300">
+    <Grid Background="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" >
+            <TextBlock Text="Name" FontSize="20"/>
+            <TextBox Text="{Binding newBuildingObjectName}"  FontSize="20" />
+        </StackPanel>
+        <Button Grid.Row="1" Content="Add Building Object" Background="Black" Foreground="Aqua" FontSize ="20" Click="Close"/>
+    </Grid>
+</Window>

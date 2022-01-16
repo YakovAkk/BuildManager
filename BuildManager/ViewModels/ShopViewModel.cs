@@ -274,6 +274,7 @@ namespace BuildManager.ViewModels
                     if (materialPrice == 0)
                     {
                         MessageBox.Show("Fill the Price");
+                        return;
                     }
                     if (materialMesurableValue == null || materialName.Replace(" ", "").Length == 0)
                     {

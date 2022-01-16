@@ -1,0 +1,58 @@
+﻿<Page x:Class="BuildManager.Views.UsersBildingObjectPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BuildManager.Views" 
+      xmlns:viewmodels="clr-namespace:BuildManager.ViewModels" 
+      d:DataContext="{d:DesignInstance Type=viewmodels:UsersBuildingObjectViewModel}"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1300"
+      Title="UsersBildingObjectPage">
+
+    <Grid Background="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+
+        <Border MinWidth="100" Background="Black" 
+                VerticalAlignment="Center" Grid.Column="0" 
+                 CornerRadius="70">
+            <TextBlock x:Name="textBox" Text="Select one from your buildings or create new" FontSize="40"
+                   Grid.Row="0" Grid.Column="0" HorizontalAlignment ="Center"
+                       VerticalAlignment="Center" 
+                   Grid.ColumnSpan="3" Cursor="Hand" Height="100"/>
+        </Border>
+
+
+
+
+
+        <ListView x:Name="MainListView" Grid.Row="1" FontSize="30" ItemsSource="{Binding BuildingObjects}"
+                          SelectedItem="{Binding selectedItem}" >
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Select" Command="{Binding Select}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="Auto" Header="Name"
+                                            DisplayMemberBinding="{Binding Path = Name}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Content="  Select Object  " FontSize="30" Width="433" Command="{Binding Select}"/>
+            <Button Content="  Add Object   " FontSize="30" Width="450" Command="{Binding OpenAddWindow}"/>
+            <Button Content="Back" FontSize="30" Width="400" Command="{Binding BackFromPage}"/>
+
+
+        </StackPanel>
+
+    </Grid>
+</Page>
