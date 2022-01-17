@@ -191,7 +191,6 @@ namespace BuildManager.ViewModels
                 }));
             }
         }
-
         private RelayCommand materialsFurniture;
         public RelayCommand MaterialsFurniture
         {
@@ -231,14 +230,21 @@ namespace BuildManager.ViewModels
                     {
                         var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
                         var buildObj = db.BuildingObjects.Where(o => o.User_id == user.id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
-                        db.DataMaterials.Add(new DataMaterial(buildObj.Id, SelectedMaterial.id, int.Parse(AddWindowViewModel.count)));
-                        db.SaveChanges();
+
+                        try
+                        {
+                            db.DataMaterials.Add(new DataMaterial(buildObj.Id, SelectedMaterial.id, int.Parse(AddWindowViewModel.count)));
+                            db.SaveChanges();
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("Dude it's symbols , i don't know how these convert to integer, if you know help me pls");
+                        }
+                      
                     }
                 }));
             }
         }
-
-
         private RelayCommand addJobberToBuilding;
         public RelayCommand AddJobberToBuilding
         {
@@ -251,8 +257,19 @@ namespace BuildManager.ViewModels
                     {
                         var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
                         var buildObj = db.BuildingObjects.Where(o => o.User_id == user.id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
-                        db.DataPeople.Add(new DataPerson(buildObj.Id, SelectedJobber.id, int.Parse(AddJobberViewModel.count)));
-                        db.SaveChanges();
+
+                        try
+                        {
+                            db.DataPeople.Add(new DataPerson(buildObj.Id, SelectedJobber.id, int.Parse(AddJobberViewModel.count)));
+                            db.SaveChanges();
+                        }
+                        catch (Exception)
+                        {
+
+                            MessageBox.Show("Invalid data, do you think, the jobber wants to earn symbols instead of dollars?");
+                        }
+                        
+                        
                     }
                 }));
             }
@@ -328,10 +345,9 @@ namespace BuildManager.ViewModels
                 }));
             }
         }
-
-
-
         #endregion
+
+
         private void UpdateAllMaterialView()
         {
             ShopMaterialPage.AllMaterialsView.ItemsSource = null;
