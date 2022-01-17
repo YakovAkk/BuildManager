@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BuildManager.Views"
+        xmlns:local="clr-namespace:BuildManager.Views" xmlns:viewmodels="clr-namespace:BuildManager.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ShopViewModel}"
         mc:Ignorable="d"
         Title="EditMaterialWindow" Height="300" Width="300">
     <Grid Background="Black">
@@ -13,15 +13,15 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" >
-            <TextBlock Text="Name" FontSize="20"/>
-            <TextBox Text=""  FontSize="20" />
+            <TextBlock Text="Name" FontSize="20" />
+            <TextBox Text="{Binding materialName}"  FontSize="20" />
             <TextBlock Text="Mesurable Value" FontSize="20" />
-            <TextBox Text="" FontSize="20"/>
+            <TextBox Text="{Binding materialMesurableValue}" FontSize="20"/>
             <TextBlock Text="Price" FontSize="20"/>
-            <TextBox Text="" FontSize="20"/>
+            <TextBox Text="{Binding materialPrice}" FontSize="20"/>
             <TextBlock Text="Category" FontSize="20"/>
-            <ComboBox Background="White"/>
+            <ComboBox Background="White" ItemsSource="{Binding AllCatigories}" DisplayMemberPath="Name" SelectedItem="{Binding materialCategory}"/>
         </StackPanel>
-        <Button Grid.Row="1" Content="Edit Material" Background="Black" Foreground="Aqua" FontSize ="20" />
+        <Button Grid.Row="1" Content="Edit Material" Background="Black" Foreground="Aqua" FontSize ="20" Command="{Binding EditMaterial}"/>
     </Grid>
 </Window>

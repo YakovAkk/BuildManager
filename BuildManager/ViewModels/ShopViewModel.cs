@@ -26,7 +26,6 @@ namespace BuildManager.ViewModels
 
         public static Material SelectedMaterial { get; set; }
 
-
         // Jobbers
 
         public static JobPerson SelectedJobber { get; set; }
@@ -72,7 +71,6 @@ namespace BuildManager.ViewModels
                 }));
             }
         }
-
 
         private RelayCommand openAddMaterialWindow;
         public RelayCommand OpenAddMaterialWindow
@@ -345,6 +343,38 @@ namespace BuildManager.ViewModels
                 }));
             }
         }
+
+        private RelayCommand editMaterial;
+        public RelayCommand EditMaterial {
+            get 
+            {
+                return editMaterial ?? (new RelayCommand(obj =>
+                {
+                    try
+                    {
+                        if (SelectedMaterial != null && materialCategory != null && materialName.Length != 0 &&
+                    materialMesurableValue.Length != 0 && materialPrice != 0)
+                        {
+                            MessageBox.Show(_generateFunk.EditMatrial(SelectedMaterial, materialName, materialMesurableValue, materialPrice, materialCategory));
+                            UpdateAllMaterialView();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Something wrong!");
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                    }
+                    
+                    
+                }));
+            }
+        }
+
+
+
         #endregion
 
 
