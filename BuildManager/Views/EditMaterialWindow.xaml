@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BuildManager.Views" xmlns:viewmodels="clr-namespace:BuildManager.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ShopViewModel}"
         mc:Ignorable="d"
+        x:Name="EditMaterialWindowWnd"
         Title="EditMaterialWindow" Height="300" Width="300">
     <Grid Background="Black">
         <Grid.RowDefinitions>
@@ -22,6 +23,7 @@
             <TextBlock Text="Category" FontSize="20"/>
             <ComboBox Background="White" ItemsSource="{Binding AllCatigories}" DisplayMemberPath="Name" SelectedItem="{Binding materialCategory}"/>
         </StackPanel>
-        <Button Grid.Row="1" Content="Edit Material" Background="Black" Foreground="Aqua" FontSize ="20" Command="{Binding EditMaterial}"/>
+        <Button Grid.Row="1" Content="Edit Material" Background="Black" Foreground="Aqua" FontSize ="20" Command="{Binding EditMaterial}"    
+                CommandParameter="{Binding ElementName=EditMaterialWindowWnd}"/>
     </Grid>
 </Window>

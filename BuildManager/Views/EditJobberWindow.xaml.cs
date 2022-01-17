@@ -12,27 +12,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+
 using System.Windows.Shapes;
 
 namespace BuildManager.Views
 {
     /// <summary>
-    /// Interaction logic for EditMaterialWindow.xaml
+    /// Interaction logic for EditJobberWindow.xaml
     /// </summary>
-    public partial class EditMaterialWindow : Window
+    public partial class EditJobberWindow : Window
     {
-        public EditMaterialWindow(Material materialToEdit)
+        public EditJobberWindow(JobPerson jobberToEdit)
         {
             InitializeComponent();
-
             DataContext = new ShopViewModel();
-
-            ShopViewModel.SelectedMaterial = materialToEdit;
-            ShopViewModel.materialName = materialToEdit.name;
-            ShopViewModel.materialPrice = materialToEdit.price; 
-            ShopViewModel.materialMesurableValue = materialToEdit.mesurableValue;
-
+            ShopViewModel.SelectedJobber = jobberToEdit;
+            ShopViewModel.JobberName = jobberToEdit.name;
+            ShopViewModel.JobberSurname = jobberToEdit.Surname;
+            ShopViewModel.JobberPhone = jobberToEdit.Phone;
         }
-
     }
 }

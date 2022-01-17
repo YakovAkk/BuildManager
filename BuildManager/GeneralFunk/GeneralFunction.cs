@@ -76,25 +76,7 @@ namespace BuildManager.GeneralFunk
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.ShowDialog();
         }
-        public string EditMatrial(Material oldMateral, string newName, string newMesValue, int newPrice, Category newCategory)
-        {
-            string result = "Такого сотрудника не существует";
-            using (AppDBContent db = new AppDBContent())
-            {
-                //check user is exist
-                Material material = db.Materials.FirstOrDefault(p => p.id == oldMateral.id);
-                if (material != null)
-                {
-                    material.name = newName;
-                    material.mesurableValue = newMesValue;
-                    material.price = newPrice;
-                    material.CategoryId = newCategory.Id;
-                    db.SaveChanges();
-                    result = "Success! Material " + material.name + " changed";
-                }
-            }
-            return result;
-        }
+        
         public List<ResMaterial> GetMaterialsForUser()
         {
             using (AppDBContent db = new AppDBContent())
@@ -163,6 +145,44 @@ namespace BuildManager.GeneralFunk
                 db.JobPeople.Add(new JobPerson() {name = jobberName , Surname = jobberSurname, Phone = jobberPhone});
                 db.SaveChanges();
             }
+        }
+        public string EditMatrial(Material oldMateral, string newName, string newMesValue, int newPrice, Category newCategory)
+        {
+            string result = "This material does not exist.";
+            using (AppDBContent db = new AppDBContent())
+            {
+                //check user is exist
+                Material material = db.Materials.FirstOrDefault(p => p.id == oldMateral.id);
+                if (material != null)
+                {
+                    material.name = newName;
+                    material.mesurableValue = newMesValue;
+                    material.price = newPrice;
+                    material.CategoryId = newCategory.Id;
+                    db.SaveChanges();
+                    result = "Success! Material " + material.name + "was changed";
+                }
+            }
+            return result;
+        }
+        public string EditJobber(JobPerson oldJobber, string jobberName, string jobberSurname, string jobberPhone)
+        {
+            string result = "This employee does not exist.";
+
+            using(AppDBContent db = new AppDBContent())
+            {
+                JobPerson person = db.JobPeople.FirstOrDefault(p => p.id == oldJobber.id);
+                if(person != null)
+                {
+                    person.name = jobberName;
+                    person.Surname = jobberSurname;
+                    person.Phone = jobberPhone;
+                    db.SaveChanges();
+
+                    result = "Success! Jobber " + person.name + "was changed";
+                }
+            }
+            return result;
         }
     }
 }

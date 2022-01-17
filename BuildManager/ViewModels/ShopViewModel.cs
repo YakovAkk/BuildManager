@@ -59,6 +59,32 @@ namespace BuildManager.ViewModels
 
 
         #region Command
+
+        private RelayCommand openEditMaterialWindow;
+        public RelayCommand OpenEditMaterialWindow
+        {
+            get
+            {
+                return openEditMaterialWindow ?? (new RelayCommand(obj =>
+                {
+                    _generateFunk.SetCenterPositionAndOpen(new EditMaterialWindow(SelectedMaterial));
+                }));
+            }
+        }
+
+        private RelayCommand openEditJobberWindow;
+        public RelayCommand OpenEditJobberWindow
+        {
+            get
+            {
+                return openEditJobberWindow ?? (new RelayCommand(obj =>
+                {
+                    _generateFunk.SetCenterPositionAndOpen(new EditJobberWindow(SelectedJobber));
+                }));
+            }
+        }
+
+
         private RelayCommand back;
         public RelayCommand Back
         {
@@ -95,19 +121,6 @@ namespace BuildManager.ViewModels
                 {
                     AddNewJobberWindow addJobberWindow = new AddNewJobberWindow();
                     _generateFunk.SetCenterPositionAndOpen(addJobberWindow);
-                }));
-            }
-        }
-
-        private RelayCommand openEditWindow;
-        public RelayCommand OpenEditWindow
-        {
-            get
-            {
-                return openEditWindow ?? (new RelayCommand(obj =>
-                {
-                    EditMaterialWindow newMaterialWindow = new EditMaterialWindow(SelectedMaterial);
-                    _generateFunk.SetCenterPositionAndOpen(newMaterialWindow);
                 }));
             }
         }
@@ -350,6 +363,7 @@ namespace BuildManager.ViewModels
             {
                 return editMaterial ?? (new RelayCommand(obj =>
                 {
+                    Window wnd = obj as Window;
                     try
                     {
                         if (SelectedMaterial != null && materialCategory != null && materialName.Length != 0 &&
@@ -357,6 +371,7 @@ namespace BuildManager.ViewModels
                         {
                             MessageBox.Show(_generateFunk.EditMatrial(SelectedMaterial, materialName, materialMesurableValue, materialPrice, materialCategory));
                             UpdateAllMaterialView();
+                            wnd.Close();
                         }
                         else
                         {
@@ -373,13 +388,43 @@ namespace BuildManager.ViewModels
             }
         }
 
+        private RelayCommand editJobber;
+        public RelayCommand EditJobber
+        {
+            get
+            {
+                return editJobber ?? (new RelayCommand(obj =>
+                {
+                    Window wnd = obj as Window;
+                    try
+                    {
+                        if(SelectedJobber != null && JobberName.Length != 0 && JobberPhone.Length != 0 && JobberSurname.Length != 0)
+                        {
 
+                            MessageBox.Show(_generateFunk.EditJobber(SelectedJobber, JobberName, JobberSurname, JobberPhone));
+                            UpdateAllJobberlView();
+                            wnd.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Something wrong!");
+                        }
+                       
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                    }
+                }));
+            }
+        }
 
         #endregion
 
 
         private void UpdateAllMaterialView()
         {
+            
             ShopMaterialPage.AllMaterialsView.ItemsSource = null;
             ShopMaterialPage.AllMaterialsView.Items.Clear();
             ShopMaterialPage.AllMaterialsView.ItemsSource = materials;
@@ -388,6 +433,7 @@ namespace BuildManager.ViewModels
 
         private void UpdateAllJobberlView()
         {
+            _jobbers = _generateFunk.GetJobbers();
             ShopMaterialPage.AllJobbersView.ItemsSource = null;
             ShopMaterialPage.AllJobbersView.Items.Clear();
             ShopMaterialPage.AllJobbersView.ItemsSource = jobbers;

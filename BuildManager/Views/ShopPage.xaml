@@ -106,7 +106,7 @@
                 <TabItem.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Add to Basket" Command="{Binding AddToBasket}" />
-                        <MenuItem Header="Edit" Command="{Binding OpenEditWindow}"/>
+                        <MenuItem Header="Edit" Command="{Binding OpenEditMaterialWindow}"/>
                     </ContextMenu>
                 </TabItem.ContextMenu>
                 <ListView x:Name="ViewMaterials" FontSize="30" ItemsSource="{Binding materials}"
@@ -134,7 +134,7 @@
                 <TabItem.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Add to my Building" Command="{Binding AddJobberToBuilding}" />
-                        <MenuItem Header="Edit" />
+                        <MenuItem Header="Edit" Command="{Binding OpenEditJobberWindow}"/>
                     </ContextMenu>
                 </TabItem.ContextMenu>
                 <ListView x:Name="ViewJobbers" FontSize="30" ItemsSource="{Binding jobbers}"
@@ -154,7 +154,6 @@
 
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
                     HorizontalAlignment="Right">
-            <Button Content="  EditMaterial  " FontSize="30" Command="{Binding OpenEditWindow}"/>
             <Button Content="  AddMaterial   " FontSize="30" Command="{Binding OpenAddMaterialWindow}"/>
             <Button Content="  AddJobber   " FontSize="30" Command="{Binding OpenAddJobberWindow}"/>
             <Button Content="  Back  " FontSize="30" Command="{Binding Back}"/>
