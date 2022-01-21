@@ -32,24 +32,20 @@ namespace BuildManager.ViewModels
                     bool flag = false;
                     using (AppDBContent DB = new AppDBContent())
                     {
-                        var Users = DB.Users;
-                        var User = Users.Where(u => u.login == Login && u.pass == Password).FirstOrDefault();
+                        var User = DB.Users.Where(u => u.login == Login && u.pass == Password).FirstOrDefault();
                         if (User != null)
                         {
                             UsersLogin = Login;
-                            flag = true;
+                            var changePage = new GenerateFunk();
+                            changePage.ChangePageForMainWindow(new UsersBildingObjectPage());
+                        }
+                        else
+                        {
+                            MessageBoxResult result = MessageBox.Show("Login or password incorrect");
                         }
                     }
 
-                    if (flag)
-                    {
-                        var changePage = new GenerateFunk();
-                        changePage.ChangePageForMainWindow(new UsersBildingObjectPage());
-                    }
-                    else
-                    {
-                        MessageBoxResult result = MessageBox.Show("Login or password incorrect");
-                    }
+
                 }));
             }
         }

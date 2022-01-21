@@ -5,6 +5,7 @@ using BuildManager.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -28,10 +29,31 @@ namespace BuildManager.GeneralFunk
         {
             using (AppDBContent db = new AppDBContent())
             {
-                var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+
+                var userTsk = new Task<User>(() => GetUser());
+                var res = userTsk.ContinueWith(t => GetBuildingObjectsForUser(userTsk.Result));
+                userTsk.Start();
+                return res.Result;
+
+            }
+        }
+
+        private List<BuildingObject> GetBuildingObjectsForUser(User user)
+        {
+            using (AppDBContent db = new AppDBContent())
+            {
                 return db.BuildingObjects.Where(o => o.User_id == user.id).ToList();
             }
         }
+
+        public User GetUser()
+        {
+            using (AppDBContent db = new AppDBContent())
+            {
+                return db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+            }
+        }
+
 
         public List<Material> GetMaterials()
         {
@@ -82,10 +104,13 @@ namespace BuildManager.GeneralFunk
             using (AppDBContent db = new AppDBContent())
             {
                 var mat = new List<ResMaterial>();
+
                 var dataMaterial = db.DataMaterials.ToList();
                 var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
                 var buildObj = db.BuildingObjects.Where(o => o.User_id == user.id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
                 var material = db.Materials.ToList();
+
+                // ParallelLoopResult result = Parallel.ForEach<int>(dataMaterial, Factorial);
                 foreach (var item in dataMaterial)
                 {
                     if (item.BuildObject_id == buildObj.Id)
@@ -103,6 +128,9 @@ namespace BuildManager.GeneralFunk
                 return mat;
             }
         }
+
+
+
         public List<ResJobbers> GetJobbersForUser()
         {
             using (AppDBContent db = new AppDBContent())
