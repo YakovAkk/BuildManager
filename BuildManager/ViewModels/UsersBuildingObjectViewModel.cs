@@ -63,7 +63,8 @@ namespace BuildManager.ViewModels
                         using(UserRepos repositoryUser = new UserRepos())
                         {
                             var user = repositoryUser.FindByLogin(LoginPageViewModel.UsersLogin);
-                            repositoryBuilding.Add(new BuildingObject() { Name = newBuildingObjectName, UserId = user.Id , User = user });
+
+                            repositoryBuilding.Add(new BuildingObject() { Name = newBuildingObjectName , User = user });
                         }
 
                         buildingObjects = repositoryBuilding.GetAll();

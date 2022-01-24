@@ -241,8 +241,8 @@ namespace BuildManager.ViewModels
                     using (AppDBContent db = new AppDBContent())
                     {
                         var user = db.Users.Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-                        var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
-
+                        //var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+                        var buildObj = db.BuildingObjects.FirstOrDefault();
                         try
                         {
                             db.DataMaterials.Add(new DataMaterial(buildObj.Id, SelectedMaterial.Id, int.Parse(AddWindowViewModel.count)));
@@ -268,8 +268,8 @@ namespace BuildManager.ViewModels
                     using (AppDBContent db = new AppDBContent())
                     {
                         var user = db.Users.Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-                        var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
-
+                       // var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+                        var buildObj = db.BuildingObjects.FirstOrDefault();
                         try
                         {
                             db.DataPeople.Add(new DataPerson(buildObj.Id, SelectedJobber.Id, int.Parse(AddJobberViewModel.count)));

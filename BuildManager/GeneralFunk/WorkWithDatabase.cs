@@ -26,7 +26,8 @@ namespace BuildManager.GeneralFunk
         {
             using (AppDBContent db = new AppDBContent())
             {
-                return db.BuildingObjects.Where(o => o.UserId == user.Id).ToList();
+                return db.BuildingObjects.ToList();
+                //return db.BuildingObjects.Where(o => o.UserId == user.Id).ToList();
             }
         }
         public User GetUser()
@@ -79,7 +80,8 @@ namespace BuildManager.GeneralFunk
 
                 var dataMaterial = db.DataMaterials.ToList();
                 var user = db.Users.Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-                var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+                //var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+                var buildObj = db.BuildingObjects.FirstOrDefault();
                 var material = db.Materials.ToList();
 
                 // ParallelLoopResult result = Parallel.ForEach<int>(dataMaterial, Factorial);
@@ -107,7 +109,8 @@ namespace BuildManager.GeneralFunk
                 var job = new List<ResJobbers>();
                 var dataPeople = db.DataPeople.ToList();
                 var user = GetUsers().Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-                var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+                var buildObj = db.BuildingObjects.FirstOrDefault();
+               // var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
                 var Jobbers = db.JobPeople.ToList();
                 foreach (var item in dataPeople)
                 {
