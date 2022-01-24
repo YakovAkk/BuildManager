@@ -24,7 +24,6 @@ namespace BuildManager.GeneralFunk
                 }
             }
         }
-
         public List<BuildingObject> GetAllObjectForUser()
         {
             using (AppDBContent db = new AppDBContent())
@@ -37,7 +36,6 @@ namespace BuildManager.GeneralFunk
 
             }
         }
-
         private List<BuildingObject> GetBuildingObjectsForUser(User user)
         {
             using (AppDBContent db = new AppDBContent())
@@ -45,7 +43,6 @@ namespace BuildManager.GeneralFunk
                 return db.BuildingObjects.Where(o => o.User_id == user.id).ToList();
             }
         }
-
         public User GetUser()
         {
             using (AppDBContent db = new AppDBContent())
@@ -53,8 +50,6 @@ namespace BuildManager.GeneralFunk
                 return db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
             }
         }
-
-
         public List<Material> GetMaterials()
         {
             using (AppDBContent db = new AppDBContent())
@@ -76,7 +71,6 @@ namespace BuildManager.GeneralFunk
                 return db.JobPeople.ToList();
             }
         }
-
         public List<Category> GetCategories()
         {
             using (AppDBContent db = new AppDBContent())
@@ -84,7 +78,6 @@ namespace BuildManager.GeneralFunk
                 return db.Categories.ToList();
             }
         }
-
         public List<User> GetUsers()
         {
             using (AppDBContent db = new AppDBContent())
@@ -98,7 +91,6 @@ namespace BuildManager.GeneralFunk
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.ShowDialog();
         }
-        
         public List<ResMaterial> GetMaterialsForUser()
         {
             using (AppDBContent db = new AppDBContent())
@@ -128,9 +120,6 @@ namespace BuildManager.GeneralFunk
                 return mat;
             }
         }
-
-
-
         public List<ResJobbers> GetJobbersForUser()
         {
             using (AppDBContent db = new AppDBContent())
@@ -156,7 +145,6 @@ namespace BuildManager.GeneralFunk
                 return job;
             }
         }
-
         public void AddMaterial(string? materialName, string? materialMesurableValue, int materialPrice, Category materialCategory)
         {
             using (AppDBContent db = new AppDBContent())
@@ -165,7 +153,6 @@ namespace BuildManager.GeneralFunk
                 db.SaveChanges();
             }
         }
-
         public void AddUser(string? jobberName, string? jobberSurname, string jobberPhone)
         {
             using (AppDBContent db = new AppDBContent())
