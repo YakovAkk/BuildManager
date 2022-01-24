@@ -6,20 +6,18 @@ using BuildManager.ViewModels.Base;
 using BuildManager.Views;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace BuildManager.ViewModels
 {
     public class UsersBuildingObjectViewModel : ViewModel
     {
         public static GenerateFunk _generateFunk = new GenerateFunk();
-
+        public static WorkWithDatabase _workWithDatabase = new WorkWithDatabase();
         public static string newBuildingObjectName { get; set; }
-
-
-
         public static BuildingObject selectedItem { get; set; }
 
-        private List<BuildingObject> buildingObjects = _generateFunk.GetAllObjectForUser();
+        private List<BuildingObject> buildingObjects = _workWithDatabase.GetAllObjectForUser();
         public List<BuildingObject> BuildingObjects
         {
             get { return buildingObjects; }
@@ -59,7 +57,7 @@ namespace BuildManager.ViewModels
                         db.BuildingObjects.Add(new BuildingObject() { Name = newBuildingObjectName, User_id = user.id });
                         db.SaveChanges();
                     }
-                    buildingObjects = _generateFunk.GetAllObjectForUser();
+                    buildingObjects = _workWithDatabase.GetAllObjectForUser();
                     UpdateAllMaterialView();
                 }));
 
@@ -82,8 +80,14 @@ namespace BuildManager.ViewModels
             {
                 return select ?? (new RelayCommand(obj =>
                 {
-                    _generateFunk.ChangePageForMainWindow(new UsersCabinetPage());
-
+                    if(selectedItem == null)
+                    {
+                        MessageBox.Show("Choose a building object or create a new one");
+                    }
+                    else
+                    {
+                        _generateFunk.ChangePageForMainWindow(new UsersCabinetPage());
+                    }
                 }));
 
             }

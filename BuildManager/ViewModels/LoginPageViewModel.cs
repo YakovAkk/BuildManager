@@ -11,11 +11,11 @@ namespace BuildManager.ViewModels
 {
     public class LoginPageViewModel : ViewModel
     {
-        
 
-        public static string UsersLogin { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
+
+        public static string UsersLogin { get; set; } = "";
+        public string Login { get; set; } = "";
+        public string Password { get; set; } = "";
 
         #region Command
         public BackFromLoginApplicationCommand backFromLoginApplicationCommand { get; }
