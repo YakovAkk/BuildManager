@@ -240,12 +240,12 @@ namespace BuildManager.ViewModels
 
                     using (AppDBContent db = new AppDBContent())
                     {
-                        var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-                        var buildObj = db.BuildingObjects.Where(o => o.User_id == user.id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+                        var user = db.Users.Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+                        var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
 
                         try
                         {
-                            db.DataMaterials.Add(new DataMaterial(buildObj.Id, SelectedMaterial.id, int.Parse(AddWindowViewModel.count)));
+                            db.DataMaterials.Add(new DataMaterial(buildObj.Id, SelectedMaterial.Id, int.Parse(AddWindowViewModel.count)));
                             db.SaveChanges();
                         }
                         catch (Exception)
@@ -267,12 +267,12 @@ namespace BuildManager.ViewModels
 
                     using (AppDBContent db = new AppDBContent())
                     {
-                        var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-                        var buildObj = db.BuildingObjects.Where(o => o.User_id == user.id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+                        var user = db.Users.Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+                        var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
 
                         try
                         {
-                            db.DataPeople.Add(new DataPerson(buildObj.Id, SelectedJobber.id, int.Parse(AddJobberViewModel.count)));
+                            db.DataPeople.Add(new DataPerson(buildObj.Id, SelectedJobber.Id, int.Parse(AddJobberViewModel.count)));
                             db.SaveChanges();
                         }
                         catch (Exception)
@@ -347,7 +347,9 @@ namespace BuildManager.ViewModels
                     }
                     else
                     {
-                        _workWithDatabase.AddUser(JobberName, JobberSurname, JobberPhone);
+                        //var user = new User()
+
+                        _workWithDatabase.AddJobber(JobberName, JobberSurname, JobberPhone);
                         MessageBox.Show("Success");
                         _jobbers = _workWithDatabase.GetJobbers();
                         UpdateAllJobberlView();

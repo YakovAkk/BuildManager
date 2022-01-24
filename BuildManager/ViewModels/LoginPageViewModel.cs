@@ -32,7 +32,7 @@ namespace BuildManager.ViewModels
                     bool flag = false;
                     using (AppDBContent DB = new AppDBContent())
                     {
-                        var User = DB.Users.Where(u => u.login == Login && u.pass == Password).FirstOrDefault();
+                        var User = DB.Users.Where(u => u.Login == Login && u.Pass == Password).FirstOrDefault();
                         if (User != null)
                         {
                             UsersLogin = Login;

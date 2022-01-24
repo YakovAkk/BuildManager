@@ -2,6 +2,8 @@
 using BuildManager.Data.DataBase;
 using BuildManager.Data.Models;
 using BuildManager.GeneralFunk;
+using BuildManager.GeneralFunk.Repos;
+using BuildManager.GeneralFunk.Repos.Base;
 using BuildManager.ViewModels.Base;
 using BuildManager.Views;
 using System.Collections.Generic;
@@ -12,8 +14,12 @@ namespace BuildManager.ViewModels
 {
     public class UsersBuildingObjectViewModel : ViewModel
     {
-        public static GenerateFunk _generateFunk = new GenerateFunk();
-        public static WorkWithDatabase _workWithDatabase = new WorkWithDatabase();
+        private static GenerateFunk _generateFunk = new GenerateFunk();
+
+       // private static readonly 
+
+
+        private static WorkWithDatabase _workWithDatabase = new WorkWithDatabase();
         public static string newBuildingObjectName { get; set; }
         public static BuildingObject selectedItem { get; set; }
 
@@ -51,13 +57,18 @@ namespace BuildManager.ViewModels
                 {
                     _generateFunk.SetCenterPositionAndOpen(new AddNewBuildingObjectWindow());
 
-                    using (AppDBContent db = new AppDBContent())
+
+                    using(IRepository<BuildingObject> repositoryBuilding = new BuildingObjectRepos())
                     {
-                        var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-                        db.BuildingObjects.Add(new BuildingObject() { Name = newBuildingObjectName, User_id = user.id });
-                        db.SaveChanges();
+                        using(UserRepos repositoryUser = new UserRepos())
+                        {
+                            var user = repositoryUser.FindByLogin(LoginPageViewModel.UsersLogin);
+                            repositoryBuilding.Add(new BuildingObject() { Name = newBuildingObjectName, UserId = user.Id , User = user });
+                        }
+
+                        buildingObjects = repositoryBuilding.GetAll();
                     }
-                    buildingObjects = _workWithDatabase.GetAllObjectForUser();
+                   
                     UpdateAllMaterialView();
                 }));
 

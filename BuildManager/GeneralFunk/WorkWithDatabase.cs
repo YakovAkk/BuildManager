@@ -16,26 +16,24 @@ namespace BuildManager.GeneralFunk
         {
             using (AppDBContent db = new AppDBContent())
             {
-
                 var userTsk = new Task<User>(() => GetUser());
                 var res = userTsk.ContinueWith(t => GetBuildingObjectsForUser(userTsk.Result));
                 userTsk.Start();
                 return res.Result;
-
             }
         }
         private List<BuildingObject> GetBuildingObjectsForUser(User user)
         {
             using (AppDBContent db = new AppDBContent())
             {
-                return db.BuildingObjects.Where(o => o.User_id == user.id).ToList();
+                return db.BuildingObjects.Where(o => o.UserId == user.Id).ToList();
             }
         }
         public User GetUser()
         {
             using (AppDBContent db = new AppDBContent())
             {
-                return db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+                return db.Users.Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
             }
         }
         public List<Material> GetMaterials()
@@ -80,8 +78,8 @@ namespace BuildManager.GeneralFunk
                 var mat = new List<ResMaterial>();
 
                 var dataMaterial = db.DataMaterials.ToList();
-                var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-                var buildObj = db.BuildingObjects.Where(o => o.User_id == user.id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+                var user = db.Users.Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+                var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
                 var material = db.Materials.ToList();
 
                 // ParallelLoopResult result = Parallel.ForEach<int>(dataMaterial, Factorial);
@@ -89,12 +87,12 @@ namespace BuildManager.GeneralFunk
                 {
                     if (item.BuildObject_id == buildObj.Id)
                     {
-                        var resMaterial = material.Where(m => m.id == item.Material_id).FirstOrDefault();
+                        var resMaterial = material.Where(m => m.Id == item.Material_id).FirstOrDefault();
                         mat.Add(new ResMaterial()
                         {
                             material = resMaterial,
                             Count = item.Count,
-                            FullPrice = item.Count * resMaterial.price
+                            FullPrice = item.Count * resMaterial.Price
                         });
                     }
                 }
@@ -108,14 +106,14 @@ namespace BuildManager.GeneralFunk
             {
                 var job = new List<ResJobbers>();
                 var dataPeople = db.DataPeople.ToList();
-                var user = GetUsers().Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-                var buildObj = db.BuildingObjects.Where(o => o.User_id == user.id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+                var user = GetUsers().Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+                var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
                 var Jobbers = db.JobPeople.ToList();
                 foreach (var item in dataPeople)
                 {
                     if (item.BuildObject_id == buildObj.Id)
                     {
-                        var resPerson = Jobbers.Where(m => m.id == item.JobPerson_id).FirstOrDefault();
+                        var resPerson = Jobbers.Where(m => m.Id == item.JobPerson_id).FirstOrDefault();
                         job.Add(new ResJobbers()
                         {
                             jobPerson = resPerson,
@@ -133,19 +131,19 @@ namespace BuildManager.GeneralFunk
             {
                 db.Materials.Add(new Material()
                 {
-                    name = materialName,
-                    mesurableValue = materialMesurableValue,
-                    price = materialPrice,
+                    Name = materialName,
+                    MesurableValue = materialMesurableValue,
+                    Price = materialPrice,
                     CategoryId = materialCategory.Id
                 });
                 db.SaveChanges();
             }
         }
-        public void AddUser(string? jobberName, string? jobberSurname, string jobberPhone)
+        public void AddJobber(string? jobberName, string? jobberSurname, string jobberPhone)
         {
             using (AppDBContent db = new AppDBContent())
             {
-                db.JobPeople.Add(new JobPerson() { name = jobberName, Surname = jobberSurname, Phone = jobberPhone });
+                db.JobPeople.Add(new JobPerson() { Name = jobberName, SurName = jobberSurname, Phone = jobberPhone });
                 db.SaveChanges();
             }
         }
@@ -155,15 +153,15 @@ namespace BuildManager.GeneralFunk
             using (AppDBContent db = new AppDBContent())
             {
                 //check user is exist
-                Material material = db.Materials.FirstOrDefault(p => p.id == oldMateral.id);
+                Material material = db.Materials.FirstOrDefault(p => p.Id == oldMateral.Id);
                 if (material != null)
                 {
-                    material.name = newName;
-                    material.mesurableValue = newMesValue;
-                    material.price = newPrice;
+                    material.Name = newName;
+                    material.MesurableValue = newMesValue;
+                    material.Price = newPrice;
                     material.CategoryId = newCategory.Id;
                     db.SaveChanges();
-                    result = "Success! Material " + material.name + "was changed";
+                    result = "Success! Material " + material.Name + "was changed";
                 }
             }
             return result;
@@ -174,15 +172,15 @@ namespace BuildManager.GeneralFunk
 
             using (AppDBContent db = new AppDBContent())
             {
-                JobPerson person = db.JobPeople.FirstOrDefault(p => p.id == oldJobber.id);
+                JobPerson person = db.JobPeople.FirstOrDefault(p => p.Id == oldJobber.Id);
                 if (person != null)
                 {
-                    person.name = jobberName;
-                    person.Surname = jobberSurname;
+                    person.Name = jobberName;
+                    person.SurName = jobberSurname;
                     person.Phone = jobberPhone;
                     db.SaveChanges();
 
-                    result = "Success! Jobber " + person.name + "was changed";
+                    result = "Success! Jobber " + person.Name + "was changed";
                 }
             }
             return result;

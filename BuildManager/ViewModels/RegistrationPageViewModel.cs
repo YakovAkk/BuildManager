@@ -3,6 +3,8 @@ using BuildManager.Commands.RegisterPageCommand;
 using BuildManager.Data.DataBase;
 using BuildManager.Data.Models;
 using BuildManager.GeneralFunk;
+using BuildManager.GeneralFunk.Repos;
+using BuildManager.GeneralFunk.Repos.Base;
 using BuildManager.ViewModels.Base;
 using BuildManager.Views;
 using System.Windows;
@@ -42,16 +44,12 @@ namespace BuildManager.ViewModels
 
         public void addUser()
         {
-            using (AppDBContent DB = new AppDBContent())
+            using (IRepository<User> repository = new UserRepos())
             {
                 User user = new User(login, email, password);
-                DB.Users.Add(user);
-
-                DB.SaveChanges();
-
-                MessageBoxResult result = MessageBox.Show("Register was Succeed. Don't forget you password)");
- 
+                repository.Add(user);
             }
+           
             var changePage = new GenerateFunk();
             changePage.ChangePageForMainWindow(new LoginPage());
 

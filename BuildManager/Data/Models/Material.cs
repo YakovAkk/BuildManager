@@ -8,10 +8,10 @@ namespace BuildManager.Data.Models
 {
     public class Material
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string mesurableValue { get; set; }
-        public int price { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string MesurableValue { get; set; }
+        public int Price { get; set; }
         public int CategoryId { get; set; }
 
         public Material()

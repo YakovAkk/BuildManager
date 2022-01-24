@@ -8,11 +8,11 @@ namespace BuildManager.Data.Models
 {
     public class DataPerson
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public int BuildObject_id { get; set; }
         public int JobPerson_id { get; set; }
         public int Salary { get; set; }
-        public DateTime dateDeal { get; set; }
+        public DateTime DateDeal { get; set; }
 
         public DataPerson()
         {
@@ -23,7 +23,7 @@ namespace BuildManager.Data.Models
             this.BuildObject_id = BuildObject_id;
             this.JobPerson_id = JobPerson_id;
             this.Salary = Salary;
-            dateDeal = DateTime.Now;
+            DateDeal = DateTime.Now;
         }
 
     }

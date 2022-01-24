@@ -10,8 +10,9 @@ namespace BuildManager.Data.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int User_id { get; set; }
 
+        public int UserId { get; set; }
+        public User User { get; set; }
         public BuildingObject()
         {
 
