@@ -12,7 +12,12 @@ namespace BuildManager.Data.Models
         public string Name { get; set; }
         public string MesurableValue { get; set; }
         public int Price { get; set; }
+    
+        // Navigation Properties
+
+        public List<DataMaterial> dataMaterials { get; set; }
         public int CategoryId { get; set; }
+        public Category Category { get; set; }
 
         public Material()
         {

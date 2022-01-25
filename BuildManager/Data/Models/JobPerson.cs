@@ -12,6 +12,11 @@ namespace BuildManager.Data.Models
         public string Name { get; set; }
         public string SurName { get; set; }
         public string Phone { get; set; }
+
+        // Navigation Properties
+
+        public List<DataPerson> dataPeople { get; set; }
+
         public JobPerson()
         {
 

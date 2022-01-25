@@ -11,6 +11,9 @@ namespace BuildManager.Data.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
+
+        // Navigation Properties
+        List<Material> materials { get; set; }
         public Category()
         {
 

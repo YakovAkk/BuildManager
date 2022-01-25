@@ -21,9 +21,7 @@ namespace BuildManager.GeneralFunk.Repos
         public void Add(BuildingObject item)
         {
             _db.BuildingObjects.Add(item);
-            _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.BuildingObjects ON;");
             _db.SaveChanges();
-            _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.BuildingObjects OFF;");
         }
 
         public void Dispose()
