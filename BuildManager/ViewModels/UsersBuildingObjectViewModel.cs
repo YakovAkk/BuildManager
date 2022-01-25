@@ -16,7 +16,7 @@ namespace BuildManager.ViewModels
     {
         private static GenerateFunk _generateFunk = new GenerateFunk();
 
-        private static readonly User user = new UserRepos().FindByLogin(LoginPageViewModel.UsersLogin);
+        private static readonly User user = new UserRepos().FindUserWithActive();
 
 
         private static WorkWithDatabase _workWithDatabase = new WorkWithDatabase();
@@ -56,7 +56,7 @@ namespace BuildManager.ViewModels
                 return openAddWindow ?? (new RelayCommand(obj =>
                 {
                     _generateFunk.SetCenterPositionAndOpen(new AddNewBuildingObjectWindow());
-                    using (IRepository<BuildingObject> repositoryBuilding = new BuildingObjectRepos())
+                    using (BuildingObjectRepos repositoryBuilding = new BuildingObjectRepos())
                     {
 
                         repositoryBuilding.Add(new BuildingObject()
@@ -65,9 +65,8 @@ namespace BuildManager.ViewModels
                             UserId = user.Id
                         });
 
-                        buildingObjects = repositoryBuilding.GetAll();
+                        buildingObjects = repositoryBuilding.GetBuildingObjectsForUser(new UserRepos().FindUserWithActive());
                     }
-
                     UpdateAllMaterialView();
                 }));
             }

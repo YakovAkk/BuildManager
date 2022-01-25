@@ -19,7 +19,9 @@ namespace BuildManager.GeneralFunk.Repos
 
         public override void Add(DataMaterial item)
         {
+
             _db.DataMaterials.Add(item);
+            _db.SaveChanges();
         }
 
         public override List<DataMaterial> GetAll()

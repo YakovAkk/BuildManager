@@ -239,22 +239,21 @@ namespace BuildManager.ViewModels
                 {
                     _generateFunk.SetCenterPositionAndOpen(new AddWindow());
 
-                    using (AppDBContent db = new AppDBContent())
-                    {
-                        var user = db.Users.Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+                    var user = new UserRepos().FindUserWithActive();
                         //var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
-                        var buildObj = db.BuildingObjects.FirstOrDefault();
+                        var buildObj = new BuildingObjectRepos().GetAll().FirstOrDefault();
                         try
                         {
-                            db.DataMaterials.Add(new DataMaterial(buildObj.Id, SelectedMaterial.Id, int.Parse(AddWindowViewModel.count)));
-                            db.SaveChanges();
+                            new DataMaterialRepos().Add(new DataMaterial(buildObj.Id, SelectedMaterial.Id, 
+                                int.Parse(AddWindowViewModel.count)));
+                           
                         }
                         catch (Exception)
                         {
                             MessageBox.Show("Dude it's symbols , i don't know how these convert to integer, if you know help me pls");
                         }
                       
-                    }
+                    
                 }));
             }
         }
@@ -266,24 +265,23 @@ namespace BuildManager.ViewModels
                 {
                     _generateFunk.SetCenterPositionAndOpen(new AddJobberWindow());
 
-                    using (AppDBContent db = new AppDBContent())
-                    {
-                        var user = db.Users.Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-                       // var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
-                        var buildObj = db.BuildingObjects.FirstOrDefault();
-                        try
-                        {
-                            db.DataPeople.Add(new DataPerson(buildObj.Id, SelectedJobber.Id, int.Parse(AddJobberViewModel.count)));
-                            db.SaveChanges();
-                        }
-                        catch (Exception)
-                        {
 
-                            MessageBox.Show("Invalid data, do you think, the jobber wants to earn symbols instead of dollars?");
-                        }
-                        
-                        
+                    var user = new UserRepos().FindUserWithActive();
+                    var buildObj = new BuildingObjectRepos().GetAll().Where(o => o.UserId == user.Id && 
+                    UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+                    try
+                    {
+                           new DataPersonRepos().Add(new DataPerson(buildObj.Id, SelectedJobber.Id, 
+                               int.Parse(AddJobberViewModel.count)));
+                           
                     }
+                    catch (Exception)
+                    {
+                       MessageBox.Show("Invalid data, do you think, the jobber wants to earn symbols instead of dollars?");
+                    }
+                        
+                       
+                    
                 }));
             }
         }

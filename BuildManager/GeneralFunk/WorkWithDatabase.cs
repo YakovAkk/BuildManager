@@ -16,18 +16,17 @@ namespace BuildManager.GeneralFunk
     {
         public List<BuildingObject> GetAllObjectForUser()
         {
-            var userTsk = new Task<User>(() => new UserRepos().FindByLogin(LoginPageViewModel.UsersLogin));
-            var res = userTsk.ContinueWith(t => new BuildingObjectRepos().GetBuildingObjectsForUser(userTsk.Result));
-            userTsk.Start();
-            return res.Result;
+            var user =  new UserRepos().FindUserWithActive();
+            var res =  new BuildingObjectRepos().GetBuildingObjectsForUser(user);        
+            return res;
         }
         public List<ResMaterial> GetMaterialsForUser()
         {
             var mat = new List<ResMaterial>();
-
             var dataMaterial = new DataMaterialRepos().GetAll();
-            var user = new UserRepos().GetAll().Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-            var buildObj = new BuildingObjectRepos().GetAll().Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+            var user = new UserRepos().FindUserWithActive();
+            var buildObj = new BuildingObjectRepos().GetAll().Where(o => o.UserId == user.Id && 
+            UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
             var material = new MaterialRepos().GetAll();
 
             // ParallelLoopResult result = Parallel.ForEach<int>(dataMaterial, Factorial);
@@ -52,7 +51,7 @@ namespace BuildManager.GeneralFunk
         {
             var job = new List<ResJobbers>();
             var dataPeople = new DataPersonRepos().GetAll();
-            var user = new UserRepos().GetAll().Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+            var user = new UserRepos().FindUserWithActive();
             var buildObj = new BuildingObjectRepos().GetAll().Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
             var Jobbers = new JobPersonRepos().GetAll();
             foreach (var item in dataPeople)

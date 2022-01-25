@@ -22,17 +22,30 @@ namespace BuildManager.GeneralFunk.Repos
             _db.Users.Add(item);
             _db.SaveChanges();
         }
-
         public override List<User> GetAll()
         {
             return _db.Users.ToList();
         }
-
-        public User FindByLogin(string usersLogin)
+        public User FindUserWithActive()
         {
-            return _db.Users.Where(u => u.Login == usersLogin).FirstOrDefault();
+            return GetAll().Where(x => x.IsActive).FirstOrDefault();    
         }
-
-
+        public void ChangeActiveOnTrue(string UserLogin , string UserPassword)
+        {
+            var user = GetAll().Where(u => u.Login == UserLogin && u.Pass == UserPassword).FirstOrDefault();
+            if(user != null)
+            {
+                user.IsActive = true;
+                _db.SaveChanges();
+            }
+        }
+        public void ChangeAllActiveFalse()
+        {
+            foreach (var item in GetAll())
+            {
+                item.IsActive = false;
+            }
+            _db.SaveChanges();
+        }
     }
 }
