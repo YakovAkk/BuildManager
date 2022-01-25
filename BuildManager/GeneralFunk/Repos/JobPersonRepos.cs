@@ -25,5 +25,23 @@ namespace BuildManager.GeneralFunk.Repos
         {
             return _db.JobPeople.ToList();
         }
+
+        public string EditMaterial(JobPerson oldJobber, string jobberName, string jobberSurname, string jobberPhone)
+        {
+            string result = "This employee does not exist.";
+
+            JobPerson person = GetAll().FirstOrDefault(p => p.Id == oldJobber.Id);
+            if (person != null)
+            {
+                person.Name = jobberName;
+                person.SurName = jobberSurname;
+                person.Phone = jobberPhone;
+                _db.SaveChanges();
+
+                result = "Success! Jobber " + person.Name + "was changed";
+            }
+
+            return result;
+        }
     }
 }

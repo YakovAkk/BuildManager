@@ -16,165 +16,81 @@ namespace BuildManager.GeneralFunk
     {
         public List<BuildingObject> GetAllObjectForUser()
         {
-            using (AppDBContent db = new AppDBContent())
-            {
-                var userTsk = new Task<User>(() => new UserRepos().FindByLogin(LoginPageViewModel.UsersLogin));
-                var res = userTsk.ContinueWith(t => new BuildingObjectRepos().GetBuildingObjectsForUser(userTsk.Result));
-                userTsk.Start();
-                return res.Result;
-            }
-        }
-        
-        public List<Material> GetMaterials()
-        {
-            using (AppDBContent db = new AppDBContent())
-            {
-                return db.Materials.ToList();
-            }
-        }
-        public List<JobPerson> GetPeople()
-        {
-            using (AppDBContent db = new AppDBContent())
-            {
-                return db.JobPeople.ToList();
-            }
-        }
-        public List<JobPerson> GetJobbers()
-        {
-            using (AppDBContent db = new AppDBContent())
-            {
-                return db.JobPeople.ToList();
-            }
-        }
-        public List<Category> GetCategories()
-        {
-            using (AppDBContent db = new AppDBContent())
-            {
-                return db.Categories.ToList();
-            }
-        }
-        public List<User> GetUsers()
-        {
-            using (AppDBContent db = new AppDBContent())
-            {
-                return db.Users.ToList();
-            }
+            var userTsk = new Task<User>(() => new UserRepos().FindByLogin(LoginPageViewModel.UsersLogin));
+            var res = userTsk.ContinueWith(t => new BuildingObjectRepos().GetBuildingObjectsForUser(userTsk.Result));
+            userTsk.Start();
+            return res.Result;
         }
         public List<ResMaterial> GetMaterialsForUser()
         {
-            using (AppDBContent db = new AppDBContent())
+            var mat = new List<ResMaterial>();
+
+            var dataMaterial = new DataMaterialRepos().GetAll();
+            var user = new UserRepos().GetAll().Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+            var buildObj = new BuildingObjectRepos().GetAll().Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+            var material = new MaterialRepos().GetAll();
+
+            // ParallelLoopResult result = Parallel.ForEach<int>(dataMaterial, Factorial);
+            foreach (var item in dataMaterial)
             {
-                var mat = new List<ResMaterial>();
-
-                var dataMaterial = db.DataMaterials.ToList();
-                var user = db.Users.Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-                var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
-                //var buildObj = db.BuildingObjects.FirstOrDefault();
-                var material = db.Materials.ToList();
-
-                // ParallelLoopResult result = Parallel.ForEach<int>(dataMaterial, Factorial);
-                foreach (var item in dataMaterial)
+                if (item.BuildingObjectId == buildObj.Id)
                 {
-                    if (item.BuildingObjectId == buildObj.Id)
+                    var resMaterial = material.Where(m => m.Id == item.MaterialId).FirstOrDefault();
+                    mat.Add(new ResMaterial()
                     {
-                        var resMaterial = material.Where(m => m.Id == item.MaterialId).FirstOrDefault();
-                        mat.Add(new ResMaterial()
-                        {
-                            material = resMaterial,
-                            Count = item.Count,
-                            FullPrice = item.Count * resMaterial.Price
-                        });
-                    }
+                        material = resMaterial,
+                        Count = item.Count,
+                        FullPrice = item.Count * resMaterial.Price
+                    });
                 }
-
-                return mat;
             }
+
+            return mat;
+
         }
         public List<ResJobbers> GetJobbersForUser()
         {
-            using (AppDBContent db = new AppDBContent())
+            var job = new List<ResJobbers>();
+            var dataPeople = new DataPersonRepos().GetAll();
+            var user = new UserRepos().GetAll().Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
+            var buildObj = new BuildingObjectRepos().GetAll().Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+            var Jobbers = new JobPersonRepos().GetAll();
+            foreach (var item in dataPeople)
             {
-                var job = new List<ResJobbers>();
-                var dataPeople = db.DataPeople.ToList();
-                var user = GetUsers().Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-                //var buildObj = db.BuildingObjects.FirstOrDefault();
-                var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
-                var Jobbers = db.JobPeople.ToList();
-                foreach (var item in dataPeople)
+                if (item.BuildingObjectId == buildObj.Id)
                 {
-                    if (item.BuildingObjectId == buildObj.Id)
+                    var resPerson = Jobbers.Where(m => m.Id == item.JobPersonId).FirstOrDefault();
+                    job.Add(new ResJobbers()
                     {
-                        var resPerson = Jobbers.Where(m => m.Id == item.JobPersonId).FirstOrDefault();
-                        job.Add(new ResJobbers()
-                        {
-                            jobPerson = resPerson,
-                            Salary = item.Salary
-                        });
-                    }
+                        jobPerson = resPerson,
+                        Salary = item.Salary
+                    });
                 }
-
-                return job;
             }
+            return job;
+
         }
         public void AddMaterial(string? materialName, string? materialMesurableValue, int materialPrice, Category materialCategory)
         {
-            using (AppDBContent db = new AppDBContent())
-            {
-                db.Materials.Add(new Material()
+                new MaterialRepos().Add(new Material()
                 {
                     Name = materialName,
                     MesurableValue = materialMesurableValue,
                     Price = materialPrice,
                     CategoryId = materialCategory.Id
                 });
-                db.SaveChanges();
-            }
         }
         public void AddJobber(string? jobberName, string? jobberSurname, string jobberPhone)
         {
-            using (AppDBContent db = new AppDBContent())
-            {
-                db.JobPeople.Add(new JobPerson() { Name = jobberName, SurName = jobberSurname, Phone = jobberPhone });
-                db.SaveChanges();
-            }
+           new JobPersonRepos().Add(new JobPerson() { Name = jobberName, SurName = jobberSurname, Phone = jobberPhone });   
         }
         public string EditMatrial(Material oldMateral, string newName, string newMesValue, int newPrice, Category newCategory)
         {
-            string result = "This material does not exist.";
-            using (AppDBContent db = new AppDBContent())
-            {
-                //check user is exist
-                Material material = db.Materials.FirstOrDefault(p => p.Id == oldMateral.Id);
-                if (material != null)
-                {
-                    material.Name = newName;
-                    material.MesurableValue = newMesValue;
-                    material.Price = newPrice;
-                    material.CategoryId = newCategory.Id;
-                    db.SaveChanges();
-                    result = "Success! Material " + material.Name + "was changed";
-                }
-            }
-            return result;
+            return new MaterialRepos().EditMaterial(oldMateral,newName,newMesValue,newPrice,newCategory);
         }
         public string EditJobber(JobPerson oldJobber, string jobberName, string jobberSurname, string jobberPhone)
         {
-            string result = "This employee does not exist.";
-
-            using (AppDBContent db = new AppDBContent())
-            {
-                JobPerson person = db.JobPeople.FirstOrDefault(p => p.Id == oldJobber.Id);
-                if (person != null)
-                {
-                    person.Name = jobberName;
-                    person.SurName = jobberSurname;
-                    person.Phone = jobberPhone;
-                    db.SaveChanges();
-
-                    result = "Success! Jobber " + person.Name + "was changed";
-                }
-            }
-            return result;
+            return new JobPersonRepos().EditMaterial(oldJobber,jobberName,jobberSurname,jobberPhone);
         }
     }
 }

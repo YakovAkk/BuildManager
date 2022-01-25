@@ -23,5 +23,21 @@ namespace BuildManager.GeneralFunk.Repos
         {
             return _db.Materials.ToList();
         }
+
+        public string EditMaterial(Material oldMateral, string newName, string newMesValue, int newPrice, Category newCategory)
+        {
+            string result = "This material does not exist.";
+            Material material = GetAll().FirstOrDefault(p => p.Id == oldMateral.Id);
+            if (material != null)
+            {
+                material.Name = newName;
+                material.MesurableValue = newMesValue;
+                material.Price = newPrice;
+                material.CategoryId = newCategory.Id;
+                _db.SaveChanges();
+                result = "Success! Material " + material.Name + "was changed";
+            }
+            return result;
+        }
     }
 }
