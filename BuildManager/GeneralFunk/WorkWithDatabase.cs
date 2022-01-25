@@ -1,6 +1,7 @@
 ﻿using BuildManager.Data;
 using BuildManager.Data.DataBase;
 using BuildManager.Data.Models;
+using BuildManager.GeneralFunk.Repos;
 using BuildManager.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,26 +18,13 @@ namespace BuildManager.GeneralFunk
         {
             using (AppDBContent db = new AppDBContent())
             {
-                var userTsk = new Task<User>(() => GetUser());
-                var res = userTsk.ContinueWith(t => GetBuildingObjectsForUser(userTsk.Result));
+                var userTsk = new Task<User>(() => new UserRepos().FindByLogin(LoginPageViewModel.UsersLogin));
+                var res = userTsk.ContinueWith(t => new BuildingObjectRepos().GetBuildingObjectsForUser(userTsk.Result));
                 userTsk.Start();
                 return res.Result;
             }
         }
-        private List<BuildingObject> GetBuildingObjectsForUser(User user)
-        {
-            using (AppDBContent db = new AppDBContent())
-            {
-                return db.BuildingObjects.Where(o => o.UserId == user.Id).ToList();
-            }
-        }
-        public User GetUser()
-        {
-            using (AppDBContent db = new AppDBContent())
-            {
-                return db.Users.Where(u => u.Login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-            }
-        }
+        
         public List<Material> GetMaterials()
         {
             using (AppDBContent db = new AppDBContent())

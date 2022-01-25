@@ -33,5 +33,10 @@ namespace BuildManager.GeneralFunk.Repos
         {
             return _db.BuildingObjects.ToList();
         }
+
+        public List<BuildingObject> GetBuildingObjectsForUser(User user)
+        {
+            return _db.BuildingObjects.Where(o => o.UserId == user.Id).ToList();
+        }
     }
 }

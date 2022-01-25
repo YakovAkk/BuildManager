@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace BuildManager.GeneralFunk.Repos.Base
 {
-    internal class BaseRepository
+    public class BaseRepository //: IRepository<>
     {
+
     }
 }
