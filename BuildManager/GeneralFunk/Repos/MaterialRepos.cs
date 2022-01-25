@@ -6,25 +6,20 @@ using System.Linq;
 
 namespace BuildManager.GeneralFunk.Repos
 {
-    public class MaterialRepos : IRepository<Material>
+    public class MaterialRepos : BaseRepository<Material>
     {
         private readonly AppDBContent _db;
         public MaterialRepos()
         {
             _db = new AppDBContent();
         }
-        public void Add(Material item)
+        public override void Add(Material item)
         {
            _db.Materials.Add(item);
            _db.SaveChanges();
         }
 
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
-
-        public List<Material> GetAll()
+        public override List<Material> GetAll()
         {
             return _db.Materials.ToList();
         }

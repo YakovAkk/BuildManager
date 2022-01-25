@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BuildManager.GeneralFunk.Repos
 {
-    public class DataMaterialRepos : IRepository<DataMaterial>
+    public class DataMaterialRepos : BaseRepository<DataMaterial>
     {
         private readonly AppDBContent _db;
         public DataMaterialRepos()
@@ -17,17 +17,12 @@ namespace BuildManager.GeneralFunk.Repos
             _db = new AppDBContent();
         }
 
-        public void Add(DataMaterial item)
+        public override void Add(DataMaterial item)
         {
             _db.DataMaterials.Add(item);
         }
 
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
-
-        public List<DataMaterial> GetAll()
+        public override List<DataMaterial> GetAll()
         {
             return _db.DataMaterials.ToList();
         }

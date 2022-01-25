@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BuildManager.GeneralFunk.Repos
 {
-    public class CategoryRepos : IRepository<Category>
+    public class CategoryRepos : BaseRepository<Category>
     {
         private readonly AppDBContent _db;
         public CategoryRepos()
@@ -17,18 +17,13 @@ namespace BuildManager.GeneralFunk.Repos
             _db = new AppDBContent();
         }
 
-        public void Add(Category item)
+        public override void Add(Category item)
         {
             _db.Add(item);
             _db.SaveChanges();
         }
 
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
-
-        public List<Category> GetAll()
+        public override List<Category> GetAll()
         {
             return _db.Categories.ToList();
         }

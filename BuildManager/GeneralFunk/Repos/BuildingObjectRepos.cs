@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BuildManager.GeneralFunk.Repos
 {
-    public class BuildingObjectRepos : IRepository<BuildingObject>
+    public class BuildingObjectRepos : BaseRepository<BuildingObject>
     {
         private readonly AppDBContent _db;
         public BuildingObjectRepos()
@@ -18,18 +18,13 @@ namespace BuildManager.GeneralFunk.Repos
             _db = new AppDBContent();
         }
 
-        public void Add(BuildingObject item)
+        public override void Add(BuildingObject item)
         {
             _db.BuildingObjects.Add(item);
             _db.SaveChanges();
         }
 
-        public void Dispose()
-        {
-           _db.Dispose();
-        }
-
-        public List<BuildingObject> GetAll()
+        public override List<BuildingObject> GetAll()
         {
             return _db.BuildingObjects.ToList();
         }

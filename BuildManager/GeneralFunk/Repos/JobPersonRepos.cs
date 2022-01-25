@@ -9,23 +9,19 @@ using System.Threading.Tasks;
 
 namespace BuildManager.GeneralFunk.Repos
 {
-    public class JobPersonRepos : IRepository<JobPerson>
+    public class JobPersonRepos : BaseRepository<JobPerson>
     {
         private readonly AppDBContent _db;
         public JobPersonRepos()
         {
             _db = new AppDBContent();
         }
-        public void Add(JobPerson item)
+        public override void Add(JobPerson item)
         {
             _db.Add(item);
             _db.SaveChanges();
         }
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
-        public List<JobPerson> GetAll()
+        public override List<JobPerson> GetAll()
         {
             return _db.JobPeople.ToList();
         }

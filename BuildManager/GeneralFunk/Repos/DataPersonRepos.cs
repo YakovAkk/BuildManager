@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BuildManager.GeneralFunk.Repos
 {
-    public class DataPersonRepos : IRepository<DataPerson>
+    public class DataPersonRepos : BaseRepository<DataPerson>
     {
         private readonly AppDBContent _db;
         public DataPersonRepos()
@@ -17,18 +17,13 @@ namespace BuildManager.GeneralFunk.Repos
             _db = new AppDBContent();
         }
 
-        public void Add(DataPerson item)
+        public override void Add(DataPerson item)
         {
             _db.Add(item);
             _db.SaveChanges(); 
         }
 
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
-
-        public List<DataPerson> GetAll()
+        public override List<DataPerson> GetAll()
         {
             return _db.DataPeople.ToList();
         }

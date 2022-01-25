@@ -10,25 +10,20 @@ using System.Threading.Tasks;
 
 namespace BuildManager.GeneralFunk.Repos
 {
-    public class UserRepos : IRepository<User>
+    public class UserRepos : BaseRepository<User>
     {
         private readonly AppDBContent _db;
         public UserRepos()
         {
             _db = new AppDBContent();
         }
-        public void Add(User item)
+        public override void Add(User item)
         {
             _db.Users.Add(item);
             _db.SaveChanges();
         }
 
-        public void Dispose()
-        {
-            _db.Dispose();  
-        }
-
-        public List<User> GetAll()
+        public override List<User> GetAll()
         {
             return _db.Users.ToList();
         }
