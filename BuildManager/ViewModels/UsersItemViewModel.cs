@@ -41,11 +41,7 @@ namespace BuildManager.ViewModels
         public static string materialMesurableValue { get; set; }
         public static int materialPrice { get; set; }
         public static string materialCount { get; set; }
-       
-
         #endregion
-
-
 
         #region Command
         private RelayCommand back;

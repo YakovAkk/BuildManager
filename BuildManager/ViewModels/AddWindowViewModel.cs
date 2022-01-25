@@ -10,11 +10,11 @@ namespace BuildManager.ViewModels
   
 
         #endregion
-        public static string count { get; set; }
+       // public static string count { get; set; }
 
         public AddWindowViewModel()
         {
-            count = "";
+        //    count = "";
         }
     }
 }

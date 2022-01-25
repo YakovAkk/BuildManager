@@ -245,7 +245,7 @@ namespace BuildManager.ViewModels
                         try
                         {
                             new DataMaterialRepos().Add(new DataMaterial(buildObj.Id, SelectedMaterial.Id, 
-                                int.Parse(AddWindowViewModel.count)));
+                                int.Parse(StaticViewModel.GetInstance().AmountMaterial)));
                            
                         }
                         catch (Exception)
@@ -272,7 +272,7 @@ namespace BuildManager.ViewModels
                     try
                     {
                            new DataPersonRepos().Add(new DataPerson(buildObj.Id, SelectedJobber.Id, 
-                               int.Parse(AddJobberViewModel.count)));
+                               int.Parse(StaticViewModel.GetInstance().SalaryJobber)));
                            
                     }
                     catch (Exception)
@@ -423,7 +423,6 @@ namespace BuildManager.ViewModels
         #endregion
         private void UpdateAllMaterialView()
         {
-            
             ShopMaterialPage.AllMaterialsView.ItemsSource = null;
             ShopMaterialPage.AllMaterialsView.Items.Clear();
             ShopMaterialPage.AllMaterialsView.ItemsSource = materials;

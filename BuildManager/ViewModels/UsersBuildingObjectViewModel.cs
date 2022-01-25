@@ -15,13 +15,15 @@ namespace BuildManager.ViewModels
     public class UsersBuildingObjectViewModel : ViewModel
     {
         private static GenerateFunk _generateFunk = new GenerateFunk();
+        private static WorkWithDatabase _workWithDatabase = new WorkWithDatabase();
+
+
 
         private static readonly User user = new UserRepos().FindUserWithActive();
-
-
-        private static WorkWithDatabase _workWithDatabase = new WorkWithDatabase();
         public static string newBuildingObjectName { get; set; }
         public static BuildingObject selectedItem { get; set; }
+
+
 
         private List<BuildingObject> buildingObjects = _workWithDatabase.GetAllObjectForUser();
         public List<BuildingObject> BuildingObjects
