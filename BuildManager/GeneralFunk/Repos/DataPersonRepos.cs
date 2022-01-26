@@ -12,10 +12,10 @@ namespace BuildManager.GeneralFunk.Repos
 {
     public class DataPersonRepos : BaseRepository<DataPerson>
     {
-        private readonly AppDBContent _db;
-        public DataPersonRepos()
+        
+        public DataPersonRepos() : base()
         {
-            _db = new AppDBContent();
+            
         }
 
         public async override Task Add(DataPerson item)

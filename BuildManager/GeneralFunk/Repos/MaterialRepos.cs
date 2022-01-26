@@ -10,10 +10,10 @@ namespace BuildManager.GeneralFunk.Repos
 {
     public class MaterialRepos : BaseRepository<Material>
     {
-        private readonly AppDBContent _db;
-        public MaterialRepos()
+        
+        public MaterialRepos() : base()
         {
-            _db = new AppDBContent();
+            
         }
         public async override Task Add(Material item)
         {

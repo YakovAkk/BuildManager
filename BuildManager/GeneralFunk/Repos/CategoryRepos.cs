@@ -12,10 +12,10 @@ namespace BuildManager.GeneralFunk.Repos
 {
     public class CategoryRepos : BaseRepository<Category>
     {
-        private readonly AppDBContent _db;
-        public CategoryRepos()
+       
+        public CategoryRepos() : base()
         {
-            _db = new AppDBContent();
+            
         }
 
         public async override Task Add(Category item)

@@ -10,10 +10,10 @@ namespace BuildManager.GeneralFunk.Repos
 {
     public class UserRepos : BaseRepository<User>
     {
-        private readonly AppDBContent _db;
-        public UserRepos()
+        
+        public UserRepos() : base()
         {
-            _db = new AppDBContent();
+            
         }
         public async override Task Add(User item)
         {

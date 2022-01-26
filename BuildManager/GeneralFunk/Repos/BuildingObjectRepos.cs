@@ -12,10 +12,9 @@ namespace BuildManager.GeneralFunk.Repos
 {
     public class BuildingObjectRepos : BaseRepository<BuildingObject>
     {
-        private readonly AppDBContent _db;
-        public BuildingObjectRepos()
+        public BuildingObjectRepos() : base()
         {
-            _db = new AppDBContent();
+           
         }
 
         public async override Task Add(BuildingObject item)

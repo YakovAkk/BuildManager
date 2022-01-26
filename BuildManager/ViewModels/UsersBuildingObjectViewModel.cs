@@ -18,11 +18,12 @@ namespace BuildManager.ViewModels
         private static GenerateFunk _generateFunk = new GenerateFunk();
         private static WorkWithDatabase _workWithDatabase = new WorkWithDatabase();
 
-        private static readonly User user = new UserRepos().FindUserWithActive().Result;
+        private readonly UserRepos _userRepos = null;
+
         public static string newBuildingObjectName { get; set; }
         public static BuildingObject selectedItem { get; set; }
 
-        private List<BuildingObject> buildingObjects = _workWithDatabase.GetAllObjectForUser().Result;
+        private List<BuildingObject> buildingObjects; 
         public List<BuildingObject> BuildingObjects
         {
             get { return buildingObjects; }
@@ -57,6 +58,7 @@ namespace BuildManager.ViewModels
                     _generateFunk.SetCenterPositionAndOpen(new AddNewBuildingObjectWindow());
                     using (BuildingObjectRepos repositoryBuilding = new BuildingObjectRepos())
                     {
+                        var user = await _userRepos.FindUserWithActive();
 
                         await repositoryBuilding.Add(new BuildingObject()
                         {
@@ -105,6 +107,10 @@ namespace BuildManager.ViewModels
 
         public UsersBuildingObjectViewModel()
         {
+            var buildingObjectsTask = _workWithDatabase.GetAllObjectForUser();
+            buildingObjectsTask.Wait();
+            buildingObjects = buildingObjectsTask.Result;
+            _userRepos = new UserRepos();
             newBuildingObjectName = "";
         }
     }

@@ -12,10 +12,10 @@ namespace BuildManager.GeneralFunk.Repos
 {
     public class JobPersonRepos : BaseRepository<JobPerson>
     {
-        private readonly AppDBContent _db;
-        public JobPersonRepos()
+       
+        public JobPersonRepos() : base()
         {
-            _db = new AppDBContent();
+            
         }
         public async override Task Add(JobPerson item)
         {

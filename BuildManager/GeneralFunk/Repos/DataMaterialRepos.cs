@@ -11,10 +11,10 @@ namespace BuildManager.GeneralFunk.Repos
 {
     public class DataMaterialRepos : BaseRepository<DataMaterial>
     {
-        private readonly AppDBContent _db;
-        public DataMaterialRepos()
+        
+        public DataMaterialRepos() : base()
         {
-            _db = new AppDBContent();
+            
         }
 
         public async override Task Add(DataMaterial item)
