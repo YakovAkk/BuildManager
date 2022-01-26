@@ -18,20 +18,20 @@ namespace BuildManager.GeneralFunk.Repos
             _db = new AppDBContent();
         }
 
-        public override void Add(BuildingObject item)
+        public async override Task Add(BuildingObject item)
         {
-            _db.BuildingObjects.Add(item);
+            await _db.BuildingObjects.AddAsync(item);
             _db.SaveChanges();
         }
 
-        public override List<BuildingObject> GetAll()
+        public async override Task<List<BuildingObject>> GetAll()
         {
-            return _db.BuildingObjects.ToList();
+            return await _db.BuildingObjects.ToListAsync();
         }
 
-        public List<BuildingObject> GetBuildingObjectsForUser(User user)
+        public async Task<List<BuildingObject>> GetBuildingObjectsForUser(User user)
         {
-            return _db.BuildingObjects.Where(o => o.UserId == user.Id).ToList();
+            return await _db.BuildingObjects.Where(o => o.UserId == user.Id).ToListAsync();
         }
     }
 }

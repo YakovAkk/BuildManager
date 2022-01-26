@@ -14,27 +14,30 @@ namespace BuildManager.GeneralFunk
 {
     public class WorkWithDatabase
     {
-        public List<BuildingObject> GetAllObjectForUser()
+        public async Task<List<BuildingObject>> GetAllObjectForUser()
         {
-            var user =  new UserRepos().FindUserWithActive();
-            var res =  new BuildingObjectRepos().GetBuildingObjectsForUser(user);        
+            var user = await new UserRepos().FindUserWithActive();
+            var res = await new BuildingObjectRepos().GetBuildingObjectsForUser(user);        
             return res;
         }
-        public List<ResMaterial> GetMaterialsForUser()
+        public async Task<List<ResMaterial>> GetMaterialsForUser()
         {
             var mat = new List<ResMaterial>();
-            var dataMaterial = new DataMaterialRepos().GetAll();
-            var user = new UserRepos().FindUserWithActive();
-            var buildObj = new BuildingObjectRepos().GetAll().Where(o => o.UserId == user.Id && 
-            UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
-            var material = new MaterialRepos().GetAll();
 
-            // ParallelLoopResult result = Parallel.ForEach<int>(dataMaterial, Factorial);
-            foreach (var item in dataMaterial)
+            var dataMaterial = Task.Run(() => new DataMaterialRepos().GetAll());
+            var user = Task.Run(() => new UserRepos().FindUserWithActive());
+            var material = Task.Run(() => new MaterialRepos().GetAll());
+
+            await user;
+
+            var buildObj = (await new BuildingObjectRepos().GetAll()).Where(o => o.UserId == user.Id &&
+            UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+
+            foreach (var item in await dataMaterial)
             {
                 if (item.BuildingObjectId == buildObj.Id)
                 {
-                    var resMaterial = material.Where(m => m.Id == item.MaterialId).FirstOrDefault();
+                    var resMaterial = (await material).Where(m => m.Id == item.MaterialId).FirstOrDefault();
                     mat.Add(new ResMaterial()
                     {
                         material = resMaterial,
@@ -47,18 +50,23 @@ namespace BuildManager.GeneralFunk
             return mat;
 
         }
-        public List<ResJobbers> GetJobbersForUser()
+        public async Task<List<ResJobbers>> GetJobbersForUser()
         {
             var job = new List<ResJobbers>();
+
             var dataPeople = new DataPersonRepos().GetAll();
-            var user = new UserRepos().FindUserWithActive();
-            var buildObj = new BuildingObjectRepos().GetAll().Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+
+            var user = await new UserRepos().FindUserWithActive();
+
+            var buildObj = (await new BuildingObjectRepos().GetAll()).Where(o => o.UserId == user.Id &&
+            UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+
             var Jobbers = new JobPersonRepos().GetAll();
-            foreach (var item in dataPeople)
+            foreach (var item in await dataPeople)
             {
                 if (item.BuildingObjectId == buildObj.Id)
                 {
-                    var resPerson = Jobbers.Where(m => m.Id == item.JobPersonId).FirstOrDefault();
+                    var resPerson = (await Jobbers).Where(m => m.Id == item.JobPersonId).FirstOrDefault();
                     job.Add(new ResJobbers()
                     {
                         jobPerson = resPerson,
@@ -66,12 +74,13 @@ namespace BuildManager.GeneralFunk
                     });
                 }
             }
+
             return job;
 
         }
-        public void AddMaterial(string? materialName, string? materialMesurableValue, int materialPrice, Category materialCategory)
+        public async Task AddMaterial(string? materialName, string? materialMesurableValue, int materialPrice, Category materialCategory)
         {
-                new MaterialRepos().Add(new Material()
+                await new MaterialRepos().Add(new Material()
                 {
                     Name = materialName,
                     MesurableValue = materialMesurableValue,
@@ -79,17 +88,17 @@ namespace BuildManager.GeneralFunk
                     CategoryId = materialCategory.Id
                 });
         }
-        public void AddJobber(string? jobberName, string? jobberSurname, string jobberPhone)
+        public async Task AddJobber(string jobberName, string jobberSurname, string jobberPhone)
         {
-           new JobPersonRepos().Add(new JobPerson() { Name = jobberName, SurName = jobberSurname, Phone = jobberPhone });   
+           await new JobPersonRepos().Add(new JobPerson() { Name = jobberName, SurName = jobberSurname, Phone = jobberPhone });   
         }
-        public string EditMatrial(Material oldMateral, string newName, string newMesValue, int newPrice, Category newCategory)
+        public async Task<string> EditMatrial(Material oldMateral, string newName, string newMesValue, int newPrice, Category newCategory)
         {
-            return new MaterialRepos().EditMaterial(oldMateral,newName,newMesValue,newPrice,newCategory);
+            return await new MaterialRepos().EditMaterial(oldMateral,newName,newMesValue,newPrice,newCategory);
         }
-        public string EditJobber(JobPerson oldJobber, string jobberName, string jobberSurname, string jobberPhone)
+        public async Task<string> EditJobber(JobPerson oldJobber, string jobberName, string jobberSurname, string jobberPhone)
         {
-            return new JobPersonRepos().EditMaterial(oldJobber,jobberName,jobberSurname,jobberPhone);
+            return await new JobPersonRepos().EditMaterial(oldJobber,jobberName,jobberSurname,jobberPhone);
         }
     }
 }

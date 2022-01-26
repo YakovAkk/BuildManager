@@ -18,7 +18,7 @@ namespace BuildManager.ViewModels
         public static WorkWithDatabase _workWithDatabase = new WorkWithDatabase();
            
         // Materials
-        private List<ResMaterial> _materials = _workWithDatabase.GetMaterialsForUser();
+        private List<ResMaterial> _materials = _workWithDatabase.GetMaterialsForUser().Result;
         public List<ResMaterial> materials
         {
             get { return _materials; }
@@ -26,7 +26,7 @@ namespace BuildManager.ViewModels
         }
 
         // Jobbers
-        private List<ResJobbers> _jobbers = _workWithDatabase.GetJobbersForUser();
+        private List<ResJobbers> _jobbers = _workWithDatabase.GetJobbersForUser().Result;
         public List<ResJobbers> jobbers
         {
             get { return _jobbers; }

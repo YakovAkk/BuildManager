@@ -26,10 +26,6 @@
                    Grid.ColumnSpan="3" Cursor="Hand" Height="100"/>
         </Border>
 
-
-
-
-
         <ListView x:Name="MainListView" Grid.Row="1" FontSize="30" ItemsSource="{Binding BuildingObjects}"
                           SelectedItem="{Binding selectedItem}" >
             <ListView.ContextMenu>

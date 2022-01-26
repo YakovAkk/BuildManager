@@ -32,7 +32,7 @@ namespace BuildManager.ViewModels
 
         public static JobPerson SelectedJobber { get; set; }
 
-        private List<JobPerson> _jobbers = new JobPersonRepos().GetAll();
+        private List<JobPerson> _jobbers = new JobPersonRepos().GetAll().Result;
         public List<JobPerson> jobbers
         {
             get { return _jobbers; }
@@ -41,7 +41,7 @@ namespace BuildManager.ViewModels
 
         // Add matreial to DB
 
-        private List<Category> allCatigories = new CategoryRepos().GetAll();
+        private List<Category> allCatigories = new CategoryRepos().GetAll().Result;
         public List<Category> AllCatigories
         {
             get { return allCatigories; }
@@ -132,9 +132,9 @@ namespace BuildManager.ViewModels
         {
             get
             {
-                return materialsCement ?? (new RelayCommand(obj =>
+                return materialsCement ?? (new RelayCommand(async obj =>
                 {
-                    _materials = new MaterialRepos().GetAll().Where(m => m.CategoryId == ((int)CategoryEnum.Cement)).ToList();
+                    _materials =(await new MaterialRepos().GetAll()).Where(m => m.CategoryId == ((int)CategoryEnum.Cement)).ToList();
                     UpdateAllMaterialView();
                 }));
             }
@@ -145,9 +145,9 @@ namespace BuildManager.ViewModels
         {
             get
             {
-                return materialsTile ?? (new RelayCommand(obj =>
+                return materialsTile ?? (new RelayCommand(async obj =>
                 {
-                    _materials = new MaterialRepos().GetAll().Where(m => m.CategoryId == ((int)CategoryEnum.Tile)).ToList();
+                    _materials =(await new MaterialRepos().GetAll()).Where(m => m.CategoryId == ((int)CategoryEnum.Tile)).ToList();
                     UpdateAllMaterialView();
                 }));
             }
@@ -158,9 +158,9 @@ namespace BuildManager.ViewModels
         {
             get
             {
-                return materialsBrick ?? (new RelayCommand(obj =>
+                return materialsBrick ?? (new RelayCommand(async obj =>
                 {
-                    _materials = new MaterialRepos().GetAll().Where(m => m.CategoryId == ((int)CategoryEnum.Brick)).ToList();
+                    _materials = (await new MaterialRepos().GetAll()).Where(m => m.CategoryId == ((int)CategoryEnum.Brick)).ToList();
                     UpdateAllMaterialView();
                 }));
             }
@@ -171,9 +171,9 @@ namespace BuildManager.ViewModels
         {
             get
             {
-                return materialsGasBlock ?? (new RelayCommand(obj =>
+                return materialsGasBlock ?? (new RelayCommand(async obj =>
                 {
-                    _materials = new MaterialRepos().GetAll().Where(m => m.CategoryId == ((int)CategoryEnum.GasBlock)).ToList();
+                    _materials = (await new MaterialRepos().GetAll()).Where(m => m.CategoryId == ((int)CategoryEnum.GasBlock)).ToList();
                     UpdateAllMaterialView();
                 }));
             }
@@ -184,9 +184,9 @@ namespace BuildManager.ViewModels
         {
             get
             {
-                return materialsSlate ?? (new RelayCommand(obj =>
+                return materialsSlate ?? (new RelayCommand(async obj =>
                 {
-                    _materials = new MaterialRepos().GetAll().Where(m => m.CategoryId == ((int)CategoryEnum.Slate)).ToList();
+                    _materials = (await new MaterialRepos().GetAll()).Where(m => m.CategoryId == ((int)CategoryEnum.Slate)).ToList();
                     UpdateAllMaterialView();
                 }));
             }
@@ -197,9 +197,9 @@ namespace BuildManager.ViewModels
         {
             get
             {
-                return materialsStyrofoam ?? (new RelayCommand(obj =>
+                return materialsStyrofoam ?? (new RelayCommand(async obj =>
                 {
-                    _materials = new MaterialRepos().GetAll().Where(m => m.CategoryId == ((int)CategoryEnum.Styrofoam)).ToList();
+                    _materials =(await new MaterialRepos().GetAll()).Where(m => m.CategoryId == ((int)CategoryEnum.Styrofoam)).ToList();
                     UpdateAllMaterialView();
                 }));
             }
@@ -209,9 +209,9 @@ namespace BuildManager.ViewModels
         {
             get
             {
-                return materialsFurniture ?? (new RelayCommand(obj =>
+                return materialsFurniture ?? (new RelayCommand(async obj =>
                 {
-                    _materials = new MaterialRepos().GetAll().Where(m => m.CategoryId == ((int)CategoryEnum.Furniture)).ToList();
+                    _materials =(await new MaterialRepos().GetAll()).Where(m => m.CategoryId == ((int)CategoryEnum.Furniture)).ToList();
                     UpdateAllMaterialView();
                 }));
             }
@@ -222,9 +222,9 @@ namespace BuildManager.ViewModels
         {
             get
             {
-                return allMaterial ?? (new RelayCommand(obj =>
+                return allMaterial ?? (new RelayCommand(async obj =>
                 {
-                    _materials = new MaterialRepos().GetAll();
+                    _materials = await new MaterialRepos().GetAll();
                      UpdateAllMaterialView();
                 }));
             }
@@ -235,16 +235,16 @@ namespace BuildManager.ViewModels
         {
             get
             {
-                return addToBasket ?? (new RelayCommand(obj =>
+                return addToBasket ?? (new RelayCommand(async obj =>
                 {
                     _generateFunk.SetCenterPositionAndOpen(new AddWindow());
 
                     var user = new UserRepos().FindUserWithActive();
                         //var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
-                        var buildObj = new BuildingObjectRepos().GetAll().FirstOrDefault();
+                        var buildObj = (await new BuildingObjectRepos().GetAll()).FirstOrDefault();
                         try
                         {
-                            new DataMaterialRepos().Add(new DataMaterial(buildObj.Id, SelectedMaterial.Id, 
+                            await new DataMaterialRepos().Add(new DataMaterial(buildObj.Id, SelectedMaterial.Id, 
                                 int.Parse(StaticViewModel.GetInstance().AmountMaterial)));
                            
                         }
@@ -261,17 +261,17 @@ namespace BuildManager.ViewModels
         public RelayCommand AddJobberToBuilding
         {
             get {
-                return addJobberToBuilding ?? (new RelayCommand(obj =>
+                return addJobberToBuilding ?? (new RelayCommand(async obj =>
                 {
                     _generateFunk.SetCenterPositionAndOpen(new AddJobberWindow());
 
 
                     var user = new UserRepos().FindUserWithActive();
-                    var buildObj = new BuildingObjectRepos().GetAll().Where(o => o.UserId == user.Id && 
+                    var buildObj = (await new BuildingObjectRepos().GetAll()).Where(o => o.UserId == user.Id && 
                     UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
                     try
                     {
-                           new DataPersonRepos().Add(new DataPerson(buildObj.Id, SelectedJobber.Id, 
+                         await new DataPersonRepos().Add(new DataPerson(buildObj.Id, SelectedJobber.Id, 
                                int.Parse(StaticViewModel.GetInstance().SalaryJobber)));
                            
                     }
@@ -328,7 +328,7 @@ namespace BuildManager.ViewModels
         {
             get
             {
-                return addNewJobber ?? (new RelayCommand(obj =>
+                return addNewJobber ?? (new RelayCommand(async obj =>
                 {
                     Window wnd = obj as Window;
                     string resultStr = "";
@@ -350,7 +350,7 @@ namespace BuildManager.ViewModels
 
                         _workWithDatabase.AddJobber(JobberName, JobberSurname, JobberPhone);
                         MessageBox.Show("Success");
-                        _jobbers = new JobPersonRepos().GetAll();
+                        _jobbers = await new JobPersonRepos().GetAll();
                         UpdateAllJobberlView();
                        
                         wnd.Close();
@@ -363,7 +363,7 @@ namespace BuildManager.ViewModels
         public RelayCommand EditMaterial {
             get 
             {
-                return editMaterial ?? (new RelayCommand(obj =>
+                return editMaterial ?? (new RelayCommand(async obj =>
                 {
                     Window wnd = obj as Window;
                     try
@@ -371,7 +371,7 @@ namespace BuildManager.ViewModels
                         if (SelectedMaterial != null && materialCategory != null && materialName.Length != 0 &&
                     materialMesurableValue.Length != 0 && materialPrice != 0)
                         {
-                            MessageBox.Show(_workWithDatabase.EditMatrial(SelectedMaterial, materialName, materialMesurableValue, materialPrice, materialCategory));
+                            MessageBox.Show(await _workWithDatabase.EditMatrial(SelectedMaterial, materialName, materialMesurableValue, materialPrice, materialCategory));
                             UpdateAllMaterialView();
                             wnd.Close();
                         }
@@ -395,7 +395,7 @@ namespace BuildManager.ViewModels
         {
             get
             {
-                return editJobber ?? (new RelayCommand(obj =>
+                return editJobber ?? (new RelayCommand(async obj =>
                 {
                     Window wnd = obj as Window;
                     try
@@ -403,7 +403,7 @@ namespace BuildManager.ViewModels
                         if(SelectedJobber != null && JobberName.Length != 0 && JobberPhone.Length != 0 && JobberSurname.Length != 0)
                         {
 
-                            MessageBox.Show(_workWithDatabase.EditJobber(SelectedJobber, JobberName, JobberSurname, JobberPhone));
+                            MessageBox.Show(await _workWithDatabase.EditJobber(SelectedJobber, JobberName, JobberSurname, JobberPhone));
                             UpdateAllJobberlView();
                             wnd.Close();
                         }
@@ -429,9 +429,9 @@ namespace BuildManager.ViewModels
             ShopMaterialPage.AllMaterialsView.Items.Refresh();
         }
 
-        private void UpdateAllJobberlView()
+        private async void UpdateAllJobberlView()
         {
-            _jobbers = new JobPersonRepos().GetAll();
+            _jobbers = await new JobPersonRepos().GetAll();
             ShopMaterialPage.AllJobbersView.ItemsSource = null;
             ShopMaterialPage.AllJobbersView.Items.Clear();
             ShopMaterialPage.AllJobbersView.ItemsSource = jobbers;

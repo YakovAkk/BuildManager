@@ -1,6 +1,7 @@
 ﻿using BuildManager.Data.DataBase;
 using BuildManager.Data.Models;
 using BuildManager.GeneralFunk.Repos.Base;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,15 +18,15 @@ namespace BuildManager.GeneralFunk.Repos
             _db = new AppDBContent();
         }
 
-        public override void Add(DataPerson item)
+        public async override Task Add(DataPerson item)
         {
-            _db.Add(item);
+           await _db.AddAsync(item);
             _db.SaveChanges(); 
         }
 
-        public override List<DataPerson> GetAll()
+        public async override Task<List<DataPerson>> GetAll()
         {
-            return _db.DataPeople.ToList();
+            return await _db.DataPeople.ToListAsync();
         }
     }
 }
