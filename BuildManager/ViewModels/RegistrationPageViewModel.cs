@@ -49,7 +49,7 @@ namespace BuildManager.ViewModels
                 User user = new User(login, email, password , false);
                 repository.Add(user);
             }
-           
+            MessageBox.Show("Don't Forget your password)");
             var changePage = new GenerateFunk();
             changePage.ChangePageForMainWindow(new LoginPage());
 

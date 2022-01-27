@@ -1,6 +1,7 @@
 ﻿using BuildManager.Data.DataBase;
 using BuildManager.Data.Models;
 using BuildManager.GeneralFunk.Repos.Base;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,26 +12,25 @@ namespace BuildManager.GeneralFunk.Repos
 {
     public class JobPersonRepos : BaseRepository<JobPerson>
     {
-        private readonly AppDBContent _db;
-        public JobPersonRepos()
+       
+        public JobPersonRepos() : base()
         {
-            _db = new AppDBContent();
+            
         }
-        public override void Add(JobPerson item)
+        public async override Task Add(JobPerson item)
         {
-            _db.Add(item);
+            await _db.AddAsync(item);
             _db.SaveChanges();
         }
-        public override List<JobPerson> GetAll()
+        public async override Task<List<JobPerson>> GetAll()
         {
-            return _db.JobPeople.ToList();
+            return await _db.JobPeople.ToListAsync();
         }
-
-        public string EditMaterial(JobPerson oldJobber, string jobberName, string jobberSurname, string jobberPhone)
+        public async Task<string> EditMaterial(JobPerson oldJobber, string jobberName, string jobberSurname, string jobberPhone)
         {
             string result = "This employee does not exist.";
 
-            JobPerson person = GetAll().FirstOrDefault(p => p.Id == oldJobber.Id);
+            JobPerson person = (await GetAll()).FirstOrDefault(p => p.Id == oldJobber.Id);
             if (person != null)
             {
                 person.Name = jobberName;

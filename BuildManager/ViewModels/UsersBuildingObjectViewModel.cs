@@ -6,8 +6,10 @@ using BuildManager.GeneralFunk.Repos;
 using BuildManager.GeneralFunk.Repos.Base;
 using BuildManager.ViewModels.Base;
 using BuildManager.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace BuildManager.ViewModels
@@ -17,15 +19,12 @@ namespace BuildManager.ViewModels
         private static GenerateFunk _generateFunk = new GenerateFunk();
         private static WorkWithDatabase _workWithDatabase = new WorkWithDatabase();
 
+        private readonly UserRepos _userRepos = null;
 
-
-        private static readonly User user = new UserRepos().FindUserWithActive();
         public static string newBuildingObjectName { get; set; }
         public static BuildingObject selectedItem { get; set; }
 
-
-
-        private List<BuildingObject> buildingObjects = _workWithDatabase.GetAllObjectForUser();
+        private List<BuildingObject> buildingObjects; 
         public List<BuildingObject> BuildingObjects
         {
             get { return buildingObjects; }
@@ -55,19 +54,20 @@ namespace BuildManager.ViewModels
         {
             get
             {
-                return openAddWindow ?? (new RelayCommand(obj =>
+                return openAddWindow ?? (new RelayCommand(async obj =>
                 {
                     _generateFunk.SetCenterPositionAndOpen(new AddNewBuildingObjectWindow());
                     using (BuildingObjectRepos repositoryBuilding = new BuildingObjectRepos())
                     {
+                        var user = await _userRepos.FindUserWithActive();
 
-                        repositoryBuilding.Add(new BuildingObject()
+                        await repositoryBuilding.Add(new BuildingObject()
                         {
                             Name = newBuildingObjectName,
                             UserId = user.Id
                         });
 
-                        buildingObjects = repositoryBuilding.GetBuildingObjectsForUser(new UserRepos().FindUserWithActive());
+                        buildingObjects = await repositoryBuilding.GetBuildingObjectsForUser(await new UserRepos().FindUserWithActive());
                     }
                     UpdateAllMaterialView();
                 }));
@@ -102,13 +102,18 @@ namespace BuildManager.ViewModels
 
             }
         }
-
-
         #endregion
 
         public UsersBuildingObjectViewModel()
         {
+            Initializator();
             newBuildingObjectName = "";
+            _userRepos = new UserRepos();
+        }
+
+        private async Task Initializator()
+        {
+            buildingObjects = await _workWithDatabase.GetAllObjectForUser();
         }
     }
 }

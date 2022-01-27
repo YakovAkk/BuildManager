@@ -9,20 +9,18 @@ namespace BuildManager.GeneralFunk.Repos.Base
 {
     public abstract class BaseRepository<T> : IRepository<T>
     {
-        private readonly AppDBContent _db;
+        protected readonly AppDBContent _db;
         public BaseRepository()
         {
             _db = new AppDBContent();
         }
 
-        public abstract void Add(T item);
-        public abstract List<T> GetAll();
+        public abstract Task Add(T item);
+        public abstract Task<List<T>> GetAll();
         public void Dispose()
         {
             _db.Dispose();
         }
 
-       
-    
     }
 }

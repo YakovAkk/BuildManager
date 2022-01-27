@@ -1,6 +1,7 @@
 ﻿using BuildManager.Data.DataBase;
 using BuildManager.Data.Models;
 using BuildManager.GeneralFunk.Repos.Base;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +12,21 @@ namespace BuildManager.GeneralFunk.Repos
 {
     public class CategoryRepos : BaseRepository<Category>
     {
-        private readonly AppDBContent _db;
-        public CategoryRepos()
+       
+        public CategoryRepos() : base()
         {
-            _db = new AppDBContent();
+            
         }
 
-        public override void Add(Category item)
+        public async override Task Add(Category item)
         {
             _db.Add(item);
             _db.SaveChanges();
         }
 
-        public override List<Category> GetAll()
+        public async override Task<List<Category>> GetAll()
         {
-            return _db.Categories.ToList();
+            return await _db.Categories.ToListAsync();
         }
     }
 }

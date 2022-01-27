@@ -25,23 +25,20 @@ namespace BuildManager.ViewModels
         {
             get
             {
-                return usersBuildingObjectCabinetCommand ?? (new UsersCabinetCommand(obj =>
+                return usersBuildingObjectCabinetCommand ?? (new UsersCabinetCommand(async obj =>
                 {
-                    bool flag = false;
-                    using (AppDBContent DB = new AppDBContent())
+                    var userRep = new UserRepos();
+                    var User = (await userRep.GetAll()).Where(u => u.Login == Login && u.Pass == Password).FirstOrDefault();
+                    if (User != null)
                     {
-                        var User = DB.Users.Where(u => u.Login == Login && u.Pass == Password).FirstOrDefault();
-                        if (User != null)
-                        {
-                            var userRep = new UserRepos();
-                            userRep.ChangeAllActiveFalse();
-                            userRep.ChangeActiveOnTrue(Login,Password);
-                            new GenerateFunk().ChangePageForMainWindow(new UsersBildingObjectPage());
-                        }
-                        else
-                        {
-                            MessageBoxResult result = MessageBox.Show("Login or password incorrect");
-                        }
+
+                        await userRep.ChangeAllActiveFalse();
+                        await userRep.ChangeActiveOnTrue(Login, Password);
+                        new GenerateFunk().ChangePageForMainWindow(new UsersBildingObjectPage());
+                    }
+                    else
+                    {
+                        MessageBox.Show("Login or password incorrect");
                     }
                 }));
             }

@@ -11,22 +11,21 @@ namespace BuildManager.GeneralFunk.Repos
 {
     public class DataMaterialRepos : BaseRepository<DataMaterial>
     {
-        private readonly AppDBContent _db;
-        public DataMaterialRepos()
+        
+        public DataMaterialRepos() : base()
         {
-            _db = new AppDBContent();
+            
         }
 
-        public override void Add(DataMaterial item)
+        public async override Task Add(DataMaterial item)
         {
-
-            _db.DataMaterials.Add(item);
+            await Task.Run(() => _db.DataMaterials.Add(item));
             _db.SaveChanges();
         }
 
-        public override List<DataMaterial> GetAll()
+        public async override Task<List<DataMaterial>> GetAll()
         {
-            return _db.DataMaterials.ToList();
+            return await Task.Run(() => _db.DataMaterials.ToList());
         }
     }
 }

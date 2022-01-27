@@ -16,9 +16,11 @@ namespace BuildManager.ViewModels
     public class UsersItemViewModel : ViewModel
     {
         public static WorkWithDatabase _workWithDatabase = new WorkWithDatabase();
-           
+
+        
+
         // Materials
-        private List<ResMaterial> _materials = _workWithDatabase.GetMaterialsForUser();
+        private List<ResMaterial> _materials;
         public List<ResMaterial> materials
         {
             get { return _materials; }
@@ -26,7 +28,7 @@ namespace BuildManager.ViewModels
         }
 
         // Jobbers
-        private List<ResJobbers> _jobbers = _workWithDatabase.GetJobbersForUser();
+        private List<ResJobbers> _jobbers;
         public List<ResJobbers> jobbers
         {
             get { return _jobbers; }
@@ -58,5 +60,16 @@ namespace BuildManager.ViewModels
             }
         }
         #endregion
+
+        public UsersItemViewModel()
+        {
+            Initializator();
+        }
+
+        private async Task Initializator()
+        {
+            _materials = await _workWithDatabase.GetMaterialsForUser();
+            _jobbers = await _workWithDatabase.GetJobbersForUser();
+        }
     }
 }

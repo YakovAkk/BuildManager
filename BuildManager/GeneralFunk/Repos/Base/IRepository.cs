@@ -8,7 +8,7 @@ namespace BuildManager.GeneralFunk.Repos.Base
 {
     public interface IRepository<T> : IDisposable
     {
-        List<T> GetAll();
-        void Add(T item);
+        Task<List<T>> GetAll();
+        Task Add(T item);
     }
 }

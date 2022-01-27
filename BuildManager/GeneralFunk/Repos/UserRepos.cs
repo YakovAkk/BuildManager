@@ -1,47 +1,45 @@
 ﻿using BuildManager.Data.DataBase;
 using BuildManager.Data.Models;
 using BuildManager.GeneralFunk.Repos.Base;
-using BuildManager.ViewModels;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BuildManager.GeneralFunk.Repos
 {
     public class UserRepos : BaseRepository<User>
     {
-        private readonly AppDBContent _db;
-        public UserRepos()
+        
+        public UserRepos() : base()
         {
-            _db = new AppDBContent();
+            
         }
-        public override void Add(User item)
+        public async override Task Add(User item)
         {
-            _db.Users.Add(item);
+            await _db.Users.AddAsync(item);
             _db.SaveChanges();
         }
-        public override List<User> GetAll()
+        public async override Task<List<User>> GetAll()
         {
-            return _db.Users.ToList();
+            return await _db.Users.ToListAsync();
         }
-        public User FindUserWithActive()
+        public async Task<User> FindUserWithActive()
         {
-            return GetAll().Where(x => x.IsActive).FirstOrDefault();    
+            return await _db.Users.FirstOrDefaultAsync(x => x.IsActive);    
         }
-        public void ChangeActiveOnTrue(string UserLogin , string UserPassword)
+        public async Task ChangeActiveOnTrue(string UserLogin , string UserPassword)
         {
-            var user = GetAll().Where(u => u.Login == UserLogin && u.Pass == UserPassword).FirstOrDefault();
+            var user = (await GetAll()).Where(u => u.Login == UserLogin && u.Pass == UserPassword).FirstOrDefault();
             if(user != null)
             {
                 user.IsActive = true;
                 _db.SaveChanges();
             }
         }
-        public void ChangeAllActiveFalse()
+        public async Task ChangeAllActiveFalse()
         {
-            foreach (var item in GetAll())
+            foreach (var item in await GetAll())
             {
                 item.IsActive = false;
             }
