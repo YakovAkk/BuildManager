@@ -27,8 +27,8 @@ namespace BuildManager.Views
             InitializeComponent();
             DataContext = new ShopViewModel();
             ShopViewModel.SelectedJobber = jobberToEdit;
-            ShopViewModel.JobberName = jobberToEdit.name;
-            ShopViewModel.JobberSurname = jobberToEdit.Surname;
+            ShopViewModel.JobberName = jobberToEdit.Name;
+            ShopViewModel.JobberSurname = jobberToEdit.SurName;
             ShopViewModel.JobberPhone = jobberToEdit.Phone;
         }
     }

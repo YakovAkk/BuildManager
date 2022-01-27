@@ -8,19 +8,23 @@ namespace BuildManager.Data.Models
 {
     public class User
     {
-        public int id { get; set; }
-        public string login { get; set; }
-        public string email { get; set; }
-        public string pass { get; set; }
+        public int Id { get; set; }
+        public string Login { get; set; }
+        public string Email { get; set; }
+        public string Pass { get; set; }
+        public bool IsActive { get; set; }
+        // Navigation Properties
+        public List<BuildingObject> buildingObjects { get; set; }
         public User()
         {
 
         }
-        public User(string login, string email, string pass)
+        public User(string login, string email, string pass , bool isActive)
         {
-            this.login = login;
-            this.email = email;
-            this.pass = pass;
+            Login = login;
+            Email = email;
+            Pass = pass;
+            IsActive = isActive;
         }
     }
 }

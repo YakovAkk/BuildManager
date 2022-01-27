@@ -9,6 +9,7 @@ using BuildManager.Data;
 using System.Windows;
 using System;
 using BuildManager.Data.DataBase;
+using BuildManager.GeneralFunk.Repos;
 
 namespace BuildManager.ViewModels
 {
@@ -16,6 +17,7 @@ namespace BuildManager.ViewModels
     {
         public static GenerateFunk _generateFunk = new GenerateFunk();
 
+        public static WorkWithDatabase _workWithDatabase = new WorkWithDatabase();
         // Materials
         private List<Material> _materials = new List<Material>();
         public List<Material> materials
@@ -30,7 +32,7 @@ namespace BuildManager.ViewModels
 
         public static JobPerson SelectedJobber { get; set; }
 
-        private List<JobPerson> _jobbers = _generateFunk.GetJobbers();
+        private List<JobPerson> _jobbers = new JobPersonRepos().GetAll();
         public List<JobPerson> jobbers
         {
             get { return _jobbers; }
@@ -39,7 +41,7 @@ namespace BuildManager.ViewModels
 
         // Add matreial to DB
 
-        private List<Category> allCatigories = _generateFunk.GetCategories();
+        private List<Category> allCatigories = new CategoryRepos().GetAll();
         public List<Category> AllCatigories
         {
             get { return allCatigories; }
@@ -132,7 +134,7 @@ namespace BuildManager.ViewModels
             {
                 return materialsCement ?? (new RelayCommand(obj =>
                 {
-                    _materials = _generateFunk.GetMaterials().Where(m => m.CategoryId ==  ((int)CategoryEnum.Cement)).ToList();
+                    _materials = new MaterialRepos().GetAll().Where(m => m.CategoryId == ((int)CategoryEnum.Cement)).ToList();
                     UpdateAllMaterialView();
                 }));
             }
@@ -145,7 +147,7 @@ namespace BuildManager.ViewModels
             {
                 return materialsTile ?? (new RelayCommand(obj =>
                 {
-                    _materials = _generateFunk.GetMaterials().Where(m => m.CategoryId == ((int)CategoryEnum.Tile)).ToList();
+                    _materials = new MaterialRepos().GetAll().Where(m => m.CategoryId == ((int)CategoryEnum.Tile)).ToList();
                     UpdateAllMaterialView();
                 }));
             }
@@ -158,7 +160,7 @@ namespace BuildManager.ViewModels
             {
                 return materialsBrick ?? (new RelayCommand(obj =>
                 {
-                    _materials = _generateFunk.GetMaterials().Where(m => m.CategoryId == ((int)CategoryEnum.Brick)).ToList();
+                    _materials = new MaterialRepos().GetAll().Where(m => m.CategoryId == ((int)CategoryEnum.Brick)).ToList();
                     UpdateAllMaterialView();
                 }));
             }
@@ -171,7 +173,7 @@ namespace BuildManager.ViewModels
             {
                 return materialsGasBlock ?? (new RelayCommand(obj =>
                 {
-                    _materials = _generateFunk.GetMaterials().Where(m => m.CategoryId == ((int)CategoryEnum.GasBlock)).ToList();
+                    _materials = new MaterialRepos().GetAll().Where(m => m.CategoryId == ((int)CategoryEnum.GasBlock)).ToList();
                     UpdateAllMaterialView();
                 }));
             }
@@ -184,7 +186,7 @@ namespace BuildManager.ViewModels
             {
                 return materialsSlate ?? (new RelayCommand(obj =>
                 {
-                    _materials = _generateFunk.GetMaterials().Where(m => m.CategoryId == ((int)CategoryEnum.Slate)).ToList();
+                    _materials = new MaterialRepos().GetAll().Where(m => m.CategoryId == ((int)CategoryEnum.Slate)).ToList();
                     UpdateAllMaterialView();
                 }));
             }
@@ -197,7 +199,7 @@ namespace BuildManager.ViewModels
             {
                 return materialsStyrofoam ?? (new RelayCommand(obj =>
                 {
-                    _materials = _generateFunk.GetMaterials().Where(m => m.CategoryId == ((int)CategoryEnum.Styrofoam)).ToList();
+                    _materials = new MaterialRepos().GetAll().Where(m => m.CategoryId == ((int)CategoryEnum.Styrofoam)).ToList();
                     UpdateAllMaterialView();
                 }));
             }
@@ -209,7 +211,7 @@ namespace BuildManager.ViewModels
             {
                 return materialsFurniture ?? (new RelayCommand(obj =>
                 {
-                    _materials = _generateFunk.GetMaterials().Where(m => m.CategoryId == ((int)CategoryEnum.Furniture)).ToList();
+                    _materials = new MaterialRepos().GetAll().Where(m => m.CategoryId == ((int)CategoryEnum.Furniture)).ToList();
                     UpdateAllMaterialView();
                 }));
             }
@@ -222,7 +224,7 @@ namespace BuildManager.ViewModels
             {
                 return allMaterial ?? (new RelayCommand(obj =>
                 {
-                    _materials = _generateFunk.GetMaterials();
+                    _materials = new MaterialRepos().GetAll();
                      UpdateAllMaterialView();
                 }));
             }
@@ -237,22 +239,21 @@ namespace BuildManager.ViewModels
                 {
                     _generateFunk.SetCenterPositionAndOpen(new AddWindow());
 
-                    using (AppDBContent db = new AppDBContent())
-                    {
-                        var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-                        var buildObj = db.BuildingObjects.Where(o => o.User_id == user.id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
-
+                    var user = new UserRepos().FindUserWithActive();
+                        //var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+                        var buildObj = new BuildingObjectRepos().GetAll().FirstOrDefault();
                         try
                         {
-                            db.DataMaterials.Add(new DataMaterial(buildObj.Id, SelectedMaterial.id, int.Parse(AddWindowViewModel.count)));
-                            db.SaveChanges();
+                            new DataMaterialRepos().Add(new DataMaterial(buildObj.Id, SelectedMaterial.Id, 
+                                int.Parse(StaticViewModel.GetInstance().AmountMaterial)));
+                           
                         }
                         catch (Exception)
                         {
                             MessageBox.Show("Dude it's symbols , i don't know how these convert to integer, if you know help me pls");
                         }
                       
-                    }
+                    
                 }));
             }
         }
@@ -264,24 +265,23 @@ namespace BuildManager.ViewModels
                 {
                     _generateFunk.SetCenterPositionAndOpen(new AddJobberWindow());
 
-                    using (AppDBContent db = new AppDBContent())
+
+                    var user = new UserRepos().FindUserWithActive();
+                    var buildObj = new BuildingObjectRepos().GetAll().Where(o => o.UserId == user.Id && 
+                    UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+                    try
                     {
-                        var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-                        var buildObj = db.BuildingObjects.Where(o => o.User_id == user.id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
-
-                        try
-                        {
-                            db.DataPeople.Add(new DataPerson(buildObj.Id, SelectedJobber.id, int.Parse(AddJobberViewModel.count)));
-                            db.SaveChanges();
-                        }
-                        catch (Exception)
-                        {
-
-                            MessageBox.Show("Invalid data, do you think, the jobber wants to earn symbols instead of dollars?");
-                        }
-                        
-                        
+                           new DataPersonRepos().Add(new DataPerson(buildObj.Id, SelectedJobber.Id, 
+                               int.Parse(StaticViewModel.GetInstance().SalaryJobber)));
+                           
                     }
+                    catch (Exception)
+                    {
+                       MessageBox.Show("Invalid data, do you think, the jobber wants to earn symbols instead of dollars?");
+                    }
+                        
+                       
+                    
                 }));
             }
         }
@@ -314,7 +314,7 @@ namespace BuildManager.ViewModels
                     }
                     else
                     {
-                        _generateFunk.AddMaterial(materialName, materialMesurableValue, materialPrice, materialCategory);
+                        _workWithDatabase.AddMaterial(materialName, materialMesurableValue, materialPrice, materialCategory);
                         UpdateAllMaterialView();
 
                         MessageBox.Show("Success");
@@ -346,9 +346,11 @@ namespace BuildManager.ViewModels
                     }
                     else
                     {
-                        _generateFunk.AddUser(JobberName, JobberSurname, JobberPhone);
+                        //var user = new User()
+
+                        _workWithDatabase.AddJobber(JobberName, JobberSurname, JobberPhone);
                         MessageBox.Show("Success");
-                        _jobbers = _generateFunk.GetJobbers();
+                        _jobbers = new JobPersonRepos().GetAll();
                         UpdateAllJobberlView();
                        
                         wnd.Close();
@@ -369,7 +371,7 @@ namespace BuildManager.ViewModels
                         if (SelectedMaterial != null && materialCategory != null && materialName.Length != 0 &&
                     materialMesurableValue.Length != 0 && materialPrice != 0)
                         {
-                            MessageBox.Show(_generateFunk.EditMatrial(SelectedMaterial, materialName, materialMesurableValue, materialPrice, materialCategory));
+                            MessageBox.Show(_workWithDatabase.EditMatrial(SelectedMaterial, materialName, materialMesurableValue, materialPrice, materialCategory));
                             UpdateAllMaterialView();
                             wnd.Close();
                         }
@@ -401,7 +403,7 @@ namespace BuildManager.ViewModels
                         if(SelectedJobber != null && JobberName.Length != 0 && JobberPhone.Length != 0 && JobberSurname.Length != 0)
                         {
 
-                            MessageBox.Show(_generateFunk.EditJobber(SelectedJobber, JobberName, JobberSurname, JobberPhone));
+                            MessageBox.Show(_workWithDatabase.EditJobber(SelectedJobber, JobberName, JobberSurname, JobberPhone));
                             UpdateAllJobberlView();
                             wnd.Close();
                         }
@@ -418,13 +420,9 @@ namespace BuildManager.ViewModels
                 }));
             }
         }
-
         #endregion
-
-
         private void UpdateAllMaterialView()
         {
-            
             ShopMaterialPage.AllMaterialsView.ItemsSource = null;
             ShopMaterialPage.AllMaterialsView.Items.Clear();
             ShopMaterialPage.AllMaterialsView.ItemsSource = materials;
@@ -433,7 +431,7 @@ namespace BuildManager.ViewModels
 
         private void UpdateAllJobberlView()
         {
-            _jobbers = _generateFunk.GetJobbers();
+            _jobbers = new JobPersonRepos().GetAll();
             ShopMaterialPage.AllJobbersView.ItemsSource = null;
             ShopMaterialPage.AllJobbersView.Items.Clear();
             ShopMaterialPage.AllJobbersView.ItemsSource = jobbers;

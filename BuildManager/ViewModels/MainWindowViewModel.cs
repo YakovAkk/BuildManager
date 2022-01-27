@@ -23,8 +23,6 @@ namespace BuildManager.ViewModels
         }
         #endregion
 
-        
-
         public MainWindowViewModel()
         {
             Title = "My Proj";

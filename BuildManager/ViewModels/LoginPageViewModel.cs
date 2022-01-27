@@ -2,6 +2,7 @@
 using BuildManager.Commands.LoginPageCommand;
 using BuildManager.Data.DataBase;
 using BuildManager.GeneralFunk;
+using BuildManager.GeneralFunk.Repos;
 using BuildManager.ViewModels.Base;
 using BuildManager.Views;
 using System.Linq;
@@ -11,11 +12,8 @@ namespace BuildManager.ViewModels
 {
     public class LoginPageViewModel : ViewModel
     {
-        
-
-        public static string UsersLogin { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
+        public string Login { get; set; } = "";
+        public string Password { get; set; } = "";
 
         #region Command
         public BackFromLoginApplicationCommand backFromLoginApplicationCommand { get; }
@@ -32,20 +30,19 @@ namespace BuildManager.ViewModels
                     bool flag = false;
                     using (AppDBContent DB = new AppDBContent())
                     {
-                        var User = DB.Users.Where(u => u.login == Login && u.pass == Password).FirstOrDefault();
+                        var User = DB.Users.Where(u => u.Login == Login && u.Pass == Password).FirstOrDefault();
                         if (User != null)
                         {
-                            UsersLogin = Login;
-                            var changePage = new GenerateFunk();
-                            changePage.ChangePageForMainWindow(new UsersBildingObjectPage());
+                            var userRep = new UserRepos();
+                            userRep.ChangeAllActiveFalse();
+                            userRep.ChangeActiveOnTrue(Login,Password);
+                            new GenerateFunk().ChangePageForMainWindow(new UsersBildingObjectPage());
                         }
                         else
                         {
                             MessageBoxResult result = MessageBox.Show("Login or password incorrect");
                         }
                     }
-
-
                 }));
             }
         }

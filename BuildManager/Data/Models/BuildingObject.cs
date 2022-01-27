@@ -10,7 +10,13 @@ namespace BuildManager.Data.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int User_id { get; set; }
+
+        // Navigations Prop
+        public int? UserId { get; set; }
+        public User User { get; set; }
+
+        public List<DataMaterial> dataMaterials { get; set; }
+        public List<DataPerson> dataPeople { get; set; }
 
         public BuildingObject()
         {

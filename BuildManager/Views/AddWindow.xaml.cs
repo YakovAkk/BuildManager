@@ -16,8 +16,9 @@ namespace BuildManager.Views
     {
         public AddWindow()
         {
-            InitializeComponent();
-            DataContext = new AddWindowViewModel();
+            InitializeComponent();    
+            DataContext = StaticViewModel.GetInstance();
+            StaticViewModel.GetInstance().AmountMaterial = "1";
         }
 
         public void Close(object sender, EventArgs e)

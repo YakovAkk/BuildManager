@@ -10,7 +10,6 @@ namespace BuildManager.Data
     public class ResJobbers
     {
         public JobPerson jobPerson { get; set; }
-
         public int Salary { get; set; }
         public ResJobbers()
         {

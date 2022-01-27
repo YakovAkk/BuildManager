@@ -8,10 +8,15 @@ namespace BuildManager.Data.Models
 {
     public class JobPerson
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string Surname { get; set; }
+        public int Id { get; set; } 
+        public string Name { get; set; }
+        public string SurName { get; set; }
         public string Phone { get; set; }
+
+        // Navigation Properties
+
+        public List<DataPerson> dataPeople { get; set; }
+
         public JobPerson()
         {
 

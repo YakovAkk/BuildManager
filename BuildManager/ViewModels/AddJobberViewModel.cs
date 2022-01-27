@@ -1,4 +1,5 @@
-﻿using BuildManager.ViewModels.Base;
+﻿
+using BuildManager.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,13 @@ namespace BuildManager.ViewModels
 {
     public class AddJobberViewModel : ViewModel
     {
-        public static string count { get; set; }
+        //public static string count { get; set; }
 
         public AddJobberViewModel()
         {
-            count = "";
+            //var single = StorageForStaticProp.GetInstance();
+            //single.SalaryJobber = count;
+           // count = "";
         }
     }
 }

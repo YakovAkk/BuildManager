@@ -28,5 +28,10 @@ namespace BuildManager.Data.DataBase
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=ProjectDB;Trusted_Connection=True;TrustServerCertificate=True;");
         }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+        }
     }
 }

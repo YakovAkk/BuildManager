@@ -15,10 +15,10 @@ namespace BuildManager.ViewModels
 {
     public class UsersItemViewModel : ViewModel
     {
-        public static GenerateFunk _generateFunk = new GenerateFunk();
+        public static WorkWithDatabase _workWithDatabase = new WorkWithDatabase();
            
         // Materials
-        private List<ResMaterial> _materials = _generateFunk.GetMaterialsForUser();
+        private List<ResMaterial> _materials = _workWithDatabase.GetMaterialsForUser();
         public List<ResMaterial> materials
         {
             get { return _materials; }
@@ -26,7 +26,7 @@ namespace BuildManager.ViewModels
         }
 
         // Jobbers
-        private List<ResJobbers> _jobbers = _generateFunk.GetJobbersForUser();
+        private List<ResJobbers> _jobbers = _workWithDatabase.GetJobbersForUser();
         public List<ResJobbers> jobbers
         {
             get { return _jobbers; }
@@ -41,11 +41,7 @@ namespace BuildManager.ViewModels
         public static string materialMesurableValue { get; set; }
         public static int materialPrice { get; set; }
         public static string materialCount { get; set; }
-       
-
         #endregion
-
-
 
         #region Command
         private RelayCommand back;

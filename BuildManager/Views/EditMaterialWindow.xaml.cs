@@ -28,9 +28,9 @@ namespace BuildManager.Views
             DataContext = new ShopViewModel();
 
             ShopViewModel.SelectedMaterial = materialToEdit;
-            ShopViewModel.materialName = materialToEdit.name;
-            ShopViewModel.materialPrice = materialToEdit.price; 
-            ShopViewModel.materialMesurableValue = materialToEdit.mesurableValue;
+            ShopViewModel.materialName = materialToEdit.Name;
+            ShopViewModel.materialPrice = materialToEdit.Price; 
+            ShopViewModel.materialMesurableValue = materialToEdit.MesurableValue;
 
         }
 

@@ -8,11 +8,16 @@ namespace BuildManager.Data.Models
 {
     public class DataPerson
     {
-        public int id { get; set; }
-        public int BuildObject_id { get; set; }
-        public int JobPerson_id { get; set; }
+        public int Id { get; set; }
         public int Salary { get; set; }
-        public DateTime dateDeal { get; set; }
+        public DateTime DateDeal { get; set; }
+
+        // Navigation Properties
+
+        public int BuildingObjectId { get; set; }
+        public BuildingObject BuildingObject { get; set; }
+        public int JobPersonId { get; set; }
+        public JobPerson JobPerson { get; set; }
 
         public DataPerson()
         {
@@ -20,10 +25,10 @@ namespace BuildManager.Data.Models
         }
         public DataPerson(int BuildObject_id, int JobPerson_id,int Salary)
         {
-            this.BuildObject_id = BuildObject_id;
-            this.JobPerson_id = JobPerson_id;
+            this.BuildingObjectId = BuildObject_id;
+            this.JobPersonId = JobPerson_id;
             this.Salary = Salary;
-            dateDeal = DateTime.Now;
+            DateDeal = DateTime.Now;
         }
 
     }

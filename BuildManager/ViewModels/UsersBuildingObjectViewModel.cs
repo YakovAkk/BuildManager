@@ -2,24 +2,30 @@
 using BuildManager.Data.DataBase;
 using BuildManager.Data.Models;
 using BuildManager.GeneralFunk;
+using BuildManager.GeneralFunk.Repos;
+using BuildManager.GeneralFunk.Repos.Base;
 using BuildManager.ViewModels.Base;
 using BuildManager.Views;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace BuildManager.ViewModels
 {
     public class UsersBuildingObjectViewModel : ViewModel
     {
-        public static GenerateFunk _generateFunk = new GenerateFunk();
+        private static GenerateFunk _generateFunk = new GenerateFunk();
+        private static WorkWithDatabase _workWithDatabase = new WorkWithDatabase();
 
+
+
+        private static readonly User user = new UserRepos().FindUserWithActive();
         public static string newBuildingObjectName { get; set; }
-
-
-
         public static BuildingObject selectedItem { get; set; }
 
-        private List<BuildingObject> buildingObjects = _generateFunk.GetAllObjectForUser();
+
+
+        private List<BuildingObject> buildingObjects = _workWithDatabase.GetAllObjectForUser();
         public List<BuildingObject> BuildingObjects
         {
             get { return buildingObjects; }
@@ -52,17 +58,19 @@ namespace BuildManager.ViewModels
                 return openAddWindow ?? (new RelayCommand(obj =>
                 {
                     _generateFunk.SetCenterPositionAndOpen(new AddNewBuildingObjectWindow());
-
-                    using (AppDBContent db = new AppDBContent())
+                    using (BuildingObjectRepos repositoryBuilding = new BuildingObjectRepos())
                     {
-                        var user = db.Users.Where(u => u.login == LoginPageViewModel.UsersLogin).FirstOrDefault();
-                        db.BuildingObjects.Add(new BuildingObject() { Name = newBuildingObjectName, User_id = user.id });
-                        db.SaveChanges();
+
+                        repositoryBuilding.Add(new BuildingObject()
+                        {
+                            Name = newBuildingObjectName,
+                            UserId = user.Id
+                        });
+
+                        buildingObjects = repositoryBuilding.GetBuildingObjectsForUser(new UserRepos().FindUserWithActive());
                     }
-                    buildingObjects = _generateFunk.GetAllObjectForUser();
                     UpdateAllMaterialView();
                 }));
-
             }
         }
 
@@ -82,8 +90,14 @@ namespace BuildManager.ViewModels
             {
                 return select ?? (new RelayCommand(obj =>
                 {
-                    _generateFunk.ChangePageForMainWindow(new UsersCabinetPage());
-
+                    if(selectedItem == null)
+                    {
+                        MessageBox.Show("Choose a building object or create a new one");
+                    }
+                    else
+                    {
+                        _generateFunk.ChangePageForMainWindow(new UsersCabinetPage());
+                    }
                 }));
 
             }

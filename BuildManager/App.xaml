@@ -9,25 +9,20 @@
         
         <ResourceDictionary>
             <Style TargetType="Button">
-
-                <Setter Property="Background" Value="Black"  />
-
-                <Setter Property="Foreground" Value="Aqua"/>
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="Foreground" Value="Orange"/>
             </Style>
 
             <Style TargetType="TextBlock">
-                <Setter Property="Foreground" Value="Aqua"/>
-
-
+                <Setter Property="Foreground" Value="Orange"/>
             </Style>
 
             <Style TargetType="TextBox">
                 <Setter Property="FontSize" Value="40"/>
-                <Setter Property="Foreground" Value="Aqua"/>
+                <Setter Property="Foreground" Value="Orange"/>
             </Style>
             <Style TargetType="PasswordBox">
-
-                <Setter Property="Foreground" Value="Aqua"/>
+                <Setter Property="Foreground" Value="Orange"/>
             </Style>
             
             <ResourceDictionary.MergedDictionaries>

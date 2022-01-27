@@ -40,7 +40,8 @@
             </Grid.Effect>
 
             <Grid Background="Black" Grid.RowSpan="2">
-                <TextBlock Text=" Shop Material "  Foreground="Aqua" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="WS Simple Gallifreyan"  FontSize="16"/>
+                <TextBlock Text=" Shop Material "  Foreground="Orange" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" FontFamily="WS Simple Gallifreyan"  FontSize="16"/>
             </Grid>
 
             <StackPanel Grid.Row="2" Margin="0,0,0,306" Grid.RowSpan="3">
@@ -114,13 +115,13 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="Auto" Header="Id"                                            
-                                            DisplayMemberBinding="{Binding Path = id}"/>
+                                            DisplayMemberBinding="{Binding Path = Id}"/>
                             <GridViewColumn Width="Auto" Header="Name"
-                                            DisplayMemberBinding="{Binding Path = name}"/>
+                                            DisplayMemberBinding="{Binding Path = Name}"/>
                             <GridViewColumn Width="Auto" Header="Mesurable Value"
-                                            DisplayMemberBinding="{Binding Path = mesurableValue}"/>
+                                            DisplayMemberBinding="{Binding Path = MesurableValue}"/>
                             <GridViewColumn Width="Auto" Header="Price"
-                                            DisplayMemberBinding="{Binding Path = price}"/>
+                                            DisplayMemberBinding="{Binding Path = Price}"/>
 
                         </GridView>
                     </ListView.View>
@@ -141,9 +142,9 @@
                           SelectedItem="{Binding SelectedJobber}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="Auto" Header="ID" DisplayMemberBinding="{Binding Path=id}"/>
-                            <GridViewColumn Width="Auto" Header="Name" DisplayMemberBinding="{Binding Path=name}"/>
-                            <GridViewColumn Width="Auto" Header="Surname" DisplayMemberBinding="{Binding Path=Surname}"/>
+                            <GridViewColumn Width="Auto" Header="ID" DisplayMemberBinding="{Binding Path=Id}"/>
+                            <GridViewColumn Width="Auto" Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                            <GridViewColumn Width="Auto" Header="Surname" DisplayMemberBinding="{Binding Path=SurName}"/>
                             <GridViewColumn Width="Auto" Header="Phone" DisplayMemberBinding="{Binding Path=Phone}"/>
                         </GridView>
                     </ListView.View>
