@@ -6,6 +6,7 @@ using BuildManager.GeneralFunk.Repos;
 using BuildManager.GeneralFunk.Repos.Base;
 using BuildManager.ViewModels.Base;
 using BuildManager.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -101,17 +102,18 @@ namespace BuildManager.ViewModels
 
             }
         }
-
-
         #endregion
 
         public UsersBuildingObjectViewModel()
         {
-            var buildingObjectsTask = _workWithDatabase.GetAllObjectForUser();
-            buildingObjectsTask.Wait();
-            buildingObjects = buildingObjectsTask.Result;
-            _userRepos = new UserRepos();
+            Initializator();
             newBuildingObjectName = "";
+            _userRepos = new UserRepos();
+        }
+
+        private async Task Initializator()
+        {
+            buildingObjects = await _workWithDatabase.GetAllObjectForUser();
         }
     }
 }

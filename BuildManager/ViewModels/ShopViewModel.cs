@@ -10,6 +10,7 @@ using System.Windows;
 using System;
 using BuildManager.Data.DataBase;
 using BuildManager.GeneralFunk.Repos;
+using System.Threading.Tasks;
 
 namespace BuildManager.ViewModels
 {
@@ -32,7 +33,7 @@ namespace BuildManager.ViewModels
 
         public static JobPerson SelectedJobber { get; set; }
 
-        private List<JobPerson> _jobbers = new JobPersonRepos().GetAll().Result;
+        private List<JobPerson> _jobbers;
         public List<JobPerson> jobbers
         {
             get { return _jobbers; }
@@ -41,11 +42,11 @@ namespace BuildManager.ViewModels
 
         // Add matreial to DB
 
-        private List<Category> allCatigories = new CategoryRepos().GetAll().Result;
+        private List<Category> _allCatigories;
         public List<Category> AllCatigories
         {
-            get { return allCatigories; }
-            set { allCatigories = value; }
+            get { return _allCatigories; }
+            set { _allCatigories = value; }
         }
         public static string materialName { get; set; }
         public static string materialMesurableValue { get; set; }
@@ -439,7 +440,14 @@ namespace BuildManager.ViewModels
         }
         public ShopViewModel()
         {
+            Initializator();
+            
+        }
 
+        private async Task Initializator()
+        {
+            _jobbers = await new JobPersonRepos().GetAll();
+            _allCatigories = await new CategoryRepos().GetAll();
         }
     }
 }
