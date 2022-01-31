@@ -8,11 +8,7 @@ namespace BuildManager.GeneralFunk.Repos
 {
     public class MaterialRepos : BaseRepository<Material>
     {
-        private readonly AppDBContent _db;
-        public MaterialRepos()
-        {
-            _db = new AppDBContent();
-        }
+
         public override void Add(Material item)
         {
            _db.Materials.Add(item);

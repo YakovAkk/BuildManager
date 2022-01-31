@@ -4,6 +4,7 @@ using BuildManager.Data.Models;
 using BuildManager.GeneralFunk;
 using BuildManager.GeneralFunk.Repos;
 using BuildManager.GeneralFunk.Repos.Base;
+using BuildManager.GeneralFunk.SingletonForActiveUser;
 using BuildManager.ViewModels.Base;
 using BuildManager.Views;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace BuildManager.ViewModels
 
 
 
-        private static readonly User user = new UserRepos().FindUserWithActive();
+        private static readonly User user = SingletonActiveUser.GetInstance().GetUser();
         public static string newBuildingObjectName { get; set; }
         public static BuildingObject selectedItem { get; set; }
 
@@ -67,7 +68,7 @@ namespace BuildManager.ViewModels
                             UserId = user.Id
                         });
 
-                        buildingObjects = repositoryBuilding.GetBuildingObjectsForUser(new UserRepos().FindUserWithActive());
+                        buildingObjects = repositoryBuilding.GetBuildingObjectsForUser(SingletonActiveUser.GetInstance().GetUser());
                     }
                     UpdateAllMaterialView();
                 }));

@@ -11,11 +11,7 @@ namespace BuildManager.GeneralFunk.Repos
 {
     public class JobPersonRepos : BaseRepository<JobPerson>
     {
-        private readonly AppDBContent _db;
-        public JobPersonRepos()
-        {
-            _db = new AppDBContent();
-        }
+
         public override void Add(JobPerson item)
         {
             _db.Add(item);

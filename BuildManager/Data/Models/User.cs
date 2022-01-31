@@ -12,19 +12,17 @@ namespace BuildManager.Data.Models
         public string Login { get; set; }
         public string Email { get; set; }
         public string Pass { get; set; }
-        public bool IsActive { get; set; }
         // Navigation Properties
         public List<BuildingObject> buildingObjects { get; set; }
         public User()
         {
 
         }
-        public User(string login, string email, string pass , bool isActive)
+        public User(string login, string email, string pass )
         {
             Login = login;
             Email = email;
             Pass = pass;
-            IsActive = isActive;
         }
     }
 }

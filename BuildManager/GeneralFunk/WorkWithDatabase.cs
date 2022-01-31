@@ -2,6 +2,7 @@
 using BuildManager.Data.DataBase;
 using BuildManager.Data.Models;
 using BuildManager.GeneralFunk.Repos;
+using BuildManager.GeneralFunk.SingletonForActiveUser;
 using BuildManager.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,7 +17,7 @@ namespace BuildManager.GeneralFunk
     {
         public List<BuildingObject> GetAllObjectForUser()
         {
-            var user =  new UserRepos().FindUserWithActive();
+            var user = SingletonActiveUser.GetInstance().GetUser();
             var res =  new BuildingObjectRepos().GetBuildingObjectsForUser(user);        
             return res;
         }
@@ -24,7 +25,7 @@ namespace BuildManager.GeneralFunk
         {
             var mat = new List<ResMaterial>();
             var dataMaterial = new DataMaterialRepos().GetAll();
-            var user = new UserRepos().FindUserWithActive();
+            var user = SingletonActiveUser.GetInstance().GetUser();
             var buildObj = new BuildingObjectRepos().GetAll().Where(o => o.UserId == user.Id && 
             UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
             var material = new MaterialRepos().GetAll();
@@ -51,7 +52,7 @@ namespace BuildManager.GeneralFunk
         {
             var job = new List<ResJobbers>();
             var dataPeople = new DataPersonRepos().GetAll();
-            var user = new UserRepos().FindUserWithActive();
+            var user = SingletonActiveUser.GetInstance().GetUser();
             var buildObj = new BuildingObjectRepos().GetAll().Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
             var Jobbers = new JobPersonRepos().GetAll();
             foreach (var item in dataPeople)

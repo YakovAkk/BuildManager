@@ -46,7 +46,7 @@ namespace BuildManager.ViewModels
         {
             using (IRepository<User> repository = new UserRepos())
             {
-                User user = new User(login, email, password , false);
+                User user = new User(login, email, password);
                 repository.Add(user);
             }
            

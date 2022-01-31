@@ -9,7 +9,7 @@ namespace BuildManager.GeneralFunk.Repos.Base
 {
     public abstract class BaseRepository<T> : IRepository<T>
     {
-        private readonly AppDBContent _db;
+        protected readonly AppDBContent _db;
         public BaseRepository()
         {
             _db = new AppDBContent();

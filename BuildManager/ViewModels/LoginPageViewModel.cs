@@ -3,6 +3,7 @@ using BuildManager.Commands.LoginPageCommand;
 using BuildManager.Data.DataBase;
 using BuildManager.GeneralFunk;
 using BuildManager.GeneralFunk.Repos;
+using BuildManager.GeneralFunk.SingletonForActiveUser;
 using BuildManager.ViewModels.Base;
 using BuildManager.Views;
 using System.Linq;
@@ -33,9 +34,7 @@ namespace BuildManager.ViewModels
                         var User = DB.Users.Where(u => u.Login == Login && u.Pass == Password).FirstOrDefault();
                         if (User != null)
                         {
-                            var userRep = new UserRepos();
-                            userRep.ChangeAllActiveFalse();
-                            userRep.ChangeActiveOnTrue(Login,Password);
+                            SingletonActiveUser.GetInstance().SetUser(User);
                             new GenerateFunk().ChangePageForMainWindow(new UsersBildingObjectPage());
                         }
                         else

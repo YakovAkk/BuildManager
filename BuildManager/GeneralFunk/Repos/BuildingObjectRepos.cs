@@ -12,12 +12,6 @@ namespace BuildManager.GeneralFunk.Repos
 {
     public class BuildingObjectRepos : BaseRepository<BuildingObject>
     {
-        private readonly AppDBContent _db;
-        public BuildingObjectRepos()
-        {
-            _db = new AppDBContent();
-        }
-
         public override void Add(BuildingObject item)
         {
             _db.BuildingObjects.Add(item);

@@ -11,11 +11,6 @@ namespace BuildManager.GeneralFunk.Repos
 {
     public class DataPersonRepos : BaseRepository<DataPerson>
     {
-        private readonly AppDBContent _db;
-        public DataPersonRepos()
-        {
-            _db = new AppDBContent();
-        }
 
         public override void Add(DataPerson item)
         {

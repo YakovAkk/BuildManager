@@ -10,6 +10,7 @@ using System.Windows;
 using System;
 using BuildManager.Data.DataBase;
 using BuildManager.GeneralFunk.Repos;
+using BuildManager.GeneralFunk.SingletonForActiveUser;
 
 namespace BuildManager.ViewModels
 {
@@ -239,9 +240,9 @@ namespace BuildManager.ViewModels
                 {
                     _generateFunk.SetCenterPositionAndOpen(new AddWindow());
 
-                    var user = new UserRepos().FindUserWithActive();
-                        //var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
-                        var buildObj = new BuildingObjectRepos().GetAll().FirstOrDefault();
+                    var user = SingletonActiveUser.GetInstance().GetUser();
+                    //var buildObj = db.BuildingObjects.Where(o => o.UserId == user.Id && UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
+                    var buildObj = new BuildingObjectRepos().GetAll().FirstOrDefault();
                         try
                         {
                             new DataMaterialRepos().Add(new DataMaterial(buildObj.Id, SelectedMaterial.Id, 
@@ -266,7 +267,7 @@ namespace BuildManager.ViewModels
                     _generateFunk.SetCenterPositionAndOpen(new AddJobberWindow());
 
 
-                    var user = new UserRepos().FindUserWithActive();
+                    var user = SingletonActiveUser.GetInstance().GetUser();
                     var buildObj = new BuildingObjectRepos().GetAll().Where(o => o.UserId == user.Id && 
                     UsersBuildingObjectViewModel.selectedItem.Name == o.Name).FirstOrDefault();
                     try
